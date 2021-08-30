@@ -1,28 +1,28 @@
 import React from 'react';
-import '../assets/styles/Paging.css';
+import { makeStyles } from '@material-ui/core/styles';
+import Pagination from '@material-ui/lab/Pagination';
 
-const Paging = ({ Page, setPage }) => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      display: 'flex',
+      width: '100%',
+      justifyContent: 'center',
+      padding: '1rem, 0',
+    },
+  },
+}));
+
+export default function PaginationRounded({ maxPage, setPage }) {
+  const classes = useStyles();
+
+  const handleChange = (e, pageNum) => {
+    setPage(pageNum);
+  };
+
   return (
-    <div className='paging-wrapper'>
-      <button
-        className='pagingBtn'
-        onClick={() => {
-          setPage(Page === 0 ? 0 : Page - 1);
-        }}
-      >
-        이전 페이지
-      </button>
-      <label>{Page}</label>
-      <button
-        className='pagingBtn'
-        onClick={() => {
-          setPage(Page + 1);
-        }}
-      >
-        다음 페이지
-      </button>
+    <div className={classes.root}>
+      <Pagination count={maxPage} variant="outlined" shape="rounded" onChange={handleChange} />
     </div>
   );
-};
-
-export default Paging;
+}
