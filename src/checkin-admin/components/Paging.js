@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PaginationRounded({ maxPage, setPage }) {
+export default function PaginationRounded({ lastPage, setPage }) {
   const classes = useStyles();
 
   const handleChange = (e, pageNum) => {
@@ -22,7 +22,7 @@ export default function PaginationRounded({ maxPage, setPage }) {
 
   return (
     <div className={classes.root}>
-      <Pagination count={maxPage} variant="outlined" shape="rounded" onChange={handleChange} />
+      <Pagination count={lastPage} variant="outlined" shape="rounded" onChange={handleChange} />
     </div>
   );
 }

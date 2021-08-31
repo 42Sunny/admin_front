@@ -29,6 +29,7 @@ const SearchBar = forwardRef(
       setLogin,
       cardId,
       setCardId,
+      setLastPage,
     },
     ref,
   ) => {
@@ -65,21 +66,21 @@ const SearchBar = forwardRef(
             else throw '유효한 카드 번호를 입력하세요.';
             break;
           case 3:
-            response = await getCheckIn(clusterType);
+            response = await getCheckIn(clusterType, page - 1);
             break;
           case 4:
-            response = await getAllCard(clusterType);
+            response = await getAllCard(clusterType, page - 1);
             break;
           default:
             break;
         }
         let datas;
-        datas = response.data;
+        datas = response.data.list;
         if (type === 3 || type === 4) {
-          datas = response.data
+          datas = response.data.list
             .filter(
               (item, index) =>
-                response.data.findIndex((item2) => item.user._id === item2.user._id) === index,
+                response.data.list.findIndex((item2) => item.user._id === item2.user._id) === index,
             )
             .reverse();
           if (type === 4) {
@@ -92,6 +93,7 @@ const SearchBar = forwardRef(
           }
         }
         setLogs(datas);
+        setLastPage(response.data.lastPage);
       } catch (err) {
         console.log(err);
       }

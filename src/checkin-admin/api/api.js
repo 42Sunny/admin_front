@@ -31,10 +31,10 @@ export const getCard = async (cardId, page) => {
   return await instance.get(`/log/card/${cardId}?page=${page}`);
 };
 
-export const getCheckIn = async (ClusterType) => {
-  return await instance.get(`/log/checkIn/${ClusterType}`);
+export const getCheckIn = async (ClusterType, page) => {
+  return await instance.get(`/log/checkIn/${ClusterType}?page=${page} `);
 };
 
-export const getAllCard = async (ClusterType) => {
-  return await instance.get(`/log/allCard/${ClusterType}`);
+export const getAllCard = async (ClusterType, page) => {
+  return await instance.get(`/log/allCard/${ClusterType}?page=${page}`);
 };

@@ -18,7 +18,6 @@ import { forceCheckOut, checkAdmin as getCheckAdmin } from '../api/api';
 
 import '../assets/styles/AdminPage.css';
 
-const TEMP_MAX_PAGE = 10;
 const LOGTYPE = {
   0: '클러스터',
   1: '인트라 ID',
@@ -66,6 +65,8 @@ function AdminPage() {
   const [login, setLogin] = useState('');
   const [cardId, setCardId] = useState(0);
 
+  const [lastPage, setLastPage] = useState(1);
+
   const ref = useRef();
   const classes = useStyles();
   const tableHead = ['ID', '시간', '출/입', '인트라 ID', '카드 번호', '클러스터', '강제 퇴실'];
@@ -76,6 +77,7 @@ function AdminPage() {
     setLogType(newValue);
     setLogin('');
     setCardId(0);
+    setLastPage(0);
   };
 
   const checkAdmin = async () => {
@@ -137,8 +139,9 @@ function AdminPage() {
         setLogin={setLogin}
         cardId={cardId}
         setCardId={setCardId}
+        setLastPage={setLastPage}
       />
-      <PaginationRounded maxPage={TEMP_MAX_PAGE} setPage={setPage} />
+      <PaginationRounded lastPage={lastPage} setPage={setPage} />
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
