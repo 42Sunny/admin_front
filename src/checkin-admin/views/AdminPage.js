@@ -19,6 +19,13 @@ import { forceCheckOut, checkAdmin as getCheckAdmin } from '../api/api';
 import '../assets/styles/AdminPage.css';
 
 const TEMP_MAX_PAGE = 10;
+const LOGTYPE = {
+  0: '클러스터',
+  1: '인트라 ID',
+  2: '카드 번호',
+  3: '미반납 카드',
+  4: '모든 카드 정보',
+};
 const styles = {
   root: {
     flexGrow: 1,
@@ -136,8 +143,7 @@ function AdminPage() {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="info">
-              <h4 className={classes.cardTitleWhite}>Logs</h4>
-              <p className={classes.cardCategoryWhite}></p>
+              <h4 className={classes.cardTitleWhite}>{LOGTYPE[logType]} 로그</h4>
             </CardHeader>
             <CardBody>
               <Table

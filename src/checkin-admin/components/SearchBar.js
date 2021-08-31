@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import Looks4Icon from '@material-ui/icons/Looks4';
 import LooksTwoIcon from '@material-ui/icons/LooksTwo';
-
+import { debounce } from 'lodash';
 import { getCluster, getStudent, getCard, getCheckIn, getAllCard } from '../api/api';
 import { gaepoCard, seochoCard } from '../utils/cardList';
 
@@ -58,11 +58,11 @@ const SearchBar = forwardRef(
             break;
           case 1:
             if (login) response = await getStudent(login, page - 1);
-            else throw '인트라 ID가 비어있습니다.\n유효한 인트라 ID를 입력하세요.';
+            else throw '유효한 인트라 ID를 입력하세요.';
             break;
           case 2:
-            if (cardId !== 0) response = await getCard(cardId, page - 1);
-            else throw '카드 번호가 초기값 0입니다.\n유효한 카드 번호를 입력하세요.';
+            if (cardId !== 0 && cardId !== '') response = await getCard(cardId, page - 1);
+            else throw '유효한 카드 번호를 입력하세요.';
             break;
           case 3:
             response = await getCheckIn(clusterType);
@@ -109,6 +109,11 @@ const SearchBar = forwardRef(
       }
     };
 
+    const handleChangeWithDebounce = debounce((e) => {
+      if (e.target.id === 'intra-id') setLogin(e.target.value);
+      else if (e.target.id === 'card-number') setCardId(e.target.value);
+    }, 200);
+
     useEffect(() => {
       onSubmit();
     }, [type, page, clusterType, login, cardId]);
@@ -140,11 +145,9 @@ const SearchBar = forwardRef(
           </Grid>
           <Grid item>
             <TextField
+              id="intra-id"
               label="인트라 ID"
-              value={login}
-              onChange={(e) => {
-                setLogin(e.target.value);
-              }}
+              onChange={handleChangeWithDebounce}
               onKeyDown={handleKeyDown}
             />
           </Grid>
@@ -166,12 +169,10 @@ const SearchBar = forwardRef(
           </Grid>
           <Grid item>
             <TextField
+              id="card-number"
               label="카드 번호"
               type="number"
-              value={cardId}
-              onChange={(e) => {
-                setCardId(e.target.value);
-              }}
+              onChange={handleChangeWithDebounce}
               onKeyDown={handleKeyDown}
             />
           </Grid>
