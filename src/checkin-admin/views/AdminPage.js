@@ -73,11 +73,11 @@ function AdminPage() {
 
   const checkAdmin = async () => {
     try {
-      const response = await getCheckAdmin();
-      if (!(response.data && response.data.isAdmin)) history.push('/checkin');
+      // const response = await getCheckAdmin();
+      // if (!(response.data && response.data.isAdmin)) history.push('/checkin');
     } catch (err) {
-      console.log(err);
-      history.push('/');
+      // console.log(err);
+      // history.push('/');
     }
   };
 
