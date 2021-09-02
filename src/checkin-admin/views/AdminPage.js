@@ -11,6 +11,9 @@ import CardBody from '../components/Card/CardBody.js';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import PaginationRounded from '../components/Paging';
 import SearchBar from '../components/SearchBar';
@@ -44,6 +47,11 @@ const styles = {
       lineHeight: '1',
     },
   },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -68,8 +76,21 @@ function AdminPage() {
   const [lastPage, setLastPage] = useState(1);
 
   const ref = useRef();
+
   const classes = useStyles();
   const tableHead = ['ID', '시간', '출/입', '인트라 ID', '카드 번호', '클러스터', '강제 퇴실'];
+
+  const [listSize, setListSize] = useState(50);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (e) => {
+    setListSize(e.target.innerText);
+    setAnchorEl(null);
+  };
 
   const handleChange = (event, newValue) => {
     setLogs([]);
@@ -140,22 +161,39 @@ function AdminPage() {
         cardId={cardId}
         setCardId={setCardId}
         setLastPage={setLastPage}
+        listSize={listSize}
       />
       <PaginationRounded lastPage={lastPage} setPage={setPage} />
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="info">
+            <CardHeader color="info" className={classes.header}>
               <h4 className={classes.cardTitleWhite}>{LOGTYPE[logType]} 로그</h4>
+              <div>
+                <Button
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                  variant="outlined"
+                  disabled={logType === 3 || logType === 4}
+                >
+                  size: {listSize}
+                </Button>
+                <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)}>
+                  <MenuItem onClick={handleClose}>10</MenuItem>
+                  <MenuItem onClick={handleClose}>30</MenuItem>
+                  <MenuItem onClick={handleClose}>50</MenuItem>
+                  <MenuItem onClick={handleClose}>100</MenuItem>
+                </Menu>
+              </div>
             </CardHeader>
             <CardBody>
               <Table
-                tableHeaderColor="black"
                 tableHead={tableHead}
                 tableData={logs.map((log, idx) => {
                   const date = new Date(log.createdAt);
                   return [
-                    log.id ?? (page - 1) * 50 + idx + 1,
+                    log.id ?? (page - 1) * listSize + idx + 1,
                     moment(date).format('MM월 DD일 HH:mm') ?? null,
                     log.logType ?? null,
                     log.user ? log.user.userName : null,
