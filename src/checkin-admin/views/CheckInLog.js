@@ -63,7 +63,7 @@ function a11yProps(index) {
   };
 }
 
-function AdminPage() {
+function CheckInLog() {
   const history = useHistory();
   const [logType, setLogType] = useState(0);
   const [logs, setLogs] = useState([]);
@@ -221,4 +221,4 @@ function AdminPage() {
   );
 }
 
-export default AdminPage;
+export default CheckInLog;
