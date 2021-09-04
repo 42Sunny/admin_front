@@ -15,6 +15,7 @@ export default function AdminNavbarLinks() {
   const classes = useStyles();
   const { setIsLogin } = useContext(LoginContext);
   const handleClickProfile = () => {
+    window.localStorage.setItem('isLogin', false);
     setIsLogin(false);
   };
   return (

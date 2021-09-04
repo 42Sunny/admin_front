@@ -13,7 +13,12 @@ const useStyles = makeStyles({
     flexDirection: 'column',
   },
   logoBox: {
-    marginBottom: '30px',
+    marginTop: '200px',
+  },
+  logo: {
+    width: '300px',
+    height: '300px',
+    objectFit: 'contain',
   },
   idBox: {
     marginBottom: '4px',
@@ -60,8 +65,10 @@ const Login = () => {
   const [error, setError] = useState(false);
 
   const handleClick = () => {
-    if (id === 'admin' && pwd === 'admin') setIsLogin(true);
-    else setError(true);
+    if (id === 'admin' && pwd === 'admin') {
+      window.localStorage.setItem('isLogin', true);
+      setIsLogin(true);
+    } else setError(true);
   };
 
   const handleChange = (event) => {

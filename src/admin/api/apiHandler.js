@@ -18,8 +18,8 @@ const getAllReserves = (date) => {
   return apiHandler('post', '/info/reserve/date', data);
 };
 
-const updateVisitorStatus = (visitorId, visitorStatus) => {
-  const data = { visitorId, visitorStatus };
+const updateVisitorStatus = (id, status) => {
+  const data = { visitor: { id, status } };
   return apiHandler('put', '/info/visitor/status', data);
 };
 
