@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import logo from 'admin/assets/img/bi_img01.png';
-import { LoginContext } from 'admin/contexts/LoginContext';
 
 const useStyles = makeStyles({
   container: {

@@ -8,8 +8,9 @@ import CardBody from 'admin/components/Card/CardBody.js';
 
 import Table from 'admin/components/Table/Table.js';
 import moment from 'moment';
-import { getAllReserves } from 'admin/api/apiHandler';
 import { updateVisitorStatus } from 'admin/api/apiHandler';
+import { useContext } from 'react';
+import { VisitorContext } from 'admin/contexts/VisitorContext';
 
 const styles = {
   cardCategoryWhite: {
@@ -59,9 +60,9 @@ const Status = (props) => {
   );
 };
 
-const makeTableData = (rawData) => {
+const makeTableData = (checkInData) => {
   const result = [];
-  rawData.forEach((elem) => {
+  checkInData.forEach((elem) => {
     const { place, staffName, date, purpose, visitors } = elem;
     visitors.forEach((elem) => {
       const temp = [
@@ -83,18 +84,18 @@ const makeTableData = (rawData) => {
 
 export default function UserProfile() {
   const classes = useStyles();
-  const [rawData, setRawData] = useState([]);
+  const { checkInData, getReserve } = useContext(VisitorContext);
   const [tableData, setTableData] = useState([]);
   const [date, setDate] = useState(new moment().format('YYYY-MM-DD'));
 
   useEffect(() => {
-    getAllReserves(date).then((res) => setRawData(res.data));
+    getReserve(date);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date]);
 
   useEffect(() => {
-    setTableData(makeTableData(rawData));
-  }, [rawData]);
+    setTableData(makeTableData(checkInData));
+  }, [checkInData]);
 
   return (
     <div>
