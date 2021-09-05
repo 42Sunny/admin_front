@@ -1,8 +1,11 @@
 import Dashboard from '@material-ui/icons/Dashboard';
 import Person from '@material-ui/icons/Person';
+import SettingsIcon from '@material-ui/icons/Settings';
+import DescriptionIcon from '@material-ui/icons/Description';
 import DashboardPage from 'admin/views/Dashboard/Dashboard.js';
 import UserProfile from 'admin/views/UserProfile/UserProfile.js';
-import AdminPage from '../checkin-admin/views/AdminPage';
+import CheckInLog from '../checkin-admin/views/CheckInLog';
+import CheckInSettings from '../checkin-admin/views/CheckInSettings';
 
 const dashboardRoutes = [
   {
@@ -20,10 +23,17 @@ const dashboardRoutes = [
     layout: '/admin',
   },
   {
-    path: '/checkin',
-    name: '체크인 관리',
-    icon: Person,
-    component: AdminPage,
+    path: '/checkin/settings',
+    name: '체크인 설정',
+    icon: SettingsIcon,
+    component: CheckInSettings,
+    layout: '/admin',
+  },
+  {
+    path: '/checkin/logs',
+    name: '체크인 로그',
+    icon: DescriptionIcon,
+    component: CheckInLog,
     layout: '/admin',
   },
 ];

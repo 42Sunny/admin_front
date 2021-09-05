@@ -56,24 +56,28 @@ const useStyles = makeStyles({
 
 const Login = () => {
   const classes = useStyles();
-  const { setIsLogin } = useContext(LoginContext);
-  const [id, setID] = useState('');
-  const [pwd, setPWD] = useState('');
+  // const { setIsLogin } = useContext(LoginContext);
+  // const [id, setID] = useState('');
+  // const [pwd, setPWD] = useState('');
   const [error, setError] = useState(false);
 
-  const handleClick = () => {
-    if (id === 'admin' && pwd === 'admin') {
-      window.localStorage.setItem('isLogin', true);
-      setIsLogin(true);
-    } else setError(true);
-  };
+  // const handleClick = () => {
+  //   if (id === 'admin' && pwd === 'admin') {
+  //     window.localStorage.setItem('isLogin', true);
+  //     setIsLogin(true);
+  //   } else setError(true);
+  // };
 
-  const handleChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-    if (name === 'id') setID(value);
-    else if (name === 'pwd') setPWD(value);
+  // const handleChange = (event) => {
+  //   const {
+  //     target: { name, value },
+  //   } = event;
+  //   if (name === 'id') setID(value);
+  //   else if (name === 'pwd') setPWD(value);
+  // };
+
+  const handleLoginClick = () => {
+    window.location.href = `${process.env.REACT_APP_CHECKIN_API_URL}/user/login`;
   };
 
   return (
@@ -81,7 +85,7 @@ const Login = () => {
       <div className={classes.logoBox}>
         <img src={logo} alt="logo" className={classes.logo} />
       </div>
-      <div className={classes.idBox}>
+      {/* <div className={classes.idBox}>
         <input
           className={classes.id}
           value={id}
@@ -103,6 +107,11 @@ const Login = () => {
       <div className={classes.loginButtonBox}>
         <button className={classes.loginButton} onClick={handleClick}>
           로그인
+        </button>
+      </div> */}
+      <div className={classes.loginButtonBox}>
+        <button className={classes.loginButton} onClick={handleLoginClick}>
+          42 로그인
         </button>
       </div>
       {error && <div className={classes.error}>아이디 또는 비밀번호를 확인하세요.</div>}

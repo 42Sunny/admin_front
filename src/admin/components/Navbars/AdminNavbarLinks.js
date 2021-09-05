@@ -15,8 +15,12 @@ export default function AdminNavbarLinks() {
   const classes = useStyles();
   const { setIsLogin } = useContext(LoginContext);
   const handleClickProfile = () => {
-    window.localStorage.setItem('isLogin', false);
-    setIsLogin(false);
+    if (window.confirm('로그아웃 하시겠습니까?')) {
+      document.cookie =
+        process.env.REACT_APP_AUTH_KEY + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+      setIsLogin(false);
+      // window.localStorage.setItem('isLogin', false);
+    }
   };
   return (
     <div>

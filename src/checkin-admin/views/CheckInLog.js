@@ -11,6 +11,9 @@ import CardBody from '../components/Card/CardBody.js';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import PaginationRounded from '../components/Paging';
 import SearchBar from '../components/SearchBar';
@@ -18,7 +21,13 @@ import { forceCheckOut, checkAdmin as getCheckAdmin } from '../api/api';
 
 import '../assets/styles/AdminPage.css';
 
-const TEMP_MAX_PAGE = 10;
+const LOGTYPE = {
+  0: '클러스터',
+  1: '인트라 ID',
+  2: '카드 번호',
+  3: '미반납 카드',
+  4: '모든 카드 정보',
+};
 const styles = {
   root: {
     flexGrow: 1,
@@ -38,6 +47,11 @@ const styles = {
       lineHeight: '1',
     },
   },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -49,7 +63,7 @@ function a11yProps(index) {
   };
 }
 
-function AdminPage() {
+function CheckInLog() {
   const history = useHistory();
   const [logType, setLogType] = useState(0);
   const [logs, setLogs] = useState([]);
@@ -59,9 +73,24 @@ function AdminPage() {
   const [login, setLogin] = useState('');
   const [cardId, setCardId] = useState(0);
 
+  const [lastPage, setLastPage] = useState(1);
+
   const ref = useRef();
+
   const classes = useStyles();
   const tableHead = ['ID', '시간', '출/입', '인트라 ID', '카드 번호', '클러스터', '강제 퇴실'];
+
+  const [listSize, setListSize] = useState(50);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (e) => {
+    setListSize(e.target.innerText);
+    setAnchorEl(null);
+  };
 
   const handleChange = (event, newValue) => {
     setLogs([]);
@@ -69,6 +98,7 @@ function AdminPage() {
     setLogType(newValue);
     setLogin('');
     setCardId(0);
+    setLastPage(0);
   };
 
   const checkAdmin = async () => {
@@ -130,23 +160,40 @@ function AdminPage() {
         setLogin={setLogin}
         cardId={cardId}
         setCardId={setCardId}
+        setLastPage={setLastPage}
+        listSize={listSize}
       />
-      <PaginationRounded maxPage={TEMP_MAX_PAGE} setPage={setPage} />
+      <PaginationRounded lastPage={lastPage} setPage={setPage} />
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="info">
-              <h4 className={classes.cardTitleWhite}>Logs</h4>
-              <p className={classes.cardCategoryWhite}></p>
+            <CardHeader color="info" className={classes.header}>
+              <h4 className={classes.cardTitleWhite}>{LOGTYPE[logType]} 로그</h4>
+              <div>
+                <Button
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                  variant="outlined"
+                  disabled={logType === 3 || logType === 4}
+                >
+                  size: {listSize}
+                </Button>
+                <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)}>
+                  <MenuItem onClick={handleClose}>10</MenuItem>
+                  <MenuItem onClick={handleClose}>30</MenuItem>
+                  <MenuItem onClick={handleClose}>50</MenuItem>
+                  <MenuItem onClick={handleClose}>100</MenuItem>
+                </Menu>
+              </div>
             </CardHeader>
             <CardBody>
               <Table
-                tableHeaderColor="black"
                 tableHead={tableHead}
                 tableData={logs.map((log, idx) => {
                   const date = new Date(log.createdAt);
                   return [
-                    log.id ?? (page - 1) * 50 + idx + 1,
+                    log.id ?? (page - 1) * listSize + idx + 1,
                     moment(date).format('MM월 DD일 HH:mm') ?? null,
                     log.logType ?? null,
                     log.user ? log.user.userName : null,
@@ -174,4 +221,4 @@ function AdminPage() {
   );
 }
 
-export default AdminPage;
+export default CheckInLog;

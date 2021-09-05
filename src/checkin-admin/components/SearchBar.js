@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import Looks4Icon from '@material-ui/icons/Looks4';
 import LooksTwoIcon from '@material-ui/icons/LooksTwo';
+import { debounce } from 'lodash';
 
 import { getCluster, getStudent, getCard, getCheckIn, getAllCard } from '../api/api';
 import { gaepoCard, seochoCard } from '../utils/cardList';
@@ -29,6 +30,8 @@ const SearchBar = forwardRef(
       setLogin,
       cardId,
       setCardId,
+      setLastPage,
+      listSize,
     },
     ref,
   ) => {
@@ -54,44 +57,52 @@ const SearchBar = forwardRef(
         let response;
         switch (type) {
           case 0:
-            response = await getCluster(clusterType, page - 1);
+            response = await getCluster(clusterType, page, listSize);
             break;
           case 1:
-            if (login) response = await getStudent(login, page - 1);
-            else throw '인트라 ID가 비어있습니다.\n유효한 인트라 ID를 입력하세요.';
+            if (login) response = await getStudent(login, page, listSize);
+            else throw new Error('유효한 인트라 ID를 입력하세요.');
             break;
           case 2:
-            if (cardId !== 0) response = await getCard(cardId, page - 1);
-            else throw '카드 번호가 초기값 0입니다.\n유효한 카드 번호를 입력하세요.';
+            if (cardId !== 0 && cardId !== '') response = await getCard(cardId, page, listSize);
+            else throw new Error('유효한 카드 번호를 입력하세요.');
             break;
           case 3:
-            response = await getCheckIn(clusterType);
+            response = await getCheckIn(clusterType, page);
             break;
           case 4:
-            response = await getAllCard(clusterType);
+            response = await getAllCard(clusterType, page);
             break;
           default:
             break;
         }
-        let datas;
-        datas = response.data;
-        if (type === 3 || type === 4) {
-          datas = response.data
-            .filter(
-              (item, index) =>
-                response.data.findIndex((item2) => item.user._id === item2.user._id) === index,
-            )
-            .reverse();
-          if (type === 4) {
-            let newdata = [];
-            const card = clusterType === '0' ? gaepoCard : seochoCard;
-            card.map((item) => {
-              return newdata.push({ id: item, ...datas.find((ele) => ele.card.cardId === item) });
-            });
-            datas = newdata;
+        if (response.data.list) {
+          let datas;
+          datas = response.data.list;
+          if (type === 3 || type === 4) {
+            datas = response.data.list
+              .filter(
+                (item, index) =>
+                  response.data.list.findIndex((item2) => item.user._id === item2.user._id) ===
+                  index,
+              )
+              .reverse();
+            if (type === 4) {
+              let newdata = [];
+              const card = clusterType === '0' ? gaepoCard : seochoCard;
+              card.map((item) => {
+                return newdata.push({ id: item, ...datas.find((ele) => ele.card.cardId === item) });
+              });
+              datas = newdata;
+            }
           }
+          setLogs(datas);
+          setLastPage(response.data.lastPage);
+        } else {
+          setLogs([]);
+          setLastPage(0);
+          throw new Error('response 형식이 올바르지 않습니다.');
         }
-        setLogs(datas);
       } catch (err) {
         console.log(err);
       }
@@ -100,7 +111,6 @@ const SearchBar = forwardRef(
     const handleChange = (event) => {
       setLogs([]);
       setClusterType(event.target.value);
-      setPage(1);
     };
 
     const handleKeyDown = (event) => {
@@ -109,9 +119,14 @@ const SearchBar = forwardRef(
       }
     };
 
+    const handleChangeWithDebounce = debounce((e) => {
+      if (e.target.id === 'intra-id') setLogin(e.target.value);
+      else if (e.target.id === 'card-number') setCardId(e.target.value);
+    }, 200);
+
     useEffect(() => {
       onSubmit();
-    }, [type, page, clusterType, login, cardId]);
+    }, [type, page, clusterType, login, cardId, listSize]);
 
     const Cluster = () => (
       <div className={classes.margin}>
@@ -140,11 +155,9 @@ const SearchBar = forwardRef(
           </Grid>
           <Grid item>
             <TextField
+              id="intra-id"
               label="인트라 ID"
-              value={login}
-              onChange={(e) => {
-                setLogin(e.target.value);
-              }}
+              onChange={handleChangeWithDebounce}
               onKeyDown={handleKeyDown}
             />
           </Grid>
@@ -166,12 +179,10 @@ const SearchBar = forwardRef(
           </Grid>
           <Grid item>
             <TextField
+              id="card-number"
               label="카드 번호"
               type="number"
-              value={cardId}
-              onChange={(e) => {
-                setCardId(e.target.value);
-              }}
+              onChange={handleChangeWithDebounce}
               onKeyDown={handleKeyDown}
             />
           </Grid>
