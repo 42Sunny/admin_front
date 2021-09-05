@@ -44,6 +44,7 @@ const tableStyle = (theme) => ({
     ...defaultFont,
     '&, &$tableCell': {
       fontSize: '1em',
+      fontWeight: '500',
     },
   },
   tableCell: {
@@ -52,6 +53,7 @@ const tableStyle = (theme) => ({
     padding: '12px 8px',
     verticalAlign: 'middle',
     fontSize: '0.8125rem',
+    fontWeight: '400',
   },
   tableResponsive: {
     width: '100%',

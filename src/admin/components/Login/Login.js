@@ -5,15 +5,12 @@ import { LoginContext } from 'admin/contexts/LoginContext';
 
 const useStyles = makeStyles({
   container: {
-    paddingTop: '100px',
+    paddingTop: '10vh',
     width: '100vw',
     height: '100vh',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-  },
-  logoBox: {
-    marginTop: '200px',
   },
   logo: {
     width: '300px',
