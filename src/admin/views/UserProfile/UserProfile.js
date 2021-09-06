@@ -11,6 +11,7 @@ import moment from 'moment';
 import { updateVisitorStatus } from 'admin/api/apiHandler';
 import { useContext } from 'react';
 import { VisitorContext } from 'admin/contexts/VisitorContext';
+import { useFormattedPhone } from 'admin/hooks/useFormattedPhone';
 
 const styles = {
   cardCategoryWhite: {
@@ -72,13 +73,14 @@ const makeTableData = (checkInData) => {
         staffName,
         elem.organization,
         elem.name,
-        elem.phone,
+        useFormattedPhone(elem.phone),
         purpose,
         <Status value={elem} />,
       ];
       result.push(temp);
     });
   });
+  result.reverse();
   return result;
 };
 

@@ -15,6 +15,7 @@ import styles from 'admin/assets/jss/material-dashboard-react/views/dashboardSty
 import moment from 'moment';
 import { useContext } from 'react';
 import { VisitorContext } from 'admin/contexts/VisitorContext';
+import { useFormattedPhone } from 'admin/hooks/useFormattedPhone';
 
 const useStyles = makeStyles(styles);
 
@@ -34,13 +35,14 @@ const makeTableData = (checkInData) => {
         staffName,
         elem.organization,
         elem.name,
-        elem.phone,
+        useFormattedPhone(elem.phone),
         purpose,
         elem.status,
       ];
       result.push(temp);
     });
   });
+  result.reverse();
   return result;
 };
 
