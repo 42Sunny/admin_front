@@ -14,22 +14,9 @@ import CardFooter from 'admin/components/Card/CardFooter.js';
 import styles from 'admin/assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { getAllReserves } from 'admin/api/apiHandler';
 import moment from 'moment';
+import Staff from 'admin/components/Staff/Staff';
 
 const useStyles = makeStyles(styles);
-
-/*
-1. 대시보드에 오늘 상세 조회 내역 띄우기
-  1. 서버에서 데이터 받아오기
-  2. 데이터 가공하기
-  3. 데이터 출력하기
-  -> 비동기는 데이터 관리를 어떻게 해야하는걸까...
-
-2. 대시보드에 현재 들어온 인원 띄우기
-3. 대시보드에 오늘 대기중인 인원 띄우기
-
-4. 방문 관리에 날짜별로 확인할 수 있게 만들기
-5. 방문 관리에서 인원별로 파악할 수 있게 만들기
-*/
 
 const getFomattedNow = () => {
   return moment().format('YYYY-MM-DD');
@@ -155,7 +142,7 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
+      <Staff />
     </div>
   );
 }
-//

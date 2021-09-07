@@ -13,7 +13,8 @@ const AdminPage = () => {
   return (
     <BrowserRouter>
       <Switch>
-        {isLogin === true ? (
+        {/* {isLogin === true ? ( */}
+        {true ? (
           <>
             <Route path="/admin" component={Admin} />
             <Redirect from="/" to="/admin/dashboard" />
