@@ -14,7 +14,7 @@ import {
   nameLabelText,
   phoneLabelText,
 } from './StaffContent';
-import { handleChange, handleClick } from './Staffhandler';
+import { handleChange, handleClick } from './StaffHandler';
 import { useStyles } from './StaffStyle';
 
 const Staff = () => {
