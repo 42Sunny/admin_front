@@ -1,4 +1,3 @@
-import { addStaff } from 'admin/api/apiHandler';
 import React from 'react';
 import { useState } from 'react';
 import Card from '../Card/Card';
@@ -8,37 +7,20 @@ import RegularButton from '../CustomButtons/Button';
 import CustomInput from '../CustomInput/CustomInput';
 import GridContainer from '../Grid/GridContainer';
 import GridItem from '../Grid/GridItem';
-import { checkContents } from './checkContents';
 import {
   buttonLabel,
   cardSubTitle,
   cardTitle,
-  confirmMessage,
   nameLabelText,
   phoneLabelText,
 } from './StaffContent';
+import { handleChange, handleClick } from './Staffhandler';
 import { useStyles } from './StaffStyle';
 
 const Staff = () => {
   const classes = useStyles();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-
-  const handleChange = (event) => {
-    const {
-      target: { value, name },
-    } = event;
-    if (name === 'name') setName(value);
-    else if (name === 'phone') setPhone(value);
-  };
-
-  const handleClick = () => {
-    if (checkContents(name, phone)) {
-      if (window.confirm(confirmMessage(name, phone)) === true) {
-        addStaff(name, phone);
-      }
-    }
-  };
 
   return (
     <GridContainer>
@@ -55,7 +37,7 @@ const Staff = () => {
                 inputProps={{
                   name: 'name',
                   value: name,
-                  onChange: handleChange,
+                  onChange: (event) => handleChange(event, setName, setPhone),
                 }}
                 color="info"
                 labelText={nameLabelText}
