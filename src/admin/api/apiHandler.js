@@ -23,4 +23,9 @@ const updateVisitorStatus = (id, status) => {
   return apiHandler('put', '/info/visitor/status', data);
 };
 
-export { apiHandler, getAllReserves, updateVisitorStatus };
+const addStaff = (name, phone) => {
+  const data = { name, phone };
+  return apiHandler('post', '/admin/staff/save', data);
+};
+
+export { apiHandler, getAllReserves, updateVisitorStatus, addStaff };
