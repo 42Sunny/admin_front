@@ -17,7 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import PaginationRounded from '../components/Paging';
 import SearchBar from '../components/SearchBar';
-import { forceCheckOut, checkAdmin as getCheckAdmin } from '../api/api';
+import { forceCheckOut, checkAdmin as getCheckAdmin } from '../api/checkinApi';
 
 import '../assets/styles/AdminPage.css';
 

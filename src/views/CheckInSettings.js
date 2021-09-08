@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { grayColor } from 'admin/assets/jss/material-dashboard-react.js';
 
-import { getMaxCapacity, setMaxCapacity } from '../api/api.js';
+import { getMaxCapacity, setMaxCapacity } from '../api/checkinApi.js';
 
 const styles = {
   cardCategory: {
