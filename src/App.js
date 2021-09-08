@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-function App() {
+import 'assets/css/material-dashboard-react.css?v=1.10.0';
+import 'assets/css/input.css';
+import Login from 'components/Login/Login';
+import { LoginContext, LoginProvider } from 'contexts/LoginContext';
+import Admin from 'layouts/Admin';
+import { VisitorProvider } from 'contexts/VisitorContext';
+
+const App = () => {
+  const { isLogin } = useContext(LoginContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LoginProvider>
+      <VisitorProvider>
+        <BrowserRouter>
+          <Switch>
+            {/* {isLogin === true ? ( */}
+            {true ? (
+              <>
+                <Route path="/" component={Admin} />
+                <Redirect from="/" to="/dashboard" />
+              </>
+            ) : (
+              <>
+                <Route path="/" component={Login} />
+                <Redirect from="*" to="/" />
+              </>
+            )}
+          </Switch>
+        </BrowserRouter>
+      </VisitorProvider>
+    </LoginProvider>
   );
-}
+};
 
 export default App;

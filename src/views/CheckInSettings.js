@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
-import GridItem from 'admin/components/Grid/GridItem.js';
-import GridContainer from 'admin/components/Grid/GridContainer.js';
-import Card from 'admin/components/Card/Card.js';
-import CardHeader from 'admin/components/Card/CardHeader.js';
-import CardIcon from 'admin/components/Card/CardIcon.js';
-import CardFooter from 'admin/components/Card/CardFooter.js';
+import GridItem from 'components/Grid/GridItem.js';
+import GridContainer from 'components/Grid/GridContainer.js';
+import Card from 'components/Card/Card.js';
+import CardHeader from 'components/Card/CardHeader.js';
+import CardIcon from 'components/Card/CardIcon.js';
+import CardFooter from 'components/Card/CardFooter.js';
 import { Typography, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 
-import { grayColor } from 'admin/assets/jss/material-dashboard-react.js';
+import { grayColor } from 'assets/jss/material-dashboard-react.js';
 
 import { getMaxCapacity, setMaxCapacity } from '../api/checkinApi.js';
 
