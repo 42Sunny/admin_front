@@ -16,12 +16,9 @@ import moment from 'moment';
 import { useContext } from 'react';
 import { VisitorContext } from 'contexts/VisitorContext';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
+import { getFomattedNow } from 'utils/getFormattedNow';
 
 const useStyles = makeStyles(styles);
-
-const getFomattedNow = () => {
-  return moment().format('YYYY-MM-DD');
-};
 
 const makeTableData = (checkInData) => {
   const result = [];

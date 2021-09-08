@@ -4,6 +4,7 @@ import { createContext } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getAllReserves } from 'api/visitorApi';
+import { getFomattedNow } from 'utils/getFormattedNow';
 
 const url = 'https://api.visitor.dev.42seoul.io/ws';
 const checkInPath = '/visitor';
@@ -26,7 +27,7 @@ export const VisitorProvider = ({ children }) => {
       stompClient.connect({}, () => {
         stompClient.reconnect_delay = 5000;
         stompClient.subscribe(checkInPath, (data) => {
-          getReserve();
+          getReserve(getFomattedNow());
         });
       });
     }
