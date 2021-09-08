@@ -142,7 +142,6 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
-      <Staff />
     </div>
   );
 }
