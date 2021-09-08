@@ -49,7 +49,7 @@ const Staff = () => {
                   value: phone,
                   type: 'tel',
                   color: 'info',
-                  onChange: handleChange,
+                  onChange: (event) => handleChange(event, setName, setPhone),
                 }}
                 color="info"
                 labelText={phoneLabelText}
