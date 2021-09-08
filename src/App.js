@@ -17,17 +17,7 @@ const App = () => {
         <BrowserRouter>
           <Switch>
             {/* {isLogin === true ? ( */}
-            {true ? (
-              <>
-                <Route path="/" component={Admin} />
-                <Redirect from="/" to="/dashboard" />
-              </>
-            ) : (
-              <>
-                <Route path="/" component={Login} />
-                <Redirect from="*" to="/" />
-              </>
-            )}
+            {true ? <Route path="*" component={Admin} /> : <Route path="*" component={Login} />}
           </Switch>
         </BrowserRouter>
       </VisitorProvider>
