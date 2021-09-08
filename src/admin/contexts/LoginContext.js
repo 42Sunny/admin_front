@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { checkAdmin } from '../../checkin-admin/api/api';
+import { checkAdmin } from 'api/checkinApi';
 
 const LoginContext = createContext({});
 
