@@ -52,7 +52,7 @@ export default function CustomTable(props) {
 }
 
 CustomTable.defaultProps = {
-  tableHeaderColor: 'gray'
+  tableHeaderColor: 'gray',
 };
 
 CustomTable.propTypes = {
@@ -63,8 +63,8 @@ CustomTable.propTypes = {
     'success',
     'info',
     'rose',
-    'gray'
+    'gray',
   ]),
-  tableHead: PropTypes.arrayOf(PropTypes.string)
+  tableHead: PropTypes.arrayOf(PropTypes.string),
   // tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
 };

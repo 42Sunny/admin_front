@@ -4,8 +4,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import DescriptionIcon from '@material-ui/icons/Description';
 import DashboardPage from 'admin/views/Dashboard/Dashboard.js';
 import UserProfile from 'admin/views/UserProfile/UserProfile.js';
-import CheckInLog from '../checkin-admin/views/CheckInLog';
-import CheckInSettings from '../checkin-admin/views/CheckInSettings';
+import CheckInLog from '../views/CheckInLog';
+import CheckInSettings from '../views/CheckInSettings';
 
 const dashboardRoutes = [
   {

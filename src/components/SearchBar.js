@@ -12,7 +12,7 @@ import Looks4Icon from '@material-ui/icons/Looks4';
 import LooksTwoIcon from '@material-ui/icons/LooksTwo';
 import { debounce } from 'lodash';
 
-import { getCluster, getStudent, getCard, getCheckIn, getAllCard } from '../api/api';
+import { getCluster, getStudent, getCard, getCheckIn, getAllCard } from '../api/checkinApi';
 import { gaepoCard, seochoCard } from '../utils/cardList';
 
 import '../assets/styles/SearchBar.css';
