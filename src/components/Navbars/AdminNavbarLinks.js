@@ -27,16 +27,11 @@ export default function AdminNavbarLinks() {
       <div className={classes.manager}>
         <Button
           color={window.innerWidth > 959 ? 'transparent' : 'white'}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
           aria-haspopup="true"
           onClick={handleClickProfile}
           className={classes.buttonLink}
         >
-          <Icon>logout</Icon>
-          <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Logout</p>
-          </Hidden>
+          logout
         </Button>
       </div>
     </div>
