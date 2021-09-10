@@ -58,6 +58,7 @@ const Login = () => {
   // const { setIsLogin } = useContext(LoginContext);
   // const [id, setID] = useState('');
   // const [pwd, setPWD] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(false);
 
   // const handleClick = () => {

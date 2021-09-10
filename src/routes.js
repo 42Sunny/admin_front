@@ -3,9 +3,9 @@ import Person from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DescriptionIcon from '@material-ui/icons/Description';
 import DashboardPage from 'views/Dashboard/Dashboard.js';
-import UserProfile from 'views/UserProfile/UserProfile.js';
-import CheckInLog from 'views/CheckInLog';
-import CheckInSettings from 'views/CheckInSettings';
+import VisitorManagement from 'views/VisitorManagement/VisitorManagement.js';
+import CheckInManagement from 'views/CheckInManagement';
+import Settings from 'views/Settings';
 
 const dashboardRoutes = [
   {
@@ -16,24 +16,24 @@ const dashboardRoutes = [
     layout: '',
   },
   {
-    path: '/user',
-    name: '출입 관리',
-    icon: Person,
-    component: UserProfile,
-    layout: '',
-  },
-  {
-    path: '/checkin/settings',
-    name: '체크인 설정',
-    icon: SettingsIcon,
-    component: CheckInSettings,
-    layout: '',
-  },
-  {
-    path: '/checkin/logs',
-    name: '체크인 로그',
+    path: '/checkin/management',
+    name: '카뎃 출입 관리',
     icon: DescriptionIcon,
-    component: CheckInLog,
+    component: CheckInManagement,
+    layout: '',
+  },
+  {
+    path: '/visitor/management',
+    name: '방문자 출입 관리',
+    icon: Person,
+    component: VisitorManagement,
+    layout: '',
+  },
+  {
+    path: '/settings',
+    name: '설정',
+    icon: SettingsIcon,
+    component: Settings,
     layout: '',
   },
 ];

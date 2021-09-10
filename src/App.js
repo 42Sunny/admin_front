@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import 'assets/css/material-dashboard-react.css?v=1.10.0';
 import 'assets/css/input.css';
@@ -16,8 +16,11 @@ const App = () => {
       <VisitorProvider>
         <BrowserRouter>
           <Switch>
-            {/* {isLogin === true ? ( */}
-            {true ? <Route path="*" component={Admin} /> : <Route path="*" component={Login} />}
+            {isLogin !== !isLogin ? (
+              <Route path="*" component={Admin} />
+            ) : (
+              <Route path="*" component={Login} />
+            )}
           </Switch>
         </BrowserRouter>
       </VisitorProvider>
