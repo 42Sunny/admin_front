@@ -86,6 +86,7 @@ const sidebarStyle = (theme) => ({
     lineHeight: '30px',
     textDecoration: 'none',
     backgroundColor: 'transparent',
+    cursor: 'pointer',
     '&,&:hover': {
       color: whiteColor,
     },

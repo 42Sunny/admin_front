@@ -16,11 +16,13 @@ import AdminNavbarLinks from 'components/Navbars/AdminNavbarLinks.js';
 import RTLNavbarLinks from 'components/Navbars/RTLNavbarLinks.js';
 
 import styles from 'assets/jss/material-dashboard-react/components/sidebarStyle.js';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
   const classes = useStyles();
+  const history = useHistory();
   let location = useLocation();
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
@@ -83,18 +85,19 @@ export default function Sidebar(props) {
   );
   var brand = (
     <div className={classes.logo}>
-      <a
-        href="https://innovationacademy.kr/academy/main/view"
+      <span
+        onClick={() => {
+          history.push('/dashboard');
+        }}
         className={classNames(classes.logoLink, {
           [classes.logoLinkRTL]: props.rtlActive,
         })}
-        target="_blank"
       >
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>
         {logoText}
-      </a>
+      </span>
     </div>
   );
   return (
