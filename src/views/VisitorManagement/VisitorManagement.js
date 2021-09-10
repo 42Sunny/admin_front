@@ -84,7 +84,7 @@ const makeTableData = (checkInData) => {
   return result;
 };
 
-export default function UserProfile() {
+export default function VisitorManagement() {
   const classes = useStyles();
   const { checkInData, getReserve } = useContext(VisitorContext);
   const [tableData, setTableData] = useState([]);

@@ -45,7 +45,7 @@ let cmpCapValue = {
   maxCapSeocho: '',
 };
 
-const CheckInSettings = () => {
+const Settings = () => {
   const classes = useStyles();
   const [capacity, setCapacity] = useState({
     maxCapGaepo: '',
@@ -147,4 +147,4 @@ const CheckInSettings = () => {
   );
 };
 
-export default CheckInSettings;
+export default Settings;

@@ -17,6 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import PaginationRounded from '../components/Paging';
 import SearchBar from '../components/SearchBar';
+// eslint-disable-next-line no-unused-vars
 import { forceCheckOut, checkAdmin as getCheckAdmin } from '../api/checkinApi';
 
 import '../assets/styles/AdminPage.css';
@@ -63,7 +64,8 @@ function a11yProps(index) {
   };
 }
 
-function CheckInLog() {
+function CheckInManagement() {
+  // eslint-disable-next-line no-unused-vars
   const history = useHistory();
   const [logType, setLogType] = useState(0);
   const [logs, setLogs] = useState([]);
@@ -221,4 +223,4 @@ function CheckInLog() {
   );
 }
 
-export default CheckInLog;
+export default CheckInManagement;

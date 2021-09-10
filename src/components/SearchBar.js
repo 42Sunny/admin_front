@@ -126,6 +126,7 @@ const SearchBar = forwardRef(
 
     useEffect(() => {
       onSubmit();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [type, page, clusterType, login, cardId, listSize]);
 
     const Cluster = () => (
