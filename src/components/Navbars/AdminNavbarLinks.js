@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
-import Hidden from '@material-ui/core/Hidden';
 // core components
 import Button from 'components/CustomButtons/Button.js';
-import Icon from '@material-ui/core/Icon';
 
 import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
 import { LoginContext } from 'contexts/LoginContext';
