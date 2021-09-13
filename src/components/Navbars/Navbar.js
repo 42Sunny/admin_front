@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 // @material-ui/core components
@@ -18,6 +18,7 @@ import Button from 'components/CustomButtons/Button.js';
 import { useRouteName } from 'hooks';
 
 import styles from 'assets/jss/material-dashboard-react/components/headerStyle.js';
+import { checkAdmin } from 'api/checkinApi.js';
 
 const useStyles = makeStyles(styles);
 
@@ -28,6 +29,22 @@ export default function Header(props) {
   const appBarClasses = classNames({
     [' ' + classes[color]]: color,
   });
+
+  const [userId, setUserId] = useState('');
+
+  const getUserId = async () => {
+    try {
+      const { data } = await checkAdmin();
+      setUserId(data.user.login);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getUserId();
+  }, []);
+
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
@@ -37,6 +54,7 @@ export default function Header(props) {
             {routeName}
           </Button>
         </div>
+        <div>{userId}</div>
         <Hidden smDown implementation="css">
           {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
         </Hidden>
