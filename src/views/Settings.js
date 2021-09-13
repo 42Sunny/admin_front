@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { grayColor } from 'assets/jss/material-dashboard-react.js';
 
-import { getMaxCapacity, setMaxCapacity } from '../api/checkinApi.js';
+import { reqMaxCapacity, setMaxCapacity } from '../api/checkinApi.js';
 
 const styles = {
   cardCategory: {
@@ -54,7 +54,7 @@ const Settings = () => {
 
   const getHeadCount = async () => {
     try {
-      const response = await getMaxCapacity();
+      const response = await reqMaxCapacity();
       cmpCapValue = {
         maxCapGaepo: response.data.maxCapGaepo,
         maxCapSeocho: response.data.maxCapSeocho,

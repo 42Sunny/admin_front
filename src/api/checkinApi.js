@@ -39,10 +39,14 @@ export const getAllCard = async (ClusterType, page) => {
   return await instance.get(`/log/allCard/${ClusterType}?page=${page}&listSize=${ALL_CARD_CNT}`);
 };
 
-export const getMaxCapacity = async () => {
+export const reqMaxCapacity = async () => {
   return await instance.get(`/config`);
 };
 
 export const setMaxCapacity = async (capacity) => {
   return await instance.put(`/config`, capacity);
+};
+
+export const reqUsingCard = async () => {
+  return await instance.get(`/card/using`);
 };

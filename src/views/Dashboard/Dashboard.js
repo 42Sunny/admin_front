@@ -17,6 +17,7 @@ import { useContext } from 'react';
 import { VisitorContext } from 'contexts/VisitorContext';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
 import { getFomattedNow } from 'utils/getFormattedNow';
+import { MyConfCard } from 'components/MyConfCard';
 
 const useStyles = makeStyles(styles);
 
@@ -61,6 +62,7 @@ export default function Dashboard() {
   const [tableData, setTableData] = useState([]);
   const [checkIn, setCheckIn] = useState(0);
   const [totalVisitor, setTotalVisitor] = useState(0);
+
   const now = new moment().format('YYYY. MM. DD');
   const { checkInData, getReserve } = useContext(VisitorContext);
 
@@ -78,6 +80,11 @@ export default function Dashboard() {
 
   return (
     <div>
+      <h5>클러스터 인원</h5>
+      <GridContainer>
+        <MyConfCard category="개포 입장 인원" cluster="gaepo" />
+        <MyConfCard category="서초 입장 인원" cluster="seocho" />
+      </GridContainer>
       <GridContainer>
         <GridItem xs={12} sm={6} md={6}>
           <Card>
