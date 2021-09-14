@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridItem from 'components/Grid/GridItem.js';
 import Card from 'components/Card/Card.js';
@@ -23,20 +23,19 @@ export const MyConfCard = ({ category, cluster }) => {
   const [clusterConf, setClusterConf] = useState({});
   const [clusterMaxConf, setClusterMaxConf] = useState({});
 
-  const getUsingCard = async () => {
+  const getUsingCard = useCallback(async () => {
     try {
       const { data } = await reqUsingCard();
       setClusterConf({
-        ...clusterConf,
         gaepo: data.gaepo,
         seocho: data.seocho,
       });
     } catch (err) {
       console.log(err);
     }
-  };
+  }, []);
 
-  const getMaxCapacity = async () => {
+  const getMaxCapacity = useCallback(async () => {
     try {
       const { data } = await reqMaxCapacity();
       setClusterMaxConf({
@@ -46,16 +45,16 @@ export const MyConfCard = ({ category, cluster }) => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, []);
 
-  const fetchData = () => {
+  const fetchData = useCallback(() => {
     getUsingCard();
     getMaxCapacity();
-  };
+  }, [getUsingCard, getMaxCapacity]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <GridItem xs={3} sm={3} md={3}>

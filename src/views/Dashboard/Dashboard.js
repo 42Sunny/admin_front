@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import DateRange from '@material-ui/icons/DateRange';
@@ -18,6 +18,8 @@ import { VisitorContext } from 'contexts/VisitorContext';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
 import { getFomattedNow } from 'utils/getFormattedNow';
 import { MyConfCard } from 'components/MyConfCard';
+import { MyLogTable } from 'components/MyLogTable';
+import SearchBar from 'components/SearchBar';
 
 const useStyles = makeStyles(styles);
 
@@ -65,6 +67,13 @@ export default function Dashboard() {
 
   const now = new moment().format('YYYY. MM. DD');
   const { checkInData, getReserve } = useContext(VisitorContext);
+  const ref = useRef();
+
+  const [logs, setLogs] = useState([]);
+  const [page, setPage] = useState(1);
+  const [listSize, setListSize] = useState(50);
+  const [clusterType, setClusterType] = useState('0');
+  const [lastPage, setLastPage] = useState(1);
 
   useEffect(() => {
     setTableData(makeTableData(checkInData));
@@ -80,7 +89,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h5>클러스터 인원</h5>
+      <h5>클러스터 인원 수</h5>
       <GridContainer>
         <MyConfCard category="개포 입장 인원" cluster="gaepo" />
         <MyConfCard category="서초 입장 인원" cluster="seocho" />
@@ -121,6 +130,27 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
+      <h5>클러스터 입장 인원 정보</h5>
+      <SearchBar
+        type={3}
+        setLogs={setLogs}
+        ref={ref}
+        page={page}
+        setPage={setPage}
+        clusterType={clusterType}
+        setClusterType={setClusterType}
+        setLastPage={setLastPage}
+        listSize={listSize}
+      />
+      <MyLogTable
+        logType={3}
+        setListSize={setListSize}
+        setLogs={setLogs}
+        ref={ref}
+        listSize={listSize}
+        page={page}
+        logs={logs}
+      />
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>

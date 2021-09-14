@@ -1,34 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import * as moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
-import GridItem from '../components/Grid/GridItem.js';
-import GridContainer from '../components/Grid/GridContainer.js';
-import Table from '../components/Table/Table.js';
-import Card from '../components/Card/Card.js';
-import CardHeader from '../components/Card/CardHeader.js';
-import CardBody from '../components/Card/CardBody.js';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-
 import PaginationRounded from '../components/Paging';
 import SearchBar from '../components/SearchBar';
-// eslint-disable-next-line no-unused-vars
-import { forceCheckOut, checkAdmin as getCheckAdmin } from '../api/checkinApi';
+import { MyLogTable } from '../components/MyLogTable';
 
 import '../assets/styles/AdminPage.css';
 
-const LOGTYPE = {
-  0: '클러스터',
-  1: '인트라 ID',
-  2: '카드 번호',
-  3: '미반납 카드',
-  4: '모든 카드 정보',
-};
 const styles = {
   root: {
     flexGrow: 1,
@@ -80,19 +61,8 @@ function CheckInManagement() {
   const ref = useRef();
 
   const classes = useStyles();
-  const tableHead = ['ID', '시간', '출/입', '인트라 ID', '카드 번호', '클러스터', '강제 퇴실'];
 
   const [listSize, setListSize] = useState(50);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = (e) => {
-    setListSize(e.target.innerText);
-    setAnchorEl(null);
-  };
 
   const handleChange = (event, newValue) => {
     setLogs([]);
@@ -102,36 +72,6 @@ function CheckInManagement() {
     setCardId(0);
     setLastPage(0);
   };
-
-  const checkAdmin = async () => {
-    try {
-      // const response = await getCheckAdmin();
-      // if (!(response.data && response.data.isAdmin)) history.push('/checkin');
-    } catch (err) {
-      // console.log(err);
-      // history.push('/');
-    }
-  };
-
-  const checkOutOnClick = async (e) => {
-    try {
-      const userId = e.target.dataset.idx;
-      if (userId) {
-        window.confirm('퇴실 처리 하시겠습니까?');
-        await forceCheckOut(userId);
-        setLogs([]);
-        ref.current.onSubmit(e);
-      } else {
-        window.alert('유효한 인트라 ID가 아닙니다.');
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    checkAdmin();
-  }, []);
 
   return (
     <>
@@ -166,59 +106,15 @@ function CheckInManagement() {
         listSize={listSize}
       />
       <PaginationRounded lastPage={lastPage} setPage={setPage} />
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color="info" className={classes.header}>
-              <h4 className={classes.cardTitleWhite}>{LOGTYPE[logType]} 로그</h4>
-              <div>
-                <Button
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  onClick={handleClick}
-                  variant="outlined"
-                  disabled={logType === 3 || logType === 4}
-                >
-                  size: {listSize}
-                </Button>
-                <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)}>
-                  <MenuItem onClick={handleClose}>10</MenuItem>
-                  <MenuItem onClick={handleClose}>30</MenuItem>
-                  <MenuItem onClick={handleClose}>50</MenuItem>
-                  <MenuItem onClick={handleClose}>100</MenuItem>
-                </Menu>
-              </div>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHead={tableHead}
-                tableData={logs.map((log, idx) => {
-                  const date = new Date(log.createdAt);
-                  return [
-                    log.id ?? (page - 1) * listSize + idx + 1,
-                    moment(date).format('MM월 DD일 HH:mm') ?? null,
-                    log.logType ?? null,
-                    log.user ? log.user.userName : null,
-                    log.card ? log.card.cardId.toString() : null,
-                    log.card ? (log.card.type === 0 ? '개포' : '서초') : null,
-                    log.user ? (
-                      log.card.cardId === log.user.cardId ? (
-                        <button
-                          className="force-out-Btn"
-                          onClick={checkOutOnClick}
-                          data-idx={log.user._id}
-                        >
-                          퇴실 처리
-                        </button>
-                      ) : null
-                    ) : null,
-                  ];
-                })}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
+      <MyLogTable
+        logType={logType}
+        setListSize={setListSize}
+        setLogs={setLogs}
+        ref={ref}
+        listSize={listSize}
+        page={page}
+        logs={logs}
+      />
     </>
   );
 }

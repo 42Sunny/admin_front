@@ -1,11 +1,12 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useCallback } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import 'assets/css/material-dashboard-react.css?v=1.10.0';
-import 'assets/css/input.css';
 import Login from 'components/Login/Login';
 import { LoginContext } from 'contexts/LoginContext';
 import Admin from 'layouts/Admin';
 import { checkAdmin } from 'api/checkinApi';
+
+import 'assets/css/material-dashboard-react.css?v=1.10.0';
+import 'assets/css/input.css';
 
 const App = () => {
   const { isLogin, setIsLogin } = useContext(LoginContext);
@@ -25,7 +26,7 @@ const App = () => {
     return result;
   };
 
-  const getUserData = async () => {
+  const getUserData = useCallback(async () => {
     try {
       const response = await checkAdmin();
       if (response.data['isAdmin']) {
@@ -37,7 +38,7 @@ const App = () => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [setIsLogin]);
 
   useEffect(() => {
     const token = getCookieValue(process.env.REACT_APP_AUTH_KEY);
@@ -46,7 +47,7 @@ const App = () => {
     } else {
       setIsLogin(false);
     }
-  }, []);
+  }, [getUserData, setIsLogin]);
 
   return (
     <BrowserRouter>
