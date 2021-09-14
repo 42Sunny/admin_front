@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { getAllReserves } from 'api/visitorApi';
 import { getFomattedNow } from 'utils/getFormattedNow';
 
-const url = 'https://api.visitor.dev.42seoul.io/ws';
+const WS_URL = 'https://api.visitor.dev.42seoul.io/ws';
 const checkInPath = '/visitor';
 
 export const VisitorContext = createContext({});
@@ -21,17 +21,35 @@ export const VisitorProvider = ({ children }) => {
   };
 
   const initSocket = () => {
-    const sockJS = new SockJS(url);
-    const stompClient = Stomp.over(sockJS);
-    if (stompClient !== null) {
-      stompClient.connect({}, () => {
-        stompClient.reconnect_delay = 5000;
-        stompClient.subscribe(checkInPath, (data) => {
-          getReserve(getFomattedNow());
-        });
-      });
+    const sockJs = new SockJS(WS_URL);
+    const client = Stomp.over(sockJs);
+
+    client.debug = (msg) => {
+      if (process.env.REACT_APP_DEBUG) console.log(`>>> Debug\n${msg}`);
+    };
+
+    client.heartbeat = {
+      incoming: 4000,
+      outgoing: 4000,
+    };
+
+    client.reconnectDelay = 5000;
+
+    if (client !== null) {
+      client.connect(
+        { login: 'user', passcode: 'password' },
+        () => {
+          client.subscribe(checkInPath, (data) => {
+            getReserve(getFomattedNow());
+          });
+        },
+        (error) => {
+          if (process.env.REACT_APP_DEBUG) console.log(`>>> Error\n${error}`);
+        },
+      );
     }
-    setSocket(stompClient);
+
+    setSocket(client);
   };
 
   useEffect(() => {
