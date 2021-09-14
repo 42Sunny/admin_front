@@ -52,15 +52,11 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        {
-          // eslint-disable-next-line no-self-compare
-          isLogin === isLogin ? (
-            <Route path="*" component={Admin} />
-          ) : (
-            <Route path="*" component={Login} />
-          )
-        }
-        {/* {isLogin ? <Route path="*" component={Admin} /> : <Route path="*" component={Login} />} */}
+        {process.env.REACT_APP_AUTO_LOGIN || isLogin ? (
+          <Route path="*" component={Admin} />
+        ) : (
+          <Route path="*" component={Login} />
+        )}
       </Switch>
     </BrowserRouter>
   );
