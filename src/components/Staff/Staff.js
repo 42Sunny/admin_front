@@ -7,15 +7,9 @@ import RegularButton from 'components/CustomButtons/Button';
 import CustomInput from 'components/CustomInput/CustomInput';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import {
-  buttonLabel,
-  cardSubTitle,
-  cardTitle,
-  nameLabelText,
-  phoneLabelText,
-} from './StaffContent';
-import { handleChange, handleClick } from './StaffHandler';
-import { useStyles } from './StaffStyle';
+import { buttonLabel, cardSubTitle, cardTitle, nameLabelText, phoneLabelText } from './Variable';
+import { handleChange, handleClick } from './Handler';
+import { useStyles } from './Styles';
 
 const Staff = () => {
   const classes = useStyles();

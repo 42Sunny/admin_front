@@ -1,6 +1,6 @@
 import { addStaff } from 'api/visitorApi';
 import { checkContents } from './checkContents';
-import { confirmMessage } from './StaffContent';
+import { confirmMessage } from './Variable';
 
 export const handleChange = (event, setName, setPhone) => {
   const {
