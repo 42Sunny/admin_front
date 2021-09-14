@@ -1,4 +1,4 @@
-import { addStaff } from 'admin/api/apiHandler';
+import { addStaff } from 'api/visitorApi';
 import { checkContents } from './checkContents';
 import { confirmMessage } from './StaffContent';
 

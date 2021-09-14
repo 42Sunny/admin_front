@@ -73,6 +73,7 @@ export default function Dashboard() {
   const [page, setPage] = useState(1);
   const [listSize, setListSize] = useState(50);
   const [clusterType, setClusterType] = useState('0');
+  // eslint-disable-next-line no-unused-vars
   const [lastPage, setLastPage] = useState(1);
 
   useEffect(() => {

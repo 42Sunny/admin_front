@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import { grayColor } from 'assets/jss/material-dashboard-react.js';
 
 import { reqMaxCapacity, setMaxCapacity } from '../api/checkinApi.js';
+import Staff from 'components/Staff/Staff.js';
 
 const styles = {
   cardCategory: {
@@ -143,6 +144,8 @@ const Settings = () => {
           </Card>
         </GridItem>
       </GridContainer>
+      <Typography variant="h6">방문자 서비스 직원 추가</Typography>
+      <Staff />
     </>
   );
 };

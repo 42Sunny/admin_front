@@ -1,8 +1,8 @@
-import { hexToRgb } from 'admin/assets/jss/material-dashboard-react';
-import { grayColor } from 'admin/assets/jss/material-dashboard-react';
+import { hexToRgb } from 'assets/jss/material-dashboard-react';
+import { grayColor } from 'assets/jss/material-dashboard-react';
 
 const { makeStyles } = require('@material-ui/core');
-const { whiteColor } = require('admin/assets/jss/material-dashboard-react');
+const { whiteColor } = require('assets/jss/material-dashboard-react');
 
 export const useStyles = makeStyles({
   cardTitleWhite: {

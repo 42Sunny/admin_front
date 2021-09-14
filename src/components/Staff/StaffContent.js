@@ -3,6 +3,6 @@ export const confirmMessage = (name, phone) =>
 
 export const nameLabelText = '이름';
 export const phoneLabelText = '휴대폰 번호';
-export const cardTitle = '스태프 추가';
-export const cardSubTitle = '추가하고자하는 스태프 정보를 입력해주세요.';
+export const cardTitle = '직원 추가';
+export const cardSubTitle = '추가하고자하는 직원 정보를 입력해주세요.';
 export const buttonLabel = '생성';

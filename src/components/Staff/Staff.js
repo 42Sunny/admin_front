@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
-import Card from '../../admin123/components/Card/Card';
-import CardBody from '../../admin123/components/Card/CardBody';
-import CardHeader from '../../admin123/components/Card/CardHeader';
-import RegularButton from '../CustomButtons/Button';
-import CustomInput from '../CustomInput/CustomInput';
-import GridContainer from '../../admin123/components/Grid/GridContainer';
-import GridItem from '../../admin123/components/Grid/GridItem';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
+import CardHeader from 'components/Card/CardHeader';
+import RegularButton from 'components/CustomButtons/Button';
+import CustomInput from 'components/CustomInput/CustomInput';
+import GridContainer from 'components/Grid/GridContainer';
+import GridItem from 'components/Grid/GridItem';
 import {
   buttonLabel,
   cardSubTitle,
