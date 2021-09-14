@@ -8,6 +8,9 @@ const apiHandler = async (method, path, data) => {
       method,
       url: `${url}${path}`,
       data,
+      headers: {
+        'X-42Cadet-Auth-Key': process.env.REACT_APP_X_42CADET_VISITOR_AUTH_KEY,
+      },
     },
     { withCredentials: true },
   );
