@@ -33,7 +33,6 @@ const Staff = () => {
           <CardBody>
             <div className={classes.inputBox}>
               <CustomInput
-                formControlProps={{}}
                 inputProps={{
                   name: 'name',
                   value: name,
@@ -43,7 +42,6 @@ const Staff = () => {
                 labelText={nameLabelText}
               />
               <CustomInput
-                formControlProps={{}}
                 inputProps={{
                   name: 'phone',
                   value: phone,
