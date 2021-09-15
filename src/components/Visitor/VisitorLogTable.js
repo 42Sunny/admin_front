@@ -8,6 +8,7 @@ import Table from 'components/Table/Table';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
 
 import { whiteColor, grayColor } from 'assets/jss/material-dashboard-react.js';
+import moment from 'moment';
 
 const styles = {
   cardTitleWhite: {
@@ -27,17 +28,20 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const tableHead = ['ID', '날짜 및 시간', '직원', '소속', '이름', '번호', '목적', '상태'];
+const tableHead = ['ID', '입실', '퇴실', '직원', '소속', '이름', '번호', '목적', '상태'];
 
 const makeTableData = (checkInData, clusterType) => {
   const result = [];
   checkInData.forEach((elem) => {
     const { place, staffName, date, purpose, visitors } = elem;
+
     if (clusterType === '0' && place === '개포') {
       visitors.forEach((elem) => {
+        const exitTime = elem.status === '퇴실' ? new moment().format('HH:MM') : '';
         const temp = [
           elem.visitorId,
-          date,
+          new moment(date).format('HH:MM'),
+          exitTime,
           staffName,
           elem.organization,
           elem.name,
@@ -50,9 +54,11 @@ const makeTableData = (checkInData, clusterType) => {
     }
     if (clusterType === '1' && place === '서초') {
       visitors.forEach((elem) => {
+        const exitTime = elem.status === '퇴실' ? new moment().format('HH:MM') : '';
         const temp = [
           elem.visitorId,
-          date,
+          new moment(date).format('HH:MM'),
+          exitTime,
           staffName,
           elem.organization,
           elem.name,

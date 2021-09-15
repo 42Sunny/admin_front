@@ -35,6 +35,15 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  optionBox: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '10vh',
+    minHeight: '40px',
+    boxSizing: 'border-box',
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -91,21 +100,23 @@ function CheckInManagement() {
           <Tab label="모든 카드 정보" {...a11yProps(4)} />
         </Tabs>
       </Paper>
-      <SearchBar
-        type={logType}
-        setLogs={setLogs}
-        ref={ref}
-        page={page}
-        setPage={setPage}
-        clusterType={clusterType}
-        setClusterType={setClusterType}
-        login={login}
-        setLogin={setLogin}
-        cardId={cardId}
-        setCardId={setCardId}
-        setLastPage={setLastPage}
-        listSize={listSize}
-      />
+      <div className={classes.optionBox}>
+        <SearchBar
+          type={logType}
+          setLogs={setLogs}
+          ref={ref}
+          page={page}
+          setPage={setPage}
+          clusterType={clusterType}
+          setClusterType={setClusterType}
+          login={login}
+          setLogin={setLogin}
+          cardId={cardId}
+          setCardId={setCardId}
+          setLastPage={setLastPage}
+          listSize={listSize}
+        />
+      </div>
       <PaginationRounded lastPage={lastPage} setPage={setPage} />
       <GridContainer>
         <MyLogTable

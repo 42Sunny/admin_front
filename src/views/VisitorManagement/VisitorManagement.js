@@ -65,10 +65,15 @@ const makeTableData = (checkInData) => {
   checkInData.forEach((elem) => {
     const { place, staffName, date, purpose, visitors } = elem;
     visitors.forEach((elem) => {
+      const exitTime = elem.status === '퇴실' ? new moment().format('HH:MM') : '';
+      const enterTime = new moment(date).format('HH:MM');
+      const enterDate = new moment(date).format('YYYY-MM-DD');
       const temp = [
         elem.visitorId,
         place,
-        date,
+        enterDate,
+        enterTime,
+        exitTime,
         staffName,
         elem.organization,
         elem.name,
@@ -82,6 +87,20 @@ const makeTableData = (checkInData) => {
   result.reverse();
   return result;
 };
+
+const tableHead = [
+  'ID',
+  '장소',
+  '날짜',
+  '입실',
+  '퇴실',
+  '방문 직원',
+  '방문자 소속',
+  '방문자 이름',
+  '방문자 번호',
+  '방문 목적',
+  '상태',
+];
 
 export default function VisitorManagement() {
   const classes = useStyles();
@@ -117,21 +136,7 @@ export default function VisitorManagement() {
                 </p>
               </CardHeader>
               <CardBody>
-                <Table
-                  tableHeaderColor="info"
-                  tableHead={[
-                    'ID',
-                    '장소',
-                    '날짜 및 시간',
-                    '직원',
-                    '소속',
-                    '이름',
-                    '번호',
-                    '목적',
-                    '상태',
-                  ]}
-                  tableData={tableData}
-                />
+                <Table tableHeaderColor="info" tableHead={tableHead} tableData={tableData} />
               </CardBody>
             </Card>
           </GridItem>
