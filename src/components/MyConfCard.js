@@ -16,7 +16,7 @@ const styles2 = {
 const useStyles = makeStyles(styles);
 const useStyles2 = makeStyles(styles2);
 
-export const MyConfCard = ({ category, cluster }) => {
+export const MyConfCard = ({ category, cluster, xs, sm, md }) => {
   const classes = useStyles();
   const classes2 = useStyles2();
 
@@ -57,12 +57,12 @@ export const MyConfCard = ({ category, cluster }) => {
   }, [fetchData]);
 
   return (
-    <GridItem xs={3} sm={3} md={3}>
+    <GridItem xs={xs} sm={sm} md={md}>
       <Card>
         <CardHeader color="info" stats icon>
           <p className={classes.cardCategory}>{category}</p>
           <div className={classes2.cardWrapper}>
-            <h3 className={classes.cardTitle}>{clusterConf[cluster]}</h3>
+            <h1 className={classes.cardTitle}>{clusterConf[cluster]}</h1>
             <h4 className={classes.cardTitle}>/{clusterMaxConf[cluster]}</h4>
           </div>
         </CardHeader>

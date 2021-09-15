@@ -77,6 +77,10 @@ const dashboardStyle = {
       lineHeight: '1',
     },
   },
+  cardWrapper: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 };
 
 export default dashboardStyle;

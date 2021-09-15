@@ -1,6 +1,5 @@
 import { forwardRef, useState } from 'react';
 import GridItem from '../components/Grid/GridItem.js';
-import GridContainer from '../components/Grid/GridContainer.js';
 import Table from '../components/Table/Table.js';
 import Card from '../components/Card/Card.js';
 import CardHeader from '../components/Card/CardHeader.js';
@@ -12,12 +11,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import { forceCheckOut } from '../api/checkinApi';
 import * as moment from 'moment';
 
+import { whiteColor, grayColor } from 'assets/jss/material-dashboard-react.js';
+
 const LOGTYPE = {
   0: '클러스터',
   1: '인트라 ID',
   2: '카드 번호',
-  3: '미반납 카드',
-  4: '모든 카드 정보',
+  3: '카뎃',
+  4: '모든 카드',
 };
 
 const styles = {
@@ -25,16 +26,14 @@ const styles = {
     flexGrow: 1,
   },
   cardTitleWhite: {
-    color: '#FFFFFF',
+    color: whiteColor,
     marginTop: '0px',
     minHeight: 'auto',
-    fontWeight: '500',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    fontWeight: 'bold',
     marginBottom: '3px',
     textDecoration: 'none',
     '& small': {
-      color: '#777',
-      fontSize: '65%',
+      color: grayColor[1],
       fontWeight: '400',
       lineHeight: '1',
     },
@@ -49,7 +48,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export const MyLogTable = forwardRef(
-  ({ logType, setListSize, setLogs, listSize, page, logs }, ref) => {
+  ({ logType, setListSize, setLogs, listSize, page, logs, xs, sm, md }, ref) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -81,11 +80,11 @@ export const MyLogTable = forwardRef(
     };
 
     return (
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color="info" className={classes.header}>
-              <h4 className={classes.cardTitleWhite}>{LOGTYPE[logType]} 로그</h4>
+      <GridItem xs={xs} sm={sm} md={md}>
+        <Card>
+          <CardHeader color="info" className={classes.header}>
+            <h4 className={classes.cardTitleWhite}>{LOGTYPE[logType]}</h4>
+            {!(logType === 3 || logType === 4) && (
               <div>
                 <Button
                   aria-controls="simple-menu"
@@ -96,6 +95,7 @@ export const MyLogTable = forwardRef(
                 >
                   size: {listSize}
                 </Button>
+
                 <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)}>
                   <MenuItem onClick={handleClose}>10</MenuItem>
                   <MenuItem onClick={handleClose}>30</MenuItem>
@@ -103,11 +103,13 @@ export const MyLogTable = forwardRef(
                   <MenuItem onClick={handleClose}>100</MenuItem>
                 </Menu>
               </div>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHead={tableHead}
-                tableData={logs.map((log, idx) => {
+            )}
+          </CardHeader>
+          <CardBody>
+            <Table
+              tableHead={tableHead}
+              tableData={logs
+                .map((log, idx) => {
                   const date = new Date(log.createdAt);
                   return [
                     log.id ?? (page - 1) * listSize + idx + 1,
@@ -128,12 +130,12 @@ export const MyLogTable = forwardRef(
                       ) : null
                     ) : null,
                   ];
-                })}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
+                })
+                .slice(0, listSize)}
+            />
+          </CardBody>
+        </Card>
+      </GridItem>
     );
   },
 );

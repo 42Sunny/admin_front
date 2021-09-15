@@ -9,6 +9,7 @@ import SearchBar from '../components/SearchBar';
 import { MyLogTable } from '../components/MyLogTable';
 
 import '../assets/styles/AdminPage.css';
+import GridContainer from 'components/Grid/GridContainer';
 
 const styles = {
   root: {
@@ -106,15 +107,20 @@ function CheckInManagement() {
         listSize={listSize}
       />
       <PaginationRounded lastPage={lastPage} setPage={setPage} />
-      <MyLogTable
-        logType={logType}
-        setListSize={setListSize}
-        setLogs={setLogs}
-        ref={ref}
-        listSize={listSize}
-        page={page}
-        logs={logs}
-      />
+      <GridContainer>
+        <MyLogTable
+          xs={12}
+          sm={12}
+          md={12}
+          logType={logType}
+          setListSize={setListSize}
+          setLogs={setLogs}
+          ref={ref}
+          listSize={listSize}
+          page={page}
+          logs={logs}
+        />
+      </GridContainer>
     </>
   );
 }

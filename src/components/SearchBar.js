@@ -42,13 +42,18 @@ const SearchBar = forwardRef(
     const useStyles = makeStyles(() => ({
       margin: {
         display: 'flex',
-        width: '100%',
-        height: '10vh',
-        minHeight: '60px',
-        flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
       },
+      // margin: {
+      //   display: 'flex',
+      //   width: '100%',
+      //   height: '10vh',
+      //   minHeight: '60px',
+      //   flexDirection: 'column',
+      //   justifyContent: 'center',
+      //   alignItems: 'center',
+      // },
     }));
     const classes = useStyles();
 
