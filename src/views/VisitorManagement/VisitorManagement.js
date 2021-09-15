@@ -9,9 +9,8 @@ import CardBody from 'components/Card/CardBody.js';
 import Table from 'components/Table/Table.js';
 import moment from 'moment';
 import { updateVisitorStatus } from 'api/visitorApi';
-import { useContext } from 'react';
-import { VisitorContext } from 'contexts/VisitorContext';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
+import { getAllReserves } from 'api/visitorApi';
 
 const styles = {
   cardCategoryWhite: {
@@ -86,13 +85,12 @@ const makeTableData = (checkInData) => {
 
 export default function VisitorManagement() {
   const classes = useStyles();
-  const { checkInData, getReserve } = useContext(VisitorContext);
   const [tableData, setTableData] = useState([]);
   const [date, setDate] = useState(new moment().format('YYYY-MM-DD'));
+  const [checkInData, setCheckInData] = useState([]);
 
   useEffect(() => {
-    getReserve(date);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getAllReserves(date).then((res) => setCheckInData(res.data));
   }, [date]);
 
   useEffect(() => {
