@@ -1,14 +1,14 @@
 import { forwardRef, useState } from 'react';
-import GridItem from '../components/Grid/GridItem.js';
-import Table from '../components/Table/Table.js';
-import Card from '../components/Card/Card.js';
-import CardHeader from '../components/Card/CardHeader.js';
-import CardBody from '../components/Card/CardBody.js';
+import GridItem from 'components/Grid/GridItem.js';
+import Table from 'components/Table/Table.js';
+import Card from 'components/Card/Card.js';
+import CardHeader from 'components/Card/CardHeader.js';
+import CardBody from 'components/Card/CardBody.js';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
-import { forceCheckOut } from '../api/checkinApi';
+import { forceCheckOut } from 'api/checkinApi';
 import * as moment from 'moment';
 
 import { whiteColor, grayColor } from 'assets/jss/material-dashboard-react.js';
@@ -107,6 +107,7 @@ export const MyLogTable = forwardRef(
           </CardHeader>
           <CardBody>
             <Table
+              tableHeaderColor="info"
               tableHead={tableHead}
               tableData={logs
                 .map((log, idx) => {
