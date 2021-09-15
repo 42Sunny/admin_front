@@ -1,35 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Icon from '@material-ui/core/Icon';
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
-import CardIcon from 'components/Card/CardIcon.js';
-import CardFooter from 'components/Card/CardFooter.js';
-import { Typography, Button } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
+import { Typography } from '@material-ui/core';
 
 import { grayColor } from 'assets/jss/material-dashboard-react.js';
 
 import { reqMaxCapacity, setMaxCapacity } from '../api/checkinApi.js';
 import Staff from 'components/Staff/Staff.js';
+import RegularButton from 'components/CustomButtons/Button.js';
+import CardBody from 'components/Card/CardBody.js';
+import { hexToRgb } from 'assets/jss/material-dashboard-react';
+
+const { whiteColor } = require('assets/jss/material-dashboard-react');
 
 const styles = {
-  cardCategory: {
-    color: grayColor[8],
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    paddingTop: '10px',
-    marginBottom: '0',
-    fontWeight: 'bold',
-  },
-  cardTitle: {
-    color: grayColor[2],
+  cardTitleWhite: {
+    color: whiteColor,
     marginTop: '0px',
     minHeight: 'auto',
-    fontWeight: '300',
+    fontWeight: 'bold',
     marginBottom: '3px',
     textDecoration: 'none',
     '& small': {
@@ -37,6 +29,27 @@ const styles = {
       fontWeight: '400',
       lineHeight: '1',
     },
+  },
+  cardCategoryWhite: {
+    color: 'rgba(' + hexToRgb(whiteColor) + ',.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
+    fontWeight: 'bold',
+  },
+  inputBox: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  input: {
+    margin: '0px',
+    marginRight: '5px',
+    fontSize: '1.1rem',
+    borderWidth: '0px 0px 1px 0px',
+    borderRadius: '0',
+    padding: '0',
+    width: '100%',
   },
 };
 
@@ -93,58 +106,84 @@ const Settings = () => {
 
   return (
     <>
-      <Typography variant="h6">클러스터 최대 입장 인원</Typography>
+      <Typography variant="h6">카뎃</Typography>
       <GridContainer>
-        <GridItem xs={12} sm={6} md={6}>
+        <GridItem xs={12} sm={3} md={3}>
           <Card>
-            <CardHeader color="info" icon>
-              <CardIcon color="info">
-                <Icon>person_add</Icon>
-              </CardIcon>
-              <p className={classes.cardCategory}>개포</p>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <TextField
+            <CardHeader color="info">
+              <h4 className={classes.cardTitleWhite}>개포</h4>
+              <p className={classes.cardCategoryWhite}>
+                클러스터에 입장 가능한 최대 카뎃 인원을 입력해주세요.
+              </p>
+            </CardHeader>
+            <CardBody color="info" icon>
+              <div
+                style={{
+                  display: 'flex',
+                }}
+              >
+                <input
+                  style={{
+                    margin: '0px',
+                    marginRight: '5px',
+                    fontSize: '1.1rem',
+                    borderWidth: '0px 0px 1px 0px',
+                    borderRadius: '0',
+                    padding: '0',
+                    width: '100%',
+                  }}
                   id="maxCapGaepo"
                   value={capacity.maxCapGaepo}
                   type="number"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {/* <EditIcon className={classes.editIcon} ></EditIcon> */}
-                <Button onClick={handleBlur} variant="outlined">
+                <RegularButton onClick={handleBlur} color="info">
                   수정
-                </Button>
+                </RegularButton>
               </div>
-            </CardHeader>
-            <CardFooter stats></CardFooter>
+            </CardBody>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={6} md={6}>
+        <GridItem xs={12} sm={3} md={3}>
           <Card>
-            <CardHeader color="info" icon>
-              <CardIcon color="info">
-                <Icon>person_add</Icon>
-              </CardIcon>
-              <p className={classes.cardCategory}>서초</p>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <TextField
+            <CardHeader color="info">
+              <h4 className={classes.cardTitleWhite}>개포</h4>
+              <p className={classes.cardCategoryWhite}>
+                클러스터에 입장 가능한 최대 카뎃 인원을 입력해주세요.
+              </p>
+            </CardHeader>
+            <CardBody color="info" icon>
+              <div
+                style={{
+                  display: 'flex',
+                }}
+              >
+                <input
+                  style={{
+                    margin: '0px',
+                    marginRight: '5px',
+                    fontSize: '1.1rem',
+                    borderWidth: '0px 0px 1px 0px',
+                    borderRadius: '0',
+                    padding: '0',
+                    width: '100%',
+                  }}
                   id="maxCapSeocho"
                   value={capacity.maxCapSeocho}
                   type="number"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <Button onClick={handleBlur} variant="outlined">
+                <RegularButton onClick={handleBlur} color="info">
                   수정
-                </Button>
-                {/* <EditIcon className={classes.editIcon} onClick={handleClick}></EditIcon> */}
+                </RegularButton>
               </div>
-            </CardHeader>
-            <CardFooter stats></CardFooter>
+            </CardBody>
           </Card>
         </GridItem>
       </GridContainer>
-      <Typography variant="h6">방문자 서비스 직원 추가</Typography>
+      <Typography variant="h6">방문자</Typography>
       <Staff />
     </>
   );

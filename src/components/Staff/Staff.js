@@ -4,7 +4,6 @@ import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import RegularButton from 'components/CustomButtons/Button';
-import CustomInput from 'components/CustomInput/CustomInput';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import { buttonLabel, cardSubTitle, cardTitle, nameLabelText, phoneLabelText } from './Variable';
@@ -26,25 +25,21 @@ const Staff = () => {
           </CardHeader>
           <CardBody>
             <div className={classes.inputBox}>
-              <CustomInput
-                inputProps={{
-                  name: 'name',
-                  value: name,
-                  onChange: (event) => handleChange(event, setName, setPhone),
-                }}
-                color="info"
-                labelText={nameLabelText}
+              <input
+                name={'name'}
+                value={name}
+                onChange={(event) => handleChange(event, setName, setPhone)}
+                placeholder={nameLabelText}
+                className={classes.input}
               />
-              <CustomInput
-                inputProps={{
-                  name: 'phone',
-                  value: phone,
-                  type: 'tel',
-                  color: 'info',
-                  onChange: (event) => handleChange(event, setName, setPhone),
-                }}
-                color="info"
-                labelText={phoneLabelText}
+              <input
+                name={'phone'}
+                value={phone}
+                type={'tel'}
+                color={'info'}
+                onChange={(event) => handleChange(event, setName, setPhone)}
+                placeholder={phoneLabelText}
+                className={classes.input}
               />
               <RegularButton color="info" onClick={handleClick}>
                 {buttonLabel}

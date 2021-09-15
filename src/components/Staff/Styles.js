@@ -30,7 +30,13 @@ export const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  customInput: {
-    marginBottom: '5px',
+  input: {
+    margin: '0px',
+    marginRight: '5px',
+    fontSize: '1.1rem',
+    borderWidth: '0px 0px 1px 0px',
+    borderRadius: '0',
+    padding: '0',
+    width: '100%',
   },
 });
