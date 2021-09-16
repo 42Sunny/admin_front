@@ -8,6 +8,21 @@ import { MyLogTable } from 'components/MyLogTable';
 import SearchBar from 'components/SearchBar';
 import VisitorLogTable from 'components/Visitor/VisitorLogTable';
 import VisitorHeadCount from 'components/Visitor/VisitorHeadCount';
+import PaginationRounded from 'components/Paging';
+import { makeStyles } from '@material-ui/core/styles';
+const styles = {
+  optionBox: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '10vh',
+    minHeight: '40px',
+    boxSizing: 'border-box',
+  },
+};
+
+const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const { checkInData, getReserve } = useContext(VisitorContext);
@@ -19,6 +34,8 @@ export default function Dashboard() {
   const [clusterType, setClusterType] = useState('0');
   // eslint-disable-next-line no-unused-vars
   const [lastPage, setLastPage] = useState(1);
+
+  const classes = useStyles();
 
   useEffect(() => {
     getReserve(getFomattedNow());
@@ -38,6 +55,7 @@ export default function Dashboard() {
         setClusterType={setClusterType}
         setLastPage={setLastPage}
         listSize={listSize}
+        isLightType={true}
       />
       <h5>인원 정보</h5>
       <GridContainer>
@@ -71,6 +89,9 @@ export default function Dashboard() {
           page={page}
           logs={logs}
         />
+        <div className={classes.optionBox}>
+          <PaginationRounded lastPage={lastPage} setPage={setPage} />
+        </div>
         <VisitorLogTable
           xs={12}
           sm={12}

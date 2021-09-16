@@ -12,8 +12,7 @@ import Looks4Icon from '@material-ui/icons/Looks4';
 import LooksTwoIcon from '@material-ui/icons/LooksTwo';
 import { debounce } from 'lodash';
 
-import { getCluster, getStudent, getCard, getCheckIn, getAllCard } from '../api/checkinApi';
-import { gaepoCard, seochoCard } from '../utils/cardList';
+import { getCluster, getStudent, getCard, getCheckIn } from '../api/checkinApi';
 
 import '../assets/styles/SearchBar.css';
 
@@ -32,6 +31,7 @@ const SearchBar = forwardRef(
       setCardId,
       setLastPage,
       listSize,
+      isLightType,
     },
     ref,
   ) => {
@@ -73,10 +73,11 @@ const SearchBar = forwardRef(
             else throw new Error('유효한 카드 번호를 입력하세요.');
             break;
           case 3:
-            response = await getCheckIn(clusterType, page);
-            break;
-          case 4:
-            response = await getAllCard(clusterType, page);
+            if (isLightType) {
+              response = await getCheckIn(clusterType, page, 10);
+            } else {
+              response = await getCheckIn(clusterType, page);
+            }
             break;
           default:
             break;
@@ -84,7 +85,7 @@ const SearchBar = forwardRef(
         if (response.data.list) {
           let datas;
           datas = response.data.list;
-          if (type === 3 || type === 4) {
+          if (type === 3) {
             datas = response.data.list
               .filter(
                 (item, index) =>
@@ -92,14 +93,6 @@ const SearchBar = forwardRef(
                   index,
               )
               .reverse();
-            if (type === 4) {
-              let newdata = [];
-              const card = clusterType === '0' ? gaepoCard : seochoCard;
-              card.map((item) => {
-                return newdata.push({ id: item, ...datas.find((ele) => ele.card.cardId === item) });
-              });
-              datas = newdata;
-            }
           }
           setLogs(datas);
           setLastPage(response.data.lastPage);
