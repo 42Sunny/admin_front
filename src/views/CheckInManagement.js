@@ -97,7 +97,6 @@ function CheckInManagement() {
           <Tab label="인트라 ID" {...a11yProps(1)} />
           <Tab label="카드 번호" {...a11yProps(2)} />
           <Tab label="미반납 카드" {...a11yProps(3)} />
-          <Tab label="모든 카드 정보" {...a11yProps(4)} />
         </Tabs>
       </Paper>
       <div className={classes.optionBox}>
