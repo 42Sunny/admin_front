@@ -15,6 +15,7 @@ export const VisitorProvider = ({ children }) => {
   // eslint-disable-next-line no-unused-vars
   const [socket, setSocket] = useState(null);
   const [checkInData, setCheckInData] = useState([]);
+  const [newVisitorAlert, setNewVisitorAlert] = useState(false);
 
   const getReserve = (date) => {
     getAllReserves(date).then((res) => setCheckInData(res.data));
@@ -41,6 +42,7 @@ export const VisitorProvider = ({ children }) => {
         () => {
           client.subscribe(checkInPath, (data) => {
             getReserve(getFomattedNow());
+            setNewVisitorAlert(true);
           });
         },
         (error) => {
@@ -48,7 +50,6 @@ export const VisitorProvider = ({ children }) => {
         },
       );
     }
-
     setSocket(client);
   };
 
@@ -63,6 +64,8 @@ export const VisitorProvider = ({ children }) => {
         checkInData,
         setCheckInData,
         getReserve,
+        newVisitorAlert,
+        setNewVisitorAlert,
       }}
     >
       {children}

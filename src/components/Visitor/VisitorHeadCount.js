@@ -1,11 +1,13 @@
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import GridItem from 'components/Grid/GridItem';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { makeStyles } from '@material-ui/core';
+import { VisitorContext } from 'contexts/VisitorContext';
 
 const useStyles = makeStyles(styles);
+const NEW_ALERT_TIME = 10000;
 
 const countVisitor = (checkInData, placeName) => {
   let checkin = 0;
@@ -29,6 +31,9 @@ const VisitorHeadCount = ({ xs, sm, md, checkInData, placeName, headerText }) =>
   const classes = useStyles();
   const [checkIn, setCheckIn] = useState();
   const [remain, setRemain] = useState();
+  const { newVisitorAlert, setNewVisitorAlert } = useContext(VisitorContext);
+  const [alertTimer, setAlertTimer] = useState(null);
+  const [isNew, setIsNew] = useState(false);
 
   useEffect(() => {
     const { remain, checkin } = countVisitor(checkInData, placeName);
@@ -36,12 +41,40 @@ const VisitorHeadCount = ({ xs, sm, md, checkInData, placeName, headerText }) =>
     setRemain(remain);
   }, [checkInData, placeName]);
 
+  // TODO : 알림 알고리즘 다시 짤 필요가 있음.
+  useEffect(() => {
+    if (newVisitorAlert === true) {
+      if (alertTimer !== null) clearTimeout(alertTimer);
+      if (checkInData[0].place === placeName) {
+        setIsNew(true);
+        const timer = setTimeout(() => {
+          setNewVisitorAlert(false);
+          setIsNew(false);
+        }, NEW_ALERT_TIME);
+        setAlertTimer(timer);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newVisitorAlert]);
+
+  useEffect(() => {
+    if (alertTimer !== null) clearTimeout(alertTimer);
+    setIsNew(false);
+    setNewVisitorAlert(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [placeName]);
+
   return (
     <GridItem xs={xs} sm={sm} md={md}>
       <Card>
         <CardHeader color="info" stats icon>
           <p className={classes.cardCategory}>{headerText}</p>
           <div className={classes.cardWrapper}>
+            {isNew === true && (
+              <h6 className={classes.cardTitle} style={{ color: 'red', fontWeight: 'bold' }}>
+                New
+              </h6>
+            )}
             <h1 className={classes.cardTitle}>{checkIn}</h1>
             <h4 className={classes.cardTitle}>/{remain}</h4>
           </div>
