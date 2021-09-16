@@ -32,6 +32,7 @@ const SearchBar = forwardRef(
       setCardId,
       setLastPage,
       listSize,
+      isLightType,
     },
     ref,
   ) => {
@@ -73,7 +74,11 @@ const SearchBar = forwardRef(
             else throw new Error('유효한 카드 번호를 입력하세요.');
             break;
           case 3:
-            response = await getCheckIn(clusterType, page);
+            if (isLightType) {
+              response = await getCheckIn(clusterType, page, 10);
+            } else {
+              response = await getCheckIn(clusterType, page);
+            }
             break;
           case 4:
             response = await getAllCard(clusterType, page);

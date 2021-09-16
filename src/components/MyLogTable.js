@@ -108,8 +108,8 @@ export const MyLogTable = forwardRef(
           <CardBody>
             <Table
               tableHead={tableHead}
-              tableData={logs
-                .map((log, idx) => {
+              tableData={
+                logs.map((log, idx) => {
                   const date = new Date(log.createdAt);
                   return [
                     log.id ?? (page - 1) * listSize + idx + 1,
@@ -131,7 +131,8 @@ export const MyLogTable = forwardRef(
                     ) : null,
                   ];
                 })
-                .slice(0, listSize)}
+                // .slice(0, listSize)
+              }
             />
           </CardBody>
         </Card>
