@@ -41,7 +41,12 @@ const Staff = () => {
                 placeholder={phoneLabelText}
                 className={classes.input}
               />
-              <RegularButton color="info" onClick={handleClick}>
+              <RegularButton
+                color="info"
+                onClick={() => {
+                  handleClick(name, phone);
+                }}
+              >
                 {buttonLabel}
               </RegularButton>
             </div>
