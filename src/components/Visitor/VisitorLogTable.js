@@ -41,29 +41,53 @@ const tableHead = [
   '상태',
 ];
 
-const MakeData = (staffName, date, purpose, visitor) => [
-  visitor.visitorId,
-  date && new moment(date).format('HH:MM'),
-  visitor.checkInTime && new moment(visitor.checkInTime).format('HH:MM'),
-  visitor.checkOutTime && new moment(visitor.checkOutTime).format('HH:MM'),
+const MakeData = (
+  visitorId,
   staffName,
-  visitor.organization,
-  visitor.name,
-  useFormattedPhone(visitor.phone),
+  date,
   purpose,
-  visitor.status,
+  checkInTime,
+  checkOutTime,
+  organization,
+  name,
+  phone,
+  status,
+) => [
+  visitorId,
+  date && new moment(date).format('HH:mm'),
+  checkInTime && new moment(checkInTime).format('HH:mm'),
+  checkOutTime && new moment(checkOutTime).format('HH:mm'),
+  staffName,
+  organization,
+  name,
+  useFormattedPhone(phone),
+  purpose,
+  status,
 ];
 
 const makeTableData = (checkInData, clusterType) => {
   const result = [];
+  console.log(checkInData);
   checkInData.forEach((elem) => {
     const { place, staffName, date, purpose, visitors } = elem;
-
     if (clusterType === '0' && place === '개포') {
-      visitors.forEach((visitor) => {
-        const temp = MakeData(staffName, date, purpose, visitor);
-        result.push(temp);
-      });
+      visitors.forEach(
+        ({ visitorId, checkInTime, checkOutTime, organization, name, phone, status }) => {
+          const temp = MakeData(
+            visitorId,
+            staffName,
+            date,
+            purpose,
+            checkInTime,
+            checkOutTime,
+            organization,
+            name,
+            phone,
+            status,
+          );
+          result.push(temp);
+        },
+      );
     }
     if (clusterType === '1' && place === '서초') {
       visitors.forEach((elem) => {
@@ -74,6 +98,7 @@ const makeTableData = (checkInData, clusterType) => {
       });
     }
   });
+  console.log(result);
   result.reverse();
   return result;
 };

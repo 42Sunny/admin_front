@@ -66,9 +66,9 @@ const makeTableData = (checkInData) => {
     const { place, staffName, date, purpose, visitors } = elem;
     visitors.forEach((elem) => {
       const enterDate = date && new moment(date).format('YYYY-MM-DD');
-      const reserveTime = date && new moment(date).format('HH:MM');
-      const enterTime = elem.checkInTime && new moment(elem.checkInTime).format('HH:MM');
-      const exitTime = elem.checkOutTime && new moment(elem.checkOutTime).format('HH:MM');
+      const reserveTime = date && new moment(date).format('HH:mm');
+      const enterTime = elem.checkInTime && new moment(elem.checkInTime).format('HH:mm');
+      const exitTime = elem.checkOutTime && new moment(elem.checkOutTime).format('HH:mm');
       const temp = [
         elem.visitorId,
         place,
