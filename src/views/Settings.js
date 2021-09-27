@@ -4,7 +4,6 @@ import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
-import { Typography } from '@material-ui/core';
 
 import { grayColor } from 'assets/jss/material-dashboard-react.js';
 
@@ -106,7 +105,6 @@ const Settings = () => {
 
   return (
     <>
-      <Typography variant="h6">카뎃</Typography>
       <GridContainer>
         <GridItem xs={12} sm={6} md={6}>
           <Card>
@@ -183,7 +181,6 @@ const Settings = () => {
           </Card>
         </GridItem>
       </GridContainer>
-      <Typography variant="h6">방문자</Typography>
       <Staff />
     </>
   );

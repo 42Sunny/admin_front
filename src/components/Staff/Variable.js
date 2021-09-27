@@ -1,6 +1,9 @@
 export const confirmMessage = (name, phone) =>
   `이름 : ${name}\n번호 : ${phone}\n해당 내용을 직원을 추가하시겠습니까?`;
 
+export const confirmDeleteMessage = (name, phone) =>
+  `이름 : ${name}\n번호 : ${phone}\n해당 내용을 직원을 삭제하시겠습니까?`;
+
 export const nameLabelText = '이름';
 export const phoneLabelText = '휴대폰 번호';
 export const cardTitle = '직원 추가';

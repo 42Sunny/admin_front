@@ -31,4 +31,13 @@ const addStaff = (name, phone) => {
   return apiHandler('post', '/admin/staff/save', data);
 };
 
-export { apiHandler, getAllReserves, updateVisitorStatus, addStaff };
+const deleteStaff = (staffId) => {
+  const data = { staffId: JSON.stringify(staffId) };
+  return apiHandler('delete', '/admin/staff', data);
+};
+
+const getStaffs = () => {
+  return apiHandler('get', '/admin/staff', {});
+};
+
+export { apiHandler, getAllReserves, updateVisitorStatus, addStaff, getStaffs, deleteStaff };
