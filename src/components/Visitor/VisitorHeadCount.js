@@ -45,7 +45,7 @@ const VisitorHeadCount = ({ xs, sm, md, checkInData, placeName, headerText }) =>
   useEffect(() => {
     if (newVisitorAlert === true) {
       if (alertTimer !== null) clearTimeout(alertTimer);
-      if (checkInData[0].place === placeName) {
+      if (checkInData[0]?.place === placeName) {
         setIsNew(true);
         const timer = setTimeout(() => {
           setNewVisitorAlert(false);
