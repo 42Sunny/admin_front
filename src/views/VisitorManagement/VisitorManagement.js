@@ -65,13 +65,15 @@ const makeTableData = (checkInData) => {
   checkInData.forEach((elem) => {
     const { place, staffName, date, purpose, visitors } = elem;
     visitors.forEach((elem) => {
-      const exitTime = elem.status === '퇴실' ? new moment().format('HH:MM') : '';
-      const enterTime = new moment(date).format('HH:MM');
-      const enterDate = new moment(date).format('YYYY-MM-DD');
+      const enterDate = date && new moment(date).format('YYYY-MM-DD');
+      const reserveTime = date && new moment(date).format('HH:MM');
+      const enterTime = elem.checkInTime && new moment(elem.checkInTime).format('HH:MM');
+      const exitTime = elem.checkOutTime && new moment(elem.checkOutTime).format('HH:MM');
       const temp = [
         elem.visitorId,
         place,
         enterDate,
+        reserveTime,
         enterTime,
         exitTime,
         staffName,
@@ -92,6 +94,7 @@ const tableHead = [
   'ID',
   '장소',
   '날짜',
+  '예약 시간',
   '입실',
   '퇴실',
   '방문 직원',

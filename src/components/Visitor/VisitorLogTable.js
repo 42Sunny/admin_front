@@ -28,7 +28,31 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const tableHead = ['ID', '입실', '퇴실', '직원', '소속', '이름', '번호', '목적', '상태'];
+const tableHead = [
+  'ID',
+  '예약 시간',
+  '입실',
+  '퇴실',
+  '직원',
+  '소속',
+  '이름',
+  '번호',
+  '목적',
+  '상태',
+];
+
+const MakeData = (staffName, date, purpose, visitor) => [
+  visitor.visitorId,
+  date && new moment(date).format('HH:MM'),
+  visitor.checkInTime && new moment(visitor.checkInTime).format('HH:MM'),
+  visitor.checkOutTime && new moment(visitor.checkOutTime).format('HH:MM'),
+  staffName,
+  visitor.organization,
+  visitor.name,
+  useFormattedPhone(visitor.phone),
+  purpose,
+  visitor.status,
+];
 
 const makeTableData = (checkInData, clusterType) => {
   const result = [];
@@ -36,37 +60,17 @@ const makeTableData = (checkInData, clusterType) => {
     const { place, staffName, date, purpose, visitors } = elem;
 
     if (clusterType === '0' && place === '개포') {
-      visitors.forEach((elem) => {
-        const exitTime = elem.status === '퇴실' ? new moment().format('HH:MM') : '';
-        const temp = [
-          elem.visitorId,
-          new moment(date).format('HH:MM'),
-          exitTime,
-          staffName,
-          elem.organization,
-          elem.name,
-          useFormattedPhone(elem.phone),
-          purpose,
-          elem.status,
-        ];
+      visitors.forEach((visitor) => {
+        const temp = MakeData(staffName, date, purpose, visitor);
         result.push(temp);
       });
     }
     if (clusterType === '1' && place === '서초') {
       visitors.forEach((elem) => {
-        const exitTime = elem.status === '퇴실' ? new moment().format('HH:MM') : '';
-        const temp = [
-          elem.visitorId,
-          new moment(date).format('HH:MM'),
-          exitTime,
-          staffName,
-          elem.organization,
-          elem.name,
-          useFormattedPhone(elem.phone),
-          purpose,
-          elem.status,
-        ];
-        result.push(temp);
+        visitors.forEach((visitor) => {
+          const temp = MakeData(staffName, date, purpose, visitor);
+          result.push(temp);
+        });
       });
     }
   });
