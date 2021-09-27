@@ -61,15 +61,15 @@ export default function Dashboard() {
       <GridContainer>
         <MyConfCard
           xs={12}
-          sm={2}
-          md={2}
+          sm={4}
+          md={4}
           category="카뎃 (입실/정원)"
           cluster={clusterType === '0' ? 'gaepo' : 'seocho'}
         />
         <VisitorHeadCount
           xs={12}
-          sm={2}
-          md={2}
+          sm={4}
+          md={4}
           checkInData={checkInData}
           placeName={clusterType === '0' ? '개포' : '서초'}
           headerText={'방문자 (입실/대기)'}

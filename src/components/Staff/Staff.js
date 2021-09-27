@@ -17,7 +17,7 @@ const Staff = () => {
 
   return (
     <GridContainer>
-      <GridItem xs={12} sm={12} md={6}>
+      <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="info">
             <h4 className={classes.cardTitleWhite}>{cardTitle}</h4>

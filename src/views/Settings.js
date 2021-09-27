@@ -108,12 +108,12 @@ const Settings = () => {
     <>
       <Typography variant="h6">카뎃</Typography>
       <GridContainer>
-        <GridItem xs={12} sm={3} md={3}>
+        <GridItem xs={12} sm={6} md={6}>
           <Card>
             <CardHeader color="info">
               <h4 className={classes.cardTitleWhite}>개포</h4>
               <p className={classes.cardCategoryWhite}>
-                클러스터에 입장 가능한 최대 카뎃 인원을 입력해주세요.
+                입장 가능한 최대 카뎃 인원을 입력해주세요.
               </p>
             </CardHeader>
             <CardBody color="info" icon>
@@ -145,12 +145,12 @@ const Settings = () => {
             </CardBody>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={3} md={3}>
+        <GridItem xs={12} sm={6} md={6}>
           <Card>
             <CardHeader color="info">
-              <h4 className={classes.cardTitleWhite}>개포</h4>
+              <h4 className={classes.cardTitleWhite}>서초</h4>
               <p className={classes.cardCategoryWhite}>
-                클러스터에 입장 가능한 최대 카뎃 인원을 입력해주세요.
+                입장 가능한 최대 카뎃 인원을 입력해주세요.
               </p>
             </CardHeader>
             <CardBody color="info" icon>
