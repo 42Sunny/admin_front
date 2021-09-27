@@ -12,6 +12,7 @@ import CreateStaffModal from './CreateStaffModal';
 import DeleteStaffButton from './DeleteStaffButton';
 import CreateStaffButton from './CreateStaffButton';
 import SearchStaff from './SearchStaff';
+import { useFormattedPhone } from 'hooks/useFormattedPhone';
 
 const tableHead = ['ID', '이름', '번호', ''];
 
@@ -21,7 +22,7 @@ const makeTableData = (rawTableData, setChangeValue) => {
     result.push([
       id,
       name,
-      phone,
+      useFormattedPhone(phone),
       <DeleteStaffButton id={id} name={name} phone={phone} setChangeValue={setChangeValue} />,
     ]);
   });
@@ -67,12 +68,14 @@ const StaffTable = () => {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="info">
-              <h4 className={classes.cardTitleWhite}>직원 관리</h4>
+              <div className={classes.cardHeader}>
+                <h4 className={classes.cardTitleWhite}>직원 관리</h4>
+                <CreateStaffButton onClick={handleOpenCreateStaffModal} />
+              </div>
             </CardHeader>
             <CardBody>
               <div className={classes.cardBodyHeader}>
                 <SearchStaff searchValue={searchValue} setSearchValue={setSearchValue} />
-                <CreateStaffButton onClick={handleOpenCreateStaffModal} />
               </div>
               <Table tableHeaderColor="info" tableHead={tableHead} tableData={tableData} />
             </CardBody>

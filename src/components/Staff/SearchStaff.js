@@ -7,15 +7,25 @@ const SearchStaff = ({ searchValue, setSearchValue }) => {
 
   return (
     <div className={classes.searchBox}>
-      <Icon className={classes.searchIcon}>search</Icon>
-      <input
-        className={classes.searchInput}
-        placeholder="이름을 입력하세요"
-        onChange={({ target: { value } }) => {
-          setSearchValue(value);
-        }}
-        value={searchValue}
-      />
+      <div>
+        <div>
+          {/* <select className={classes.searchSelect}>
+            <option>이름</option>
+            <option>휴대폰 번호</option>
+          </select> */}
+        </div>
+        <div className={classes.searchInputBox}>
+          <input
+            className={classes.searchInput}
+            placeholder="검색할 이름을 입력하세요"
+            onChange={({ target: { value } }) => {
+              setSearchValue(value);
+            }}
+            value={searchValue}
+          />
+          <Icon className={classes.searchIcon}>search</Icon>
+        </div>
+      </div>
     </div>
   );
 };
