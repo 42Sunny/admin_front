@@ -89,10 +89,22 @@ export const useStyles = makeStyles({
     borderWidth: '0px 0px 1px 0px',
     borderRadius: '0',
   },
-  addButton: {
+  addIcon: {
     color: '#1cbcd0',
-    padding: '14px',
-    '&:hover': { color: '#5ac2ce' },
-    '&:click': { color: '#1cbcd0' },
+    padding: '6px',
+  },
+  addButton: {
+    appearance: 'none',
+    backgroundColor: 'white',
+    border: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    margin: '8px',
+    '&:hover': { opacity: '0.7' },
+  },
+  addText: {
+    padding: '6px 0px',
+    color: 'grey',
+    fontSize: '0.9rem',
   },
 });

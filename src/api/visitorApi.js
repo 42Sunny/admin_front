@@ -32,7 +32,7 @@ const addStaff = (name, phone) => {
 };
 
 const deleteStaff = (staffId) => {
-  const data = { staffId: JSON.stringify(staffId) };
+  const data = { staffId: Number.parseInt(staffId) };
   return apiHandler('delete', '/admin/staff', data);
 };
 

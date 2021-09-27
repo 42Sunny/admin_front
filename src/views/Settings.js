@@ -8,10 +8,10 @@ import CardHeader from 'components/Card/CardHeader.js';
 import { grayColor } from 'assets/jss/material-dashboard-react.js';
 
 import { reqMaxCapacity, setMaxCapacity } from '../api/checkinApi.js';
-import Staff from 'components/Staff/Staff.js';
 import RegularButton from 'components/CustomButtons/Button.js';
 import CardBody from 'components/Card/CardBody.js';
 import { hexToRgb } from 'assets/jss/material-dashboard-react';
+import StaffTable from 'components/Staff/StaffTable.js';
 
 const { whiteColor } = require('assets/jss/material-dashboard-react');
 
@@ -181,7 +181,7 @@ const Settings = () => {
           </Card>
         </GridItem>
       </GridContainer>
-      <Staff />
+      <StaffTable />
     </>
   );
 };
