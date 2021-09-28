@@ -68,10 +68,11 @@ const Settings = () => {
 
   const getHeadCount = async () => {
     try {
-      const response = await reqMaxCapacity();
+      const today = new Date();
+      const response = await reqMaxCapacity(today.toISOString());
       cmpCapValue = {
-        maxCapGaepo: response.data.maxCapGaepo,
-        maxCapSeocho: response.data.maxCapSeocho,
+        maxCapGaepo: response.data.gaepo,
+        maxCapSeocho: response.data.seocho,
       };
       setCapacity(cmpCapValue);
     } catch (err) {

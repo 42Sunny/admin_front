@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { getAllReserves } from 'api/visitorApi';
 import { getFomattedNow } from 'utils/getFormattedNow';
 
-const WS_URL = 'https://api.visitor.dev.42seoul.io/ws';
+const WS_URL = `${process.env.REACT_APP_VISITOR_API_URL}/ws`;
 const checkInPath = '/visitor';
 
 export const VisitorContext = createContext({});

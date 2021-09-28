@@ -1,6 +1,6 @@
 const { default: axios } = require('axios');
 
-const url = 'https://api.visitor.dev.42seoul.io';
+const url = process.env.REACT_APP_VISITOR_API_URL;
 
 const apiHandler = async (method, path, data) => {
   return await axios(

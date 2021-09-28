@@ -34,16 +34,12 @@ export const getCard = async (cardId, page, listSize) => {
   return await instance.get(`/log/card/${cardId}?page=${page}&listSize=${listSize}`);
 };
 
-export const getCheckIn = async (ClusterType, page, listSize = ALL_CARD_CNT) => {
-  return await instance.get(`/log/checkIn/${ClusterType}?page=${page}&listSize=${listSize}`);
+export const getCheckIn = async (ClusterType, page) => {
+  return await instance.get(`/log/checkIn/${ClusterType}?page=${page}&listSize=${ALL_CARD_CNT}`);
 };
 
-export const getAllCard = async (ClusterType, page) => {
-  return await instance.get(`/log/allCard/${ClusterType}?page=${page}&listSize=${ALL_CARD_CNT}`);
-};
-
-export const reqMaxCapacity = async () => {
-  return await instance.get(`/config`);
+export const reqMaxCapacity = async (date) => {
+  return await instance.get(`/config`, { params: { date } });
 };
 
 export const setMaxCapacity = async (capacity) => {
@@ -51,5 +47,5 @@ export const setMaxCapacity = async (capacity) => {
 };
 
 export const reqUsingCard = async () => {
-  return await instance.get(`/card/using`);
+  return await instance.get(`/user/using`);
 };
