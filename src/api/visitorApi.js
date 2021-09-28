@@ -40,4 +40,17 @@ const getStaffs = () => {
   return apiHandler('get', '/admin/staff', {});
 };
 
-export { apiHandler, getAllReserves, updateVisitorStatus, addStaff, getStaffs, deleteStaff };
+const checkStaff = (staffName) => {
+  const data = { staffName };
+  return apiHandler('post', '/staff', data);
+};
+
+export {
+  apiHandler,
+  getAllReserves,
+  updateVisitorStatus,
+  addStaff,
+  getStaffs,
+  deleteStaff,
+  checkStaff,
+};

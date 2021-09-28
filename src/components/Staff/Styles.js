@@ -135,4 +135,8 @@ export const useStyles = makeStyles({
     color: 'white',
     fontSize: '0.9rem',
   },
+  errorBox: {
+    color: 'red',
+    paddingLeft: '20px',
+  },
 });

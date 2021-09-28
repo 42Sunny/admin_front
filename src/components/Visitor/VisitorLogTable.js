@@ -67,7 +67,6 @@ const MakeData = (
 
 const makeTableData = (checkInData, clusterType) => {
   const result = [];
-  console.log(checkInData);
   checkInData.forEach((elem) => {
     const { place, staffName, date, purpose, visitors } = elem;
     if (clusterType === '0' && place === '개포') {
@@ -98,7 +97,6 @@ const makeTableData = (checkInData, clusterType) => {
       });
     }
   });
-  console.log(result);
   result.reverse();
   return result;
 };
