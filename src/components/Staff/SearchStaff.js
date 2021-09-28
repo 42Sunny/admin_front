@@ -8,12 +8,6 @@ const SearchStaff = ({ searchValue, setSearchValue }) => {
   return (
     <div className={classes.searchBox}>
       <div>
-        <div>
-          {/* <select className={classes.searchSelect}>
-            <option>이름</option>
-            <option>휴대폰 번호</option>
-          </select> */}
-        </div>
         <div className={classes.searchInputBox}>
           <input
             className={classes.searchInput}
