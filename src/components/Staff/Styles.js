@@ -123,7 +123,7 @@ export const useStyles = makeStyles({
   },
   addButton: {
     appearance: 'none',
-    backgroundColor: '#09B0C4',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     border: 'none',
     display: 'flex',
     alignItems: 'center',
