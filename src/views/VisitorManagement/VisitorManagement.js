@@ -57,12 +57,12 @@ const styles = {
   },
   searchInput: {
     borderStyle: 'none',
-    fontSize: '1.1rem',
+    fontSize: '0.9rem',
     padding: '0',
   },
   searchSelect: {
     borderStyle: 'none',
-    fontSize: '1.1rem',
+    fontSize: '0.9rem',
   },
   searchIcon: { fontSize: '1.7rem' },
 };
@@ -222,7 +222,9 @@ function VisitorManagementContent() {
                       className={classes.searchInput}
                       placeholder="다음으로 검색"
                       value={inputValue}
-                      onChange={({ target: { value } }) => setInputValue(value)}
+                      onChange={({ target: { value }, nativeEvent: { data } }) => {
+                        if (data !== '\\') setInputValue(value);
+                      }}
                     />
                     <Icon className={classes.searchIcon}>search</Icon>
                   </div>

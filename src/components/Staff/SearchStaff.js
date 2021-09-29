@@ -12,8 +12,8 @@ const SearchStaff = ({ searchValue, setSearchValue }) => {
           <input
             className={classes.searchInput}
             placeholder="검색할 이름을 입력하세요"
-            onChange={({ target: { value } }) => {
-              setSearchValue(value);
+            onChange={({ target: { value }, nativeEvent: { data } }) => {
+              if (data !== '\\') setSearchValue(value);
             }}
             value={searchValue}
           />
