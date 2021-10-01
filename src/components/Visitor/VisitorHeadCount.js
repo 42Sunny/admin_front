@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core';
 import { VisitorContext } from 'contexts/VisitorContext';
 
 const useStyles = makeStyles(styles);
-const NEW_ALERT_TIME = 10000;
+const NEW_ALERT_TIME = 5000;
 
 const countVisitor = (checkInData, placeName) => {
   let checkin = 0;
@@ -72,7 +72,7 @@ const VisitorHeadCount = ({ xs, sm, md, checkInData, placeName, headerText }) =>
           <div className={classes.cardWrapper}>
             {isNew === true && (
               <h6 className={classes.cardTitle} style={{ color: 'red', fontWeight: 'bold' }}>
-                New
+                Update
               </h6>
             )}
             <h1 className={classes.cardTitle}>{checkIn}</h1>

@@ -5,9 +5,11 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getAllReserves } from 'api/visitorApi';
 import { getFomattedNow } from 'utils/getFormattedNow';
+import { useSnackbar } from 'notistack';
 
 const WS_URL = 'https://api.visitor.dev.42seoul.io/ws';
 const checkInPath = '/visitor';
+const options = { variant: 'info', anchorOrigin: { vertical: 'bottom', horizontal: 'right' } };
 
 export const VisitorContext = createContext({});
 
@@ -16,6 +18,7 @@ export const VisitorProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [checkInData, setCheckInData] = useState([]);
   const [newVisitorAlert, setNewVisitorAlert] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const getReserve = (date) => {
     getAllReserves(date).then((res) => setCheckInData(res.data));
@@ -41,8 +44,10 @@ export const VisitorProvider = ({ children }) => {
         { login: 'user', passcode: 'password' },
         () => {
           client.subscribe(checkInPath, (data) => {
+            const { body } = data;
             getReserve(getFomattedNow());
             setNewVisitorAlert(true);
+            enqueueSnackbar(body, options);
           });
         },
         (error) => {
