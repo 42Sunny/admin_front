@@ -7,7 +7,7 @@ import { getAllReserves } from 'api/visitorApi';
 import { getFomattedNow } from 'utils/getFormattedNow';
 import { useSnackbar } from 'notistack';
 
-const WS_URL = 'https://api.visitor.dev.42seoul.io/ws';
+const WS_URL = `${process.env.REACT_APP_VISITOR_API_URL}/ws`;
 const checkInPath = '/visitor';
 const options = { variant: 'info', anchorOrigin: { vertical: 'bottom', horizontal: 'right' } };
 
