@@ -112,7 +112,7 @@ export const MyLogTable = forwardRef(
               tableData={logs.map((log, idx) => {
                 return [
                   log._id ?? (page - 1) * listSize + idx + 1,
-                  moment(log.create_at).format('MM월 DD일 HH:mm') ?? null,
+                  moment(log.created_at).format('MM월 DD일 HH:mm') ?? null,
                   log.type,
                   log.login,
                   log.card_no,
