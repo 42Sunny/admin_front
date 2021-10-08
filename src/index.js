@@ -4,6 +4,7 @@ import App from './App';
 import { LoginProvider } from 'contexts/LoginContext';
 import { VisitorProvider } from 'contexts/VisitorContext';
 import { SnackbarProvider } from 'notistack';
+import 'assets/css/Global.css';
 
 ReactDOM.render(
   <LoginProvider>
