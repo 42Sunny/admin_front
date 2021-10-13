@@ -27,6 +27,9 @@ const useStyles = makeStyles({
     color: 'white',
     borderStyle: 'none',
     borderRadius: '3px',
+    '&:active': {
+      backgroundColor: '#0962AA',
+    },
   },
   error: {
     color: 'red',
