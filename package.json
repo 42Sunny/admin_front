@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "dotenv": "^10.0.0",
     "dotenv-cli": "^4.0.0"
   }
 }

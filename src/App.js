@@ -7,6 +7,8 @@ import { checkAdmin } from 'api/checkinApi';
 
 import 'assets/css/material-dashboard-react.css?v=1.10.0';
 import 'assets/css/input.css';
+import { SnackbarProvider } from 'notistack';
+import { VisitorProvider } from 'contexts/VisitorContext';
 
 const App = () => {
   const { isLogin, setIsLogin } = useContext(LoginContext);
@@ -53,7 +55,11 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         {process.env.REACT_APP_AUTO_LOGIN || isLogin ? (
-          <Route path="*" component={Admin} />
+          <SnackbarProvider maxSnack={3}>
+            <VisitorProvider>
+              <Route path="*" component={Admin} />
+            </VisitorProvider>
+          </SnackbarProvider>
         ) : (
           <Route path="*" component={Login} />
         )}
