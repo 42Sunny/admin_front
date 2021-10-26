@@ -110,22 +110,20 @@ const VisitorLogTable = ({ xs, sm, md, checkInData, clusterType }) => {
   }, [checkInData, clusterType]);
 
   return (
-    <>
-      <GridItem xs={xs} sm={sm} md={md}>
-        <Card>
-          <CardHeader color="info">
-            <h4 className={classes.cardTitleWhite}>방문자</h4>
-          </CardHeader>
-          <CardBody>
-            {tableData && tableData.length !== 0 ? (
-              <Table tableHeaderColor="info" tableHead={tableHead} tableData={tableData} />
-            ) : (
-              <h3>방문 예약이 없습니다.</h3>
-            )}
-          </CardBody>
-        </Card>
-      </GridItem>
-    </>
+    <GridItem xs={xs} sm={sm} md={md}>
+      <Card>
+        <CardHeader color="info">
+          <h4 className={classes.cardTitleWhite}>방문자</h4>
+        </CardHeader>
+        <CardBody>
+          {tableData && tableData.length !== 0 ? (
+            <Table tableHeaderColor="info" tableHead={tableHead} tableData={tableData} />
+          ) : (
+            <h3>방문 예약이 없습니다.</h3>
+          )}
+        </CardBody>
+      </Card>
+    </GridItem>
   );
 };
 

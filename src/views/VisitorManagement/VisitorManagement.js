@@ -42,7 +42,7 @@ const styles = {
   },
   searchContainer: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   searchBox: {
     borderStyle: 'solid',
@@ -65,6 +65,24 @@ const styles = {
     fontSize: '0.9rem',
   },
   searchIcon: { fontSize: '1.7rem' },
+  checkPlaceContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.3rem',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkPlaceBox: {
+    display: 'flex',
+    gap: '0.2rem',
+  },
+  checkLabel: {
+    fontSize: '1rem',
+  },
+  checkBox: {
+    width: '1rem',
+    height: '1rem',
+  },
 };
 
 const VisitorManagementContext = createContext({});
@@ -96,7 +114,6 @@ const tableHead = [
 ];
 
 const selectOptions = [
-  { value: 'place', name: '장소' },
   { value: 'name', name: '이름' },
   { value: 'staffName', name: '직원' },
   { value: 'organization', name: '소속' },
@@ -123,12 +140,14 @@ const Status = (props) => {
       <option value="대기">대기</option>
       <option value="입실">입실</option>
       <option value="퇴실">퇴실</option>
+      <option value="만료">만료</option>
     </select>
   );
 };
 
-const makeTableData = (checkInData, selectOption, inputValue) => {
-  const result = [];
+const makeTableData = (checkInData, selectOption, inputValue, checks) => {
+  let result = [];
+  const [checkGaepo, checkSeocho] = checks;
   checkInData.forEach((elem) => {
     const { place, staffName, date, purpose, visitors } = elem;
     visitors.forEach((elem) => {
@@ -152,8 +171,7 @@ const makeTableData = (checkInData, selectOption, inputValue) => {
       ];
       if (inputValue === '') result.push(temp);
       else {
-        if (selectOption === 'place' && place.search(inputValue) !== -1) result.push(temp);
-        else if (selectOption === 'name' && elem.name.search(inputValue) !== -1) result.push(temp);
+        if (selectOption === 'name' && elem.name.search(inputValue) !== -1) result.push(temp);
         else if (selectOption === 'staffName' && staffName.search(inputValue) !== -1)
           result.push(temp);
         else if (selectOption === 'organization' && elem.organization.search(inputValue) !== -1)
@@ -165,6 +183,9 @@ const makeTableData = (checkInData, selectOption, inputValue) => {
       }
     });
   });
+  result = result.filter(
+    (elem) => (elem[1] === '서초' && checkSeocho) || (elem[1] === '개포' && checkGaepo),
+  );
   result.reverse();
   return result;
 };
@@ -175,15 +196,28 @@ function VisitorManagementContent() {
   const { date, setDate, checkInData, setCheckInData } = useContext(VisitorManagementContext);
   const [selectOption, setSelectOption] = useState(selectOptions[0].value);
   const [inputValue, setInputValue] = useState('');
+  const [checkGaepo, setCheckGaepo] = useState(true);
+  const [checkSeocho, setCheckSeocho] = useState(true);
+
+  const handleCheckSeocho = () => {
+    setCheckSeocho(!checkSeocho);
+  };
+
+  const handleCheckGaepo = () => {
+    setCheckGaepo(!checkGaepo);
+  };
 
   useEffect(() => {
     getAllReserves(date).then((res) => setCheckInData(res.data));
   }, [date, setCheckInData]);
 
   useEffect(() => {
-    const tableData = makeTableData(checkInData, selectOption, inputValue);
+    const tableData = makeTableData(checkInData, selectOption, inputValue, [
+      checkGaepo,
+      checkSeocho,
+    ]);
     setTableData(tableData);
-  }, [checkInData, inputValue, selectOption]);
+  }, [checkInData, inputValue, selectOption, checkSeocho, checkGaepo]);
 
   return (
     <div>
@@ -206,6 +240,26 @@ function VisitorManagementContent() {
               </CardHeader>
               <CardBody>
                 <div className={classes.searchContainer}>
+                  <div className={classes.checkPlaceContainer}>
+                    <div className={classes.checkPlaceBox} onClick={handleCheckGaepo}>
+                      <input
+                        className={classes.checkBox}
+                        type="checkbox"
+                        checked={checkGaepo}
+                        onChange={handleCheckGaepo}
+                      />
+                      <label className={classes.checkLabel}>개포</label>
+                    </div>
+                    <div className={classes.checkPlaceBox} onClick={handleCheckSeocho}>
+                      <input
+                        className={classes.checkBox}
+                        type="checkbox"
+                        checked={checkSeocho}
+                        onChange={handleCheckSeocho}
+                      />
+                      <label className={classes.checkLabel}>서초</label>
+                    </div>
+                  </div>
                   <div className={classes.searchBox}>
                     <select
                       className={classes.searchSelect}
