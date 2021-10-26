@@ -90,9 +90,50 @@ const VisitorManagementContext = createContext({});
 const VisitorManagementProvider = ({ children }) => {
   const [checkInData, setCheckInData] = useState([]);
   const [date, setDate] = useState(new moment().format('YYYY-MM-DD'));
+  const [checkGaepo, setCheckGaepo] = useState(true);
+  const [checkSeocho, setCheckSeocho] = useState(true);
+
+  const [tableData, setTableData] = useState([]);
+  const [searchOption, setSearchOption] = useState(searchOptions[0].value);
+  const [searchValue, setSearchValue] = useState('');
+
+  useEffect(() => {
+    getAllReserves(date).then((res) => setCheckInData(res.data));
+  }, [date, setCheckInData]);
+
+  useEffect(() => {
+    const tableData = makeTableData(checkInData, searchOption, searchValue, [
+      checkGaepo,
+      checkSeocho,
+    ]);
+    setTableData(tableData);
+  }, [checkInData, searchValue, searchOption, checkSeocho, checkGaepo]);
 
   return (
-    <VisitorManagementContext.Provider value={{ checkInData, setCheckInData, date, setDate }}>
+    <VisitorManagementContext.Provider
+      value={{
+        checkInData,
+        setCheckInData,
+
+        date,
+        setDate,
+
+        checkGaepo,
+        setCheckGaepo,
+
+        checkSeocho,
+        setCheckSeocho,
+
+        tableData,
+        setTableData,
+
+        searchOption,
+        setSearchOption,
+
+        searchValue,
+        setSearchValue,
+      }}
+    >
       {children}
     </VisitorManagementContext.Provider>
   );
@@ -113,7 +154,7 @@ const tableHead = [
   '상태',
 ];
 
-const selectOptions = [
+const searchOptions = [
   { value: 'name', name: '이름' },
   { value: 'staffName', name: '직원' },
   { value: 'organization', name: '소속' },
@@ -129,10 +170,11 @@ const Status = (props) => {
 
   return (
     <select
-      name="purpose"
+      name="status"
       onChange={async ({ target: { value } }) => {
         await updateVisitorStatus(props.value.visitorId, value);
-        getAllReserves(date).then((res) => setCheckInData(res.data));
+        const res = await getAllReserves(date);
+        setCheckInData(res.data);
       }}
       className={classes.status}
       defaultValue={props.value.status}
@@ -145,59 +187,69 @@ const Status = (props) => {
   );
 };
 
-const makeTableData = (checkInData, selectOption, inputValue, checks) => {
-  let result = [];
+const makeTableData = (checkInData, searchOption, searchValue, checks) => {
+  let results = [];
   const [checkGaepo, checkSeocho] = checks;
   checkInData.forEach((elem) => {
     const { place, staffName, date, purpose, visitors } = elem;
-    visitors.forEach((elem) => {
-      const enterDate = date && new moment(date).format('YYYY-MM-DD');
-      const reserveTime = date && new moment(date).format('HH:mm');
-      const enterTime = elem.checkInTime && new moment(elem.checkInTime).format('HH:mm');
-      const exitTime = elem.checkOutTime && new moment(elem.checkOutTime).format('HH:mm');
-      const temp = [
-        elem.visitorId,
-        place,
-        enterDate,
-        reserveTime,
-        enterTime,
-        exitTime,
-        staffName,
-        elem.organization,
-        elem.name,
-        useFormattedPhone(elem.phone),
-        purpose,
-        <Status value={elem} />,
-      ];
-      if (inputValue === '') result.push(temp);
-      else {
-        if (selectOption === 'name' && elem.name.search(inputValue) !== -1) result.push(temp);
-        else if (selectOption === 'staffName' && staffName.search(inputValue) !== -1)
-          result.push(temp);
-        else if (selectOption === 'organization' && elem.organization.search(inputValue) !== -1)
-          result.push(temp);
-        else if (selectOption === 'phone' && elem.phone.search(inputValue) !== -1)
-          result.push(temp);
-        else if (selectOption === 'status' && elem.status.search(inputValue) !== -1)
-          result.push(temp);
-      }
-    });
+    if ((place === '서초' && checkSeocho) || (place === '개포' && checkGaepo)) {
+      visitors.forEach((visitor) => {
+        const enterDate = date && new moment(date).format('YYYY-MM-DD');
+        const reserveTime = date && new moment(date).format('HH:mm');
+        const enterTime = visitor.checkInTime && new moment(visitor.checkInTime).format('HH:mm');
+        const exitTime = visitor.checkOutTime && new moment(visitor.checkOutTime).format('HH:mm');
+        const temp = [
+          visitor.visitorId,
+          place,
+          enterDate,
+          reserveTime,
+          enterTime,
+          exitTime,
+          staffName,
+          visitor.organization,
+          visitor.name,
+          useFormattedPhone(visitor.phone),
+          purpose,
+          <Status value={visitor} />,
+        ];
+        if (searchValue === '') results.push(temp);
+        else {
+          if (searchOption === 'name' && visitor.name.search(searchValue) !== -1)
+            results.push(temp);
+          else if (searchOption === 'staffName' && staffName.search(searchValue) !== -1)
+            results.push(temp);
+          else if (
+            searchOption === 'organization' &&
+            visitor.organization.search(searchValue) !== -1
+          )
+            results.push(temp);
+          else if (searchOption === 'phone' && visitor.phone.search(searchValue) !== -1)
+            results.push(temp);
+          else if (searchOption === 'status' && visitor.status.search(searchValue) !== -1)
+            results.push(temp);
+        }
+      });
+    }
   });
-  result = result.filter(
-    (elem) => (elem[1] === '서초' && checkSeocho) || (elem[1] === '개포' && checkGaepo),
-  );
-  result.reverse();
-  return result;
+  results.reverse();
+  return results;
 };
 
 function VisitorManagementContent() {
   const classes = useStyles();
-  const [tableData, setTableData] = useState([]);
-  const { date, setDate, checkInData, setCheckInData } = useContext(VisitorManagementContext);
-  const [selectOption, setSelectOption] = useState(selectOptions[0].value);
-  const [inputValue, setInputValue] = useState('');
-  const [checkGaepo, setCheckGaepo] = useState(true);
-  const [checkSeocho, setCheckSeocho] = useState(true);
+  const {
+    setCheckGaepo,
+    setCheckSeocho,
+    checkSeocho,
+    checkGaepo,
+    date,
+    setDate,
+    searchOption,
+    setSearchOption,
+    searchValue,
+    setSearchValue,
+    tableData,
+  } = useContext(VisitorManagementContext);
 
   const handleCheckSeocho = () => {
     setCheckSeocho(!checkSeocho);
@@ -206,18 +258,6 @@ function VisitorManagementContent() {
   const handleCheckGaepo = () => {
     setCheckGaepo(!checkGaepo);
   };
-
-  useEffect(() => {
-    getAllReserves(date).then((res) => setCheckInData(res.data));
-  }, [date, setCheckInData]);
-
-  useEffect(() => {
-    const tableData = makeTableData(checkInData, selectOption, inputValue, [
-      checkGaepo,
-      checkSeocho,
-    ]);
-    setTableData(tableData);
-  }, [checkInData, inputValue, selectOption, checkSeocho, checkGaepo]);
 
   return (
     <div>
@@ -263,10 +303,10 @@ function VisitorManagementContent() {
                   <div className={classes.searchBox}>
                     <select
                       className={classes.searchSelect}
-                      value={selectOption}
-                      onChange={({ target: { value } }) => setSelectOption(value)}
+                      value={searchOption}
+                      onChange={({ target: { value } }) => setSearchOption(value)}
                     >
-                      {selectOptions.map((elem, idx) => (
+                      {searchOptions.map((elem, idx) => (
                         <option key={idx} value={elem.value}>
                           {elem.name}
                         </option>
@@ -275,9 +315,9 @@ function VisitorManagementContent() {
                     <input
                       className={classes.searchInput}
                       placeholder="다음으로 검색"
-                      value={inputValue}
+                      value={searchValue}
                       onChange={({ target: { value }, nativeEvent: { data } }) => {
-                        if (data !== '\\') setInputValue(value);
+                        if (data !== '\\') setSearchValue(value);
                       }}
                     />
                     <Icon className={classes.searchIcon}>search</Icon>
