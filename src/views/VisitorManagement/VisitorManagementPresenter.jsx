@@ -12,8 +12,10 @@ import VisitorManagementBodyHeader from './VisitorManagementBodyHeader';
 
 const VisitorManagementPresenter = () => {
   const {
-    date,
-    setDate,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
     checkGaepo,
     setCheckGaepo,
     checkSeocho,
@@ -31,7 +33,12 @@ const VisitorManagementPresenter = () => {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="info">
-              <VisitorManagementHeader date={date} setDate={setDate} />
+              <VisitorManagementHeader
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+              />
             </CardHeader>
             <CardBody>
               <VisitorManagementBodyHeader
