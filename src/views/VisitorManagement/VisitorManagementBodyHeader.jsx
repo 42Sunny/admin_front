@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import VisitorManagementCheckBox from './VisitorManagementCheckBox';
 import VisitorManagementSearchBar from './VisitorManagementSeachBar';
 import styles from './VisitorManagementStyles';
 
@@ -17,12 +16,6 @@ const VisitorManagementBodyHeader = ({
   const classes = makeStyles(styles)();
   return (
     <div className={classes.bodyHeader}>
-      <VisitorManagementCheckBox
-        setCheckGaepo={setCheckGaepo}
-        setCheckSeocho={setCheckSeocho}
-        checkGaepo={checkGaepo}
-        checkSeocho={checkSeocho}
-      />
       <VisitorManagementSearchBar
         searchOption={searchOption}
         setSearchOption={setSearchOption}

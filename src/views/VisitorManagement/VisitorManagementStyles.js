@@ -1,4 +1,25 @@
 const styles = {
+  header: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.5rem',
+  },
+  datePicker: {
+    backgroundColor: 'rgba(255, 255, 255 ,0)',
+    borderStyle: 'none',
+    color: 'white',
+    fontFamily: 'Spoqa Han Sans Neo',
+    padding: '0rem',
+    margin: '0px',
+    fontSize: '1.2rem',
+    boxSizing: 'border-box',
+  },
+  datePickerBox: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+  },
+
   cardCategoryWhite: {
     color: 'rgba(255,255,255,.62)',
     margin: '0',
@@ -15,14 +36,7 @@ const styles = {
     marginBottom: '3px',
     textDecoration: 'none',
   },
-  datePicker: {
-    backgroundColor: 'rgba(255, 255, 255 ,0)',
-    borderStyle: 'none',
-    color: 'white',
-    fontFamily: 'Spoqa Han Sans Neo',
-    padding: '5px 0px 0px 0px',
-    fontSize: '0.9rem',
-  },
+
   searchContainer: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -48,27 +62,21 @@ const styles = {
     fontSize: '0.9rem',
   },
   searchIcon: { fontSize: '1.7rem' },
-  checkPlaceContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.3rem',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkPlaceBox: {
-    display: 'flex',
-    gap: '0.2rem',
-  },
-  checkLabel: {
-    fontSize: '1rem',
-  },
-  checkBox: {
-    width: '1rem',
-    height: '1rem',
-  },
+
   bodyHeader: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
+  },
+
+  placeSelect: {
+    borderStyle: 'none',
+    fontSize: '14px',
+    color: '#00ACC1',
+    fontWeight: 'bold',
+  },
+
+  statueSelect: {
+    borderStyle: 'none',
   },
 };
 
