@@ -8,7 +8,8 @@ const VisitorManagementContext = createContext({});
 
 const VisitorManagementProvider = ({ children }) => {
   const [checkInData, setCheckInData] = useState([]);
-  const [date, setDate] = useState(new moment().format('YYYY-MM-DD'));
+  const [startDate, setStartDate] = useState(new moment().format('YYYY-MM-DD'));
+  const [endDate, setEndDate] = useState(new moment().format('YYYY-MM-DD'));
   const [checkGaepo, setCheckGaepo] = useState(true);
   const [checkSeocho, setCheckSeocho] = useState(true);
 
@@ -17,8 +18,8 @@ const VisitorManagementProvider = ({ children }) => {
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
-    getAllReserves(date).then((res) => setCheckInData(res.data));
-  }, [date, setCheckInData]);
+    getAllReserves(startDate).then((res) => setCheckInData(res.data));
+  }, [startDate, setCheckInData]);
 
   useEffect(() => {
     const tableData = makeTableData(checkInData, searchOption, searchValue, [
@@ -34,8 +35,11 @@ const VisitorManagementProvider = ({ children }) => {
         checkInData,
         setCheckInData,
 
-        date,
-        setDate,
+        startDate,
+        setStartDate,
+
+        endDate,
+        setEndDate,
 
         checkGaepo,
         setCheckGaepo,

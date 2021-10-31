@@ -1,3 +1,5 @@
+import VisitorManagementPlaceSelector from './VisitorManagementPlaceSelector';
+
 export const SEARCH_OPTIONS = [
   { value: 'name', name: '이름' },
   { value: 'staffName', name: '직원' },
@@ -7,7 +9,7 @@ export const SEARCH_OPTIONS = [
 ];
 
 export const TABLE_HEAD = [
-  '장소',
+  <VisitorManagementPlaceSelector />,
   '날짜',
   '예약 시간',
   '입실',
