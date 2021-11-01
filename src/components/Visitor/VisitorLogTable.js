@@ -109,6 +109,7 @@ const VisitorLogTable = ({ xs, sm, md, checkInData, clusterType }) => {
     setTableData(makeTableData(checkInData, clusterType));
   }, [checkInData, clusterType]);
 
+  console.log(tableData);
   return (
     <GridItem xs={xs} sm={sm} md={md}>
       <Card>

@@ -5,17 +5,13 @@ import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import { useContext } from 'react';
 import { TABLE_HEAD } from './Define';
-import { VisitorManagementContext } from './VisitorManagementContext';
-import VisitorManagementHeader from './VisitorManagementHeader';
+import { VisitorManagementContext } from '../../contexts/VisitorManagementContext';
+import VisitDataTableHeader from './VisitDataTableHeader';
 import Table from 'components/Table/Table';
-import VisitorManagementBodyHeader from './VisitorManagementBodyHeader';
+import VisitDataTableBodyHeader from './VisitDataTableBodyHeader';
 
-const VisitorManagementPresenter = () => {
+const VisitDataTablePresenter = () => {
   const {
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
     checkGaepo,
     setCheckGaepo,
     checkSeocho,
@@ -33,15 +29,10 @@ const VisitorManagementPresenter = () => {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="info">
-              <VisitorManagementHeader
-                startDate={startDate}
-                setStartDate={setStartDate}
-                endDate={endDate}
-                setEndDate={setEndDate}
-              />
+              <VisitDataTableHeader />
             </CardHeader>
             <CardBody>
-              <VisitorManagementBodyHeader
+              <VisitDataTableBodyHeader
                 setCheckGaepo={setCheckGaepo}
                 setCheckSeocho={setCheckSeocho}
                 checkGaepo={checkGaepo}
@@ -60,4 +51,4 @@ const VisitorManagementPresenter = () => {
   );
 };
 
-export default VisitorManagementPresenter;
+export default VisitDataTablePresenter;

@@ -3,12 +3,7 @@ import { Icon } from '@mui/material';
 import { SEARCH_OPTIONS } from './Define';
 import styles from './VisitorManagementStyles';
 
-const VisitorManagementSearchBar = ({
-  searchOption,
-  setSearchOption,
-  searchValue,
-  setSearchValue,
-}) => {
+const VisitDataTableSeachBar = ({ searchOption, setSearchOption, searchValue, setSearchValue }) => {
   const classes = makeStyles(styles)();
   return (
     <div className={classes.searchContainer}>
@@ -20,7 +15,7 @@ const VisitorManagementSearchBar = ({
         >
           {SEARCH_OPTIONS.map((elem, idx) => (
             <option key={idx} value={elem.value}>
-              {elem.name}
+              {elem.text}
             </option>
           ))}
         </select>
@@ -38,4 +33,4 @@ const VisitorManagementSearchBar = ({
   );
 };
 
-export default VisitorManagementSearchBar;
+export default VisitDataTableSeachBar;

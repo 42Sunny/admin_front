@@ -1,9 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import VisitorManagementSearchBar from './VisitorManagementSeachBar';
+import VisitDataTablePageSelect from './VisitDataTablePageSelect';
+import VisitorManagementSearchBar from './VisitDataTableSeachBar';
 import styles from './VisitorManagementStyles';
 
-const VisitorManagementBodyHeader = ({
+const VisitDataTableBodyHeader = ({
   setCheckGaepo,
   setCheckSeocho,
   checkGaepo,
@@ -22,8 +23,9 @@ const VisitorManagementBodyHeader = ({
         searchValue={searchValue}
         setSearchValue={setSearchValue}
       />
+      <VisitDataTablePageSelect />
     </div>
   );
 };
 
-export default VisitorManagementBodyHeader;
+export default VisitDataTableBodyHeader;
