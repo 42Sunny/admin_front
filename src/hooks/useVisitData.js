@@ -10,8 +10,8 @@ import { SEARCH_OPTION_NAME } from 'views/VisitorManagement/Define';
 import { PLACE_GAEPO } from 'views/VisitorManagement/Define';
 import { PLACE_ALL } from 'views/VisitorManagement/Define';
 import { PLACE_SEOCHO } from 'views/VisitorManagement/Define';
-import VisitStatus from 'views/VisitorManagement/VisitStatus';
 import { useFormattedPhone } from './useFormattedPhone';
+// import VisitStatus from 'views/VisitorManagement/VisitStatus';
 
 const makeTableData = (visitData, searchOption, searchValue, placeValue) => {
   let results = [];
