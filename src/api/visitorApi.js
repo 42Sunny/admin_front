@@ -3,6 +3,10 @@ const { default: axios } = require('axios');
 const URL = process.env.REACT_APP_VISITOR_API_URL;
 const VERSION_PATH = '/v1';
 const makeApiPath = (path) => `${VERSION_PATH}${path}`;
+const METHOD_GET = 'get';
+const METHOD_POST = 'post';
+const METHOD_PUT = 'put';
+const METHOD_DELETE = 'delete';
 
 const apiHandler = async (method, path, data) => {
   return await axios(
@@ -20,31 +24,38 @@ const apiHandler = async (method, path, data) => {
 
 const getAllReserves = (date) => {
   const data = { date };
-  return apiHandler('post', makeApiPath('/info/reserve/date'), data);
+  return apiHandler(METHOD_POST, makeApiPath('/info/reserve/date'), data);
 };
 
 const updateVisitorStatus = (id, status) => {
   const data = { visitor: { id, status } };
-  return apiHandler('put', makeApiPath('/info/visitor/status'), data);
+  return apiHandler(METHOD_PUT, makeApiPath('/info/visitor/status'), data);
 };
 
 const addStaff = (name, phone) => {
   const data = { name, phone };
-  return apiHandler('post', makeApiPath('/admin/staff/save'), data);
+  return apiHandler(METHOD_POST, makeApiPath('/admin/staff/save'), data);
 };
 
 const deleteStaff = (staffId) => {
   const data = { staffId: Number.parseInt(staffId) };
-  return apiHandler('delete', makeApiPath('/admin/staff'), data);
+  return apiHandler(METHOD_DELETE, makeApiPath('/admin/staff'), data);
 };
 
 const getStaffs = () => {
-  return apiHandler('get', makeApiPath('/admin/staff'), {});
+  return apiHandler(METHOD_GET, makeApiPath('/admin/staff'), {});
 };
 
 const checkStaff = (staffName) => {
   const data = { staffName };
-  return apiHandler('post', makeApiPath('/staff'), data);
+  return apiHandler(METHOD_POST, makeApiPath('/staff'), data);
+};
+
+const INIT_PAGE = 0;
+const INIT_SIZE = 10;
+const getVisitData = (start, end, page = INIT_PAGE, size = INIT_SIZE) => {
+  const data = { start, end, pagination: { page, size } };
+  return apiHandler(METHOD_POST, makeApiPath('/info/log/date'), data);
 };
 
 export {
@@ -55,4 +66,5 @@ export {
   getStaffs,
   deleteStaff,
   checkStaff,
+  getVisitData,
 };

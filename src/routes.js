@@ -3,7 +3,7 @@ import Person from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DescriptionIcon from '@material-ui/icons/Description';
 import DashboardPage from 'views/Dashboard/Dashboard.js';
-import VisitorManagement from 'views/VisitorManagement/VisitorManagement.js';
+import VisitorManagement from 'views/VisitorManagement/VisitorManagementContainer';
 import CheckInManagement from 'views/CheckInManagement';
 import Settings from 'views/Settings';
 

@@ -1,39 +1,27 @@
-import { getAllReserves } from 'api/visitorApi';
 import moment from 'moment';
-import { createContext, useEffect, useState } from 'react';
-import { SEARCH_OPTIONS } from './Define';
-import makeTableData from './makeTableData';
+import { createContext, useState } from 'react';
+import { PLACE_ALL, SEARCH_OPTIONS } from '../views/VisitorManagement/Define';
 
 const VisitorManagementContext = createContext({});
 
 const VisitorManagementProvider = ({ children }) => {
-  const [checkInData, setCheckInData] = useState([]);
+  const [visitData, setVisitData] = useState([]);
   const [startDate, setStartDate] = useState(new moment().format('YYYY-MM-DD'));
   const [endDate, setEndDate] = useState(new moment().format('YYYY-MM-DD'));
-  const [checkGaepo, setCheckGaepo] = useState(true);
-  const [checkSeocho, setCheckSeocho] = useState(true);
+  const [place, setPlace] = useState(PLACE_ALL.value);
 
   const [tableData, setTableData] = useState([]);
   const [searchOption, setSearchOption] = useState(SEARCH_OPTIONS[0].value);
   const [searchValue, setSearchValue] = useState('');
 
-  useEffect(() => {
-    getAllReserves(startDate).then((res) => setCheckInData(res.data));
-  }, [startDate, setCheckInData]);
-
-  useEffect(() => {
-    const tableData = makeTableData(checkInData, searchOption, searchValue, [
-      checkGaepo,
-      checkSeocho,
-    ]);
-    setTableData(tableData);
-  }, [checkInData, searchValue, searchOption, checkSeocho, checkGaepo]);
+  const [page, setPage] = useState(0);
+  const [lastPage, setLastPage] = useState(0);
 
   return (
     <VisitorManagementContext.Provider
       value={{
-        checkInData,
-        setCheckInData,
+        visitData,
+        setVisitData,
 
         startDate,
         setStartDate,
@@ -41,11 +29,8 @@ const VisitorManagementProvider = ({ children }) => {
         endDate,
         setEndDate,
 
-        checkGaepo,
-        setCheckGaepo,
-
-        checkSeocho,
-        setCheckSeocho,
+        place,
+        setPlace,
 
         tableData,
         setTableData,
@@ -55,6 +40,12 @@ const VisitorManagementProvider = ({ children }) => {
 
         searchValue,
         setSearchValue,
+
+        page,
+        setPage,
+
+        lastPage,
+        setLastPage,
       }}
     >
       {children}

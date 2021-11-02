@@ -65,7 +65,7 @@ const styles = {
 
   bodyHeader: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
 
   placeSelect: {
@@ -78,6 +78,28 @@ const styles = {
   statueSelect: {
     borderStyle: 'none',
   },
+
+  pageSelectBox: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '0.3rem',
+  },
+  pageSelectButton: {
+    backgroundColor: 'white',
+    borderStyle: 'solid',
+    borderRadius: '0.3rem',
+    borderWidth: '1px',
+    borderColor: 'black',
+    fontSize: '1.1rem',
+    '&:active': {
+      backgroundColor: '#1a1a1a',
+    },
+    '&:hover': {
+      backgroundColor: '#cacaca',
+    },
+  },
+  pageSelectContent: { fontSize: '1.3rem' },
 };
 
 export default styles;

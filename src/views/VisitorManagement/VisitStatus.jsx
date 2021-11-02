@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import { getAllReserves } from 'api/visitorApi';
 import { updateVisitorStatus } from 'api/visitorApi';
 import { useContext } from 'react';
-import { VisitorManagementContext } from './VisitorManagementContext';
+import { VisitorManagementContext } from '../../contexts/VisitorManagementContext';
 import styles from './VisitorManagementStyles';
 
 const StatusOptions = [
@@ -19,7 +19,7 @@ const Options = () =>
     </option>
   ));
 
-const VisitorManagementStatus = (props) => {
+const VisitStatus = (props) => {
   const classes = makeStyles(styles)();
   const { date, setCheckInData } = useContext(VisitorManagementContext);
 
@@ -41,4 +41,4 @@ const VisitorManagementStatus = (props) => {
   );
 };
 
-export default VisitorManagementStatus;
+export default VisitStatus;
