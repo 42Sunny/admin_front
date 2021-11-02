@@ -14,13 +14,13 @@ import CreateStaffButton from './CreateStaffButton';
 import SearchStaff from './SearchStaff';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
 
-const tableHead = ['ID', '이름', '번호', ''];
+const tableHead = ['소속', '이름', '번호', ''];
 
 const makeTableData = (rawTableData, setChangeValue) => {
   const result = [];
-  rawTableData.forEach(({ id, name, phone }) => {
+  rawTableData.forEach(({ id, department, name, phone }) => {
     result.push([
-      id,
+      department,
       name,
       useFormattedPhone(phone),
       <DeleteStaffButton id={id} name={name} phone={phone} setChangeValue={setChangeValue} />,

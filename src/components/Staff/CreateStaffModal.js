@@ -11,11 +11,12 @@ import { useStyles } from './Styles';
 const DUPLICATE_NAME_ERROR_MESSAGE = '이미 사용중인 이름입니다.';
 const INVALIDE_PHONE_ERROR_MESSAGE = '번호 형식이 올바르지 않습니다.';
 const INVALIDE_NAME_ERROR_MESSAGE = '공백으로 지정할 수 없습니다.';
+const INPUT_DEPARTMENT_NAME = 'department';
 const INPUT_NAME_NAME = 'name';
 const INPUT_PHONE_NAME = 'phone';
 const PHONE_REG_EXP = /^01\d{8,9}$/; // 휴대폰 번호 유효성 검사 정규표현식
-const CREATE_CONFIRM_MESSAGE = (name, phone) =>
-  `이름 : ${name}\n번호 : ${phone}\n해당 내용을 직원을 추가하시겠습니까?`;
+const CREATE_CONFIRM_MESSAGE = (department, name, phone) =>
+  `소속 : ${department}\n이름 : ${name}\n번호 : ${phone}\n해당 내용을 직원을 추가하시겠습니까?`;
 
 const getOnlyNumber = (num) => {
   const phoneArray = Array.from(num);
@@ -49,27 +50,30 @@ const checkContents = async (name, phone) => {
 
 const CreateStaffModal = ({ open, onClose, setChangeValue }) => {
   const classes = useStyles();
+  const [department, setDepartment] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleChange = (event, setName, setPhone) => {
+  const handleChange = (event) => {
     const {
       target: { value, name },
       nativeEvent: { data },
     } = event;
     if (name === INPUT_NAME_NAME) setName(value);
     else if (name === INPUT_PHONE_NAME && (isNaN(data) === false || data === '-')) setPhone(value);
+    else if (name === INPUT_DEPARTMENT_NAME) setDepartment(value);
   };
 
-  const handleClick = async (name, phone, setName, setPhone, handleClose) => {
+  const handleClick = async () => {
     const checkContentsResult = await checkContents(name, phone);
     if (checkContentsResult === true) {
-      if (window.confirm(CREATE_CONFIRM_MESSAGE(name, phone)) === true) {
-        addStaff(name, getOnlyNumber(phone)).then(() => {
+      if (window.confirm(CREATE_CONFIRM_MESSAGE(department, name, phone)) === true) {
+        addStaff(name, getOnlyNumber(phone), department).then(() => {
           setName('');
           setPhone('');
-          handleClose();
+          setDepartment('');
+          onClose();
           setChangeValue(true);
         });
       }
@@ -81,6 +85,7 @@ const CreateStaffModal = ({ open, onClose, setChangeValue }) => {
   useEffect(() => {
     setName('');
     setPhone('');
+    setDepartment('');
     setErrorMessage('');
   }, [open]);
 
@@ -95,9 +100,16 @@ const CreateStaffModal = ({ open, onClose, setChangeValue }) => {
           <CardBody>
             <div className={classes.inputBox}>
               <input
+                name={INPUT_DEPARTMENT_NAME}
+                value={department}
+                onChange={handleChange}
+                placeholder="소속"
+                className={classes.input}
+              />
+              <input
                 name={INPUT_NAME_NAME}
                 value={name}
-                onChange={(event) => handleChange(event, setName, setPhone)}
+                onChange={handleChange}
                 placeholder="이름"
                 className={classes.input}
               />
@@ -105,7 +117,7 @@ const CreateStaffModal = ({ open, onClose, setChangeValue }) => {
                 name={INPUT_PHONE_NAME}
                 value={phone}
                 type={'tel'}
-                onChange={(event) => handleChange(event, setName, setPhone)}
+                onChange={handleChange}
                 placeholder="휴대폰 번호"
                 className={classes.input}
               />
@@ -113,7 +125,7 @@ const CreateStaffModal = ({ open, onClose, setChangeValue }) => {
                 color="info"
                 onClick={() => {
                   setErrorMessage('');
-                  handleClick(name, phone, setName, setPhone, onClose);
+                  handleClick();
                 }}
                 className={classes.inputButton}
               >

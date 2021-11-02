@@ -32,8 +32,8 @@ const updateVisitorStatus = (id, status) => {
   return apiHandler(METHOD_PUT, makeApiPath('/info/visitor/status'), data);
 };
 
-const addStaff = (name, phone) => {
-  const data = { name, phone };
+const addStaff = (name, phone, department) => {
+  const data = { name, phone, department };
   return apiHandler(METHOD_POST, makeApiPath('/admin/staff/save'), data);
 };
 
