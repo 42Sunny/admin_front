@@ -53,8 +53,34 @@ const checkStaff = (staffName) => {
 
 const INIT_PAGE = 0;
 const INIT_SIZE = 10;
-const getVisitData = (start, end, page = INIT_PAGE, size = INIT_SIZE) => {
+const getVisitData = ({
+  start,
+  end,
+  place = null,
+  name = null,
+  phone = null,
+  status = null,
+  oraganization = null,
+  staffDepartment = null,
+  staffName = null,
+  staffPhone = null,
+  page = INIT_PAGE,
+  size = INIT_SIZE,
+}) => {
+  const searchCriteria = [];
   const data = { start, end, pagination: { page, size } };
+  if (place !== null) data['place'] = place;
+  if (name !== null) searchCriteria.push({ criteria: 'VISITOR_NAME', value: name });
+  if (phone !== null) searchCriteria.push({ criteria: 'VISITOR_PHONE', value: phone });
+  if (status !== null) searchCriteria.push({ criteria: 'VISITOR_STATUS', value: status });
+  if (oraganization !== null)
+    searchCriteria.push({ criteria: 'VISITOR_ORGANIZATION', value: oraganization });
+  if (staffDepartment !== null)
+    searchCriteria.push({ criteria: 'STAFF_DEPARTMENT', value: staffDepartment });
+  if (staffName !== null) searchCriteria.push({ criteria: 'STAFF_NAME', value: staffName });
+  if (staffPhone !== null) searchCriteria.push({ criteria: 'STAFF_PHONE', value: staffPhone });
+  if (searchCriteria.length !== 0) data['searchCriteria'] = searchCriteria;
+
   return apiHandler(METHOD_POST, makeApiPath('/info/log/date'), data);
 };
 

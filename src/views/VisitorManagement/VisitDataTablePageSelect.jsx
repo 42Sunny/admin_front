@@ -8,16 +8,14 @@ const VisitDataTablePageSelect = () => {
   const classes = makeStyles(styles)();
 
   const onIncrease = () => {
-    if (page < lastPage) {
-      const currentPage = page;
-      setPage(currentPage + 1);
+    if (page + 1 < lastPage) {
+      setPage((page) => page + 1);
     }
   };
 
   const onDecrease = () => {
     if (page > 0) {
-      const currentPage = page;
-      setPage(currentPage - 1);
+      setPage((page) => page - 1);
     }
   };
 
