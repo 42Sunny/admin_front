@@ -28,5 +28,5 @@ export const TABLE_HEAD = [
 ];
 
 export const PLACE_ALL = { value: 'all', text: '장소' };
-export const PLACE_GAEPO = { value: 'gaepo', text: '개포' };
-export const PLACE_SEOCHO = { value: 'seocho', text: '서초' };
+export const PLACE_GAEPO = { value: '개포', text: '개포' };
+export const PLACE_SEOCHO = { value: '서초', text: '서초' };

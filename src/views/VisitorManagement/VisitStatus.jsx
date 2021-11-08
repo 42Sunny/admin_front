@@ -8,7 +8,6 @@ import styles from './VisitorManagementStyles';
 const StatusOptions = [
   { value: '대기', name: '대기' },
   { value: '입실', name: '입실' },
-  { value: '퇴실', name: '퇴실' },
   { value: '만료', name: '만료' },
 ];
 
