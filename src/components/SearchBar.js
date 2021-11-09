@@ -14,7 +14,7 @@ import { debounce } from 'lodash';
 
 import { getCluster, getStudent, getCard, getCheckIn } from '../api/checkinApi';
 
-import '../assets/styles/SearchBar.css';
+import '../assets/css/SearchBar.css';
 
 const SearchBar = forwardRef(
   (

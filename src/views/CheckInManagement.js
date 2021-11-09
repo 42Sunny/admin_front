@@ -8,7 +8,7 @@ import PaginationRounded from '../components/Paging';
 import SearchBar from '../components/SearchBar';
 import { MyLogTable } from '../components/MyLogTable';
 
-import '../assets/styles/AdminPage.css';
+import '../assets/css/AdminPage.css';
 import GridContainer from 'components/Grid/GridContainer';
 
 const styles = {
