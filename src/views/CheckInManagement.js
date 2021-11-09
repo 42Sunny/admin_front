@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -68,8 +68,6 @@ function CheckInManagement() {
 
   const [lastPage, setLastPage] = useState(1);
 
-  const ref = useRef();
-
   const classes = useStyles();
 
   const [listSize, setListSize] = useState(50);
@@ -103,7 +101,6 @@ function CheckInManagement() {
         <CheckinSearchBar
           type={logType}
           setLogs={setLogs}
-          ref={ref}
           page={page}
           setPage={setPage}
           clusterType={clusterType}
@@ -126,7 +123,6 @@ function CheckInManagement() {
           logType={logType}
           setListSize={setListSize}
           setLogs={setLogs}
-          ref={ref}
           listSize={listSize}
           page={page}
           logs={logs}

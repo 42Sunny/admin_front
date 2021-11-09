@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import GridContainer from 'components/Grid/GridContainer.js';
 import { useContext } from 'react';
 import { VisitorContext } from 'contexts/VisitorContext';
@@ -26,7 +26,6 @@ const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const { checkInData, getReserve } = useContext(VisitorContext);
-  const ref = useRef();
 
   const [logs, setLogs] = useState([]);
   const [page, setPage] = useState(1);
@@ -48,7 +47,6 @@ export default function Dashboard() {
       <CheckinSearchBar
         type={3}
         setLogs={setLogs}
-        ref={ref}
         page={page}
         setPage={setPage}
         clusterType={clusterType}
@@ -84,7 +82,6 @@ export default function Dashboard() {
           logType={3}
           setListSize={setListSize}
           setLogs={setLogs}
-          ref={ref}
           listSize={listSize}
           page={page}
           logs={logs}
