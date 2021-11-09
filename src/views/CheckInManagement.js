@@ -1,15 +1,16 @@
-import React, { useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PaginationRounded from '../components/Paging';
-import SearchBar from '../components/SearchBar';
-import { MyLogTable } from '../components/MyLogTable';
+import CheckinSearchBar from '../components/CheckinSearchBar';
+import CheckinLogTable from '../components/CheckinLogTable';
 
-import '../assets/styles/AdminPage.css';
+import '../assets/css/AdminPage.css';
 import GridContainer from 'components/Grid/GridContainer';
+import useCriteria from '../hooks/useCriteria';
+import useCheckinLog from 'hooks/useCheckinLog';
 
 const styles = {
   root: {
@@ -56,31 +57,29 @@ function a11yProps(index) {
 }
 
 function CheckInManagement() {
-  // eslint-disable-next-line no-unused-vars
-  const history = useHistory();
-  const [logType, setLogType] = useState(0);
-  const [logs, setLogs] = useState([]);
-  const [page, setPage] = useState(1);
-
-  const [clusterType, setClusterType] = useState('0');
-  const [login, setLogin] = useState('');
-  const [cardId, setCardId] = useState(0);
-
-  const [lastPage, setLastPage] = useState(1);
-
-  const ref = useRef();
-
   const classes = useStyles();
 
-  const [listSize, setListSize] = useState(50);
+  const {
+    criteria: { logType },
+    setLastPage,
+    setLogType,
+    setIntraId,
+    setCardNum,
+    setCurrentPage,
+  } = useCriteria();
+
+  const {
+    checkinLog: { logs },
+    setLogs,
+  } = useCheckinLog();
 
   const handleChange = (event, newValue) => {
     setLogs([]);
-    setPage(1);
+    setCurrentPage(1);
     setLogType(newValue);
-    setLogin('');
-    setCardId(0);
-    setLastPage(0);
+    setIntraId('');
+    setCardNum('');
+    setLastPage(1);
   };
 
   return (
@@ -100,37 +99,11 @@ function CheckInManagement() {
         </Tabs>
       </Paper>
       <div className={classes.optionBox}>
-        <SearchBar
-          type={logType}
-          setLogs={setLogs}
-          ref={ref}
-          page={page}
-          setPage={setPage}
-          clusterType={clusterType}
-          setClusterType={setClusterType}
-          login={login}
-          setLogin={setLogin}
-          cardId={cardId}
-          setCardId={setCardId}
-          setLastPage={setLastPage}
-          listSize={listSize}
-          isLightType={false}
-        />
+        <CheckinSearchBar isLightType={false} />
       </div>
-      <PaginationRounded lastPage={lastPage} setPage={setPage} />
+      <PaginationRounded />
       <GridContainer>
-        <MyLogTable
-          xs={12}
-          sm={12}
-          md={12}
-          logType={logType}
-          setListSize={setListSize}
-          setLogs={setLogs}
-          ref={ref}
-          listSize={listSize}
-          page={page}
-          logs={logs}
-        />
+        <CheckinLogTable xs={12} sm={12} md={12} logs={logs} />
       </GridContainer>
     </>
   );

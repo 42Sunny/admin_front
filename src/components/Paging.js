@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Pagination from '@mui/material/Pagination';
+import useCriteria from '../hooks/useCriteria';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,11 +14,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PaginationRounded({ lastPage, setPage }) {
+export default function PaginationRounded() {
   const classes = useStyles();
+  const {
+    criteria: { lastPage },
+    setCurrentPage,
+  } = useCriteria();
 
   const handleChange = (e, pageNum) => {
-    setPage(pageNum);
+    setCurrentPage(pageNum);
   };
 
   return (

@@ -5,23 +5,20 @@ import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { reqUsingCard, reqMaxCapacity } from 'api/checkinApi';
-
-const styles2 = {
-  cardWrapper: {
-    display: 'flex',
-    float: 'right',
-  },
-};
+import useCriteria from '../hooks/useCriteria';
 
 const useStyles = makeStyles(styles);
-const useStyles2 = makeStyles(styles2);
 
-export const MyConfCard = ({ category, cluster, xs, sm, md }) => {
+export const ConfigCard = ({ category, xs, sm, md }) => {
   const classes = useStyles();
-  const classes2 = useStyles2();
+  const {
+    criteria: { clusterType },
+  } = useCriteria();
 
   const [clusterConf, setClusterConf] = useState({});
   const [clusterMaxConf, setClusterMaxConf] = useState({});
+
+  const cluster = clusterType === '0' ? 'gaepo' : 'seocho';
 
   const getUsingCard = useCallback(async () => {
     try {
@@ -62,7 +59,7 @@ export const MyConfCard = ({ category, cluster, xs, sm, md }) => {
       <Card>
         <CardHeader color="info" stats icon>
           <p className={classes.cardCategory}>{category}</p>
-          <div className={classes2.cardWrapper}>
+          <div className={classes.cardWrapper}>
             <h1 className={classes.cardTitle}>{clusterConf[cluster]}</h1>
             <h4 className={classes.cardTitle}>/{clusterMaxConf[cluster]}</h4>
           </div>
