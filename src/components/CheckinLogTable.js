@@ -47,7 +47,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export const MyLogTable = forwardRef(
+export const CheckinLogTable = forwardRef(
   ({ logType, setListSize, setLogs, listSize, page, logs, xs, sm, md }, ref) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);

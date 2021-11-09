@@ -14,9 +14,9 @@ import { debounce } from 'lodash';
 
 import { getCluster, getStudent, getCard, getCheckIn } from '../api/checkinApi';
 
-import '../assets/css/SearchBar.css';
+import '../assets/css/CheckinSearchBar.css';
 
-const SearchBar = forwardRef(
+const CheckinSearchBar = forwardRef(
   (
     {
       type,
@@ -199,4 +199,4 @@ const SearchBar = forwardRef(
   },
 );
 
-export default SearchBar;
+export default CheckinSearchBar;

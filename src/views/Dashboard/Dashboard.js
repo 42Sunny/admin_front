@@ -3,9 +3,9 @@ import GridContainer from 'components/Grid/GridContainer.js';
 import { useContext } from 'react';
 import { VisitorContext } from 'contexts/VisitorContext';
 import { getFomattedNow } from 'utils/getFormattedNow';
-import { MyConfCard } from 'components/MyConfCard';
-import { MyLogTable } from 'components/MyLogTable';
-import SearchBar from 'components/SearchBar';
+import { ConfigCard } from 'components/ConfigCard';
+import { CheckinLogTable } from 'components/CheckinLogTable';
+import CheckinSearchBar from 'components/CheckinSearchBar';
 import VisitorLogTable from 'components/Visitor/VisitorLogTable';
 import VisitorHeadCount from 'components/Visitor/VisitorHeadCount';
 import PaginationRounded from 'components/Paging';
@@ -45,7 +45,7 @@ export default function Dashboard() {
   return (
     <div>
       <h5>클러스터</h5>
-      <SearchBar
+      <CheckinSearchBar
         type={3}
         setLogs={setLogs}
         ref={ref}
@@ -59,7 +59,7 @@ export default function Dashboard() {
       />
       <h5>인원 정보</h5>
       <GridContainer>
-        <MyConfCard
+        <ConfigCard
           xs={12}
           sm={4}
           md={4}
@@ -77,7 +77,7 @@ export default function Dashboard() {
       </GridContainer>
       <h5>출입 정보</h5>
       <GridContainer>
-        <MyLogTable
+        <CheckinLogTable
           xs={12}
           sm={12}
           md={12}

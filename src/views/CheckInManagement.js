@@ -5,8 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PaginationRounded from '../components/Paging';
-import SearchBar from '../components/SearchBar';
-import { MyLogTable } from '../components/MyLogTable';
+import CheckinSearchBar from '../components/CheckinSearchBar';
+import { CheckinLogTable } from '../components/CheckinLogTable';
 
 import '../assets/css/AdminPage.css';
 import GridContainer from 'components/Grid/GridContainer';
@@ -100,7 +100,7 @@ function CheckInManagement() {
         </Tabs>
       </Paper>
       <div className={classes.optionBox}>
-        <SearchBar
+        <CheckinSearchBar
           type={logType}
           setLogs={setLogs}
           ref={ref}
@@ -119,7 +119,7 @@ function CheckInManagement() {
       </div>
       <PaginationRounded lastPage={lastPage} setPage={setPage} />
       <GridContainer>
-        <MyLogTable
+        <CheckinLogTable
           xs={12}
           sm={12}
           md={12}

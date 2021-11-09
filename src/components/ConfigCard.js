@@ -8,7 +8,7 @@ import { reqUsingCard, reqMaxCapacity } from 'api/checkinApi';
 
 const useStyles = makeStyles(styles);
 
-export const MyConfCard = ({ category, cluster, xs, sm, md }) => {
+export const ConfigCard = ({ category, cluster, xs, sm, md }) => {
   const classes = useStyles();
 
   const [clusterConf, setClusterConf] = useState({});
