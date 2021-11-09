@@ -12,6 +12,7 @@ import {
   SEARCH_OPTION_STATUS,
 } from '../views/VisitorManagement/Define';
 import { debounce } from 'lodash';
+import VisitStatus from 'views/VisitorManagement/VisitStatus';
 
 const VisitorManagementContext = createContext({});
 
@@ -31,7 +32,7 @@ const makeTableData = (visitData) => {
     elem.purpose,
     elem.staffName,
     useFormattedPhone(elem.staffPhone),
-    elem.status,
+    <VisitStatus visitorId={elem.id} status={elem.status} />,
   ]);
   return results;
 };
@@ -68,10 +69,7 @@ const VisitorManagementProvider = ({ children }) => {
       } = response;
       if (!error) {
         const {
-          data: { checkInLogs },
-        } = response;
-        const {
-          data: { lastPage },
+          data: { checkInLogs, lastPage },
         } = response;
         setVisitData(checkInLogs);
         setLastPage(lastPage);
@@ -93,6 +91,7 @@ const VisitorManagementProvider = ({ children }) => {
     [endDate, lazyGetData, page, place, searchOption, searchValue, startDate],
   );
   useEffect(() => setTableData(makeTableData(visitData)), [visitData]);
+  useEffect(() => setPage(0), [startDate, endDate, searchValue, searchOption]);
 
   return (
     <VisitorManagementContext.Provider
