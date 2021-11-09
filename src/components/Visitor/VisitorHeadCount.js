@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { makeStyles } from '@material-ui/core';
 import { VisitorContext } from 'contexts/VisitorContext';
+import useCriteria from '../../hooks/useCriteria';
 
 const useStyles = makeStyles(styles);
 const NEW_ALERT_TIME = 5000;
@@ -27,13 +28,19 @@ const countVisitor = (checkInData, placeName) => {
   return { total, remain, checkin };
 };
 
-const VisitorHeadCount = ({ xs, sm, md, checkInData, placeName, headerText }) => {
+const VisitorHeadCount = ({ xs, sm, md, checkInData, headerText }) => {
   const classes = useStyles();
   const [checkIn, setCheckIn] = useState();
   const [remain, setRemain] = useState();
   const { newVisitorAlert, setNewVisitorAlert } = useContext(VisitorContext);
   const [alertTimer, setAlertTimer] = useState(null);
   const [isNew, setIsNew] = useState(false);
+
+  const {
+    criteria: { clusterType },
+  } = useCriteria();
+
+  const placeName = clusterType === '0' ? '개포' : '서초';
 
   useEffect(() => {
     const { remain, checkin } = countVisitor(checkInData, placeName);

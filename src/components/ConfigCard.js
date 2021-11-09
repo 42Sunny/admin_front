@@ -5,14 +5,20 @@ import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 import { reqUsingCard, reqMaxCapacity } from 'api/checkinApi';
+import useCriteria from '../hooks/useCriteria';
 
 const useStyles = makeStyles(styles);
 
-export const ConfigCard = ({ category, cluster, xs, sm, md }) => {
+export const ConfigCard = ({ category, xs, sm, md }) => {
   const classes = useStyles();
+  const {
+    criteria: { clusterType },
+  } = useCriteria();
 
   const [clusterConf, setClusterConf] = useState({});
   const [clusterMaxConf, setClusterMaxConf] = useState({});
+
+  const cluster = clusterType === '0' ? 'gaepo' : 'seocho';
 
   const getUsingCard = useCallback(async () => {
     try {

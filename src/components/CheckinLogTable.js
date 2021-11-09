@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import { forceCheckOut } from 'api/checkinApi';
 import * as moment from 'moment';
+import useCriteria from '../hooks/useCriteria';
 
 import { whiteColor, grayColor } from 'assets/jss/material-dashboard-react.js';
 
@@ -18,7 +19,6 @@ const LOGTYPE = {
   1: '인트라 ID',
   2: '카드 번호',
   3: '카뎃',
-  4: '모든 카드',
 };
 
 const styles = {
@@ -47,19 +47,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export const CheckinLogTable = ({
-  logType,
-  setListSize,
-  setLogs,
-  listSize,
-  page,
-  logs,
-  xs,
-  sm,
-  md,
-}) => {
+const CheckinLogTable = ({ setLogs, logs, xs, sm, md }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const {
+    criteria: { currentPage, logType, listSize },
+    setListSize,
+  } = useCriteria();
 
   const tableHead = ['ID', '시간', '출/입', '인트라 ID', '카드 번호', '클러스터', '강제 퇴실'];
 
@@ -92,18 +86,17 @@ export const CheckinLogTable = ({
       <Card>
         <CardHeader color="info" className={classes.header}>
           <h4 className={classes.cardTitleWhite}>{LOGTYPE[logType]}</h4>
-          {!(logType === 3 || logType === 4) && (
+          {!(logType === 3) && (
             <div>
               <Button
                 aria-controls="simple-menu"
                 aria-haspopup="true"
                 onClick={handleClick}
                 variant="outlined"
-                disabled={logType === 3 || logType === 4}
+                disabled={logType === 3}
               >
                 size: {listSize}
               </Button>
-
               <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)}>
                 <MenuItem onClick={handleClose}>10</MenuItem>
                 <MenuItem onClick={handleClose}>30</MenuItem>
@@ -119,7 +112,7 @@ export const CheckinLogTable = ({
             tableHead={tableHead}
             tableData={logs.map((log, idx) => {
               return [
-                log._id ?? (page - 1) * listSize + idx + 1,
+                log._id ?? (currentPage - 1) * listSize + idx + 1,
                 moment(log.created_at).format('MM월 DD일 HH:mm') ?? null,
                 logType === 3 ? log.state : log.type,
                 log.login,
@@ -143,3 +136,5 @@ export const CheckinLogTable = ({
     </GridItem>
   );
 };
+
+export default CheckinLogTable;

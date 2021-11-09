@@ -13,62 +13,50 @@ import LooksTwoIcon from '@material-ui/icons/LooksTwo';
 import { debounce } from 'lodash';
 
 import { getCluster, getStudent, getCard, getCheckIn } from '../api/checkinApi';
+import useCriteria from '../hooks/useCriteria';
 
 import '../assets/css/CheckinSearchBar.css';
 
-const CheckinSearchBar = ({
-  type,
-  setLogs,
-  page,
-  setPage,
-  clusterType,
-  setClusterType,
-  login,
-  setLogin,
-  cardId,
-  setCardId,
-  setLastPage,
-  listSize,
-  isLightType,
-}) => {
-  const useStyles = makeStyles(() => ({
-    margin: {
-      display: 'flex',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-    },
-    // margin: {
-    //   display: 'flex',
-    //   width: '100%',
-    //   height: '10vh',
-    //   minHeight: '60px',
-    //   flexDirection: 'column',
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
-    // },
-  }));
+const useStyles = makeStyles(() => ({
+  margin: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+}));
+
+const CheckinSearchBar = ({ setLogs, isLightType }) => {
   const classes = useStyles();
+
+  const {
+    criteria: { clusterType, currentPage, logType, cardNum, intraId, listSize },
+    setClusterType,
+    setLastPage,
+    setCardNum,
+    setIntraId,
+  } = useCriteria();
 
   const onSubmit = async (e) => {
     try {
       let response;
-      switch (type) {
+      switch (logType) {
         case 0:
-          response = await getCluster(clusterType, page, listSize);
+          response = await getCluster(clusterType, currentPage, listSize);
           break;
         case 1:
-          if (login) response = await getStudent(login, page, listSize);
+          if (intraId) response = await getStudent(intraId, currentPage, listSize);
           else throw new Error('유효한 인트라 ID를 입력하세요.');
           break;
         case 2:
-          if (cardId !== 0 && cardId !== '') response = await getCard(cardId, page, listSize);
+          if (cardNum !== 0 && cardNum !== '')
+            response = await getCard(cardNum, currentPage, listSize);
           else throw new Error('유효한 카드 번호를 입력하세요.');
           break;
         case 3:
           if (isLightType) {
-            response = await getCheckIn(clusterType, page, 10);
+            response = await getCheckIn(clusterType, currentPage, 10);
           } else {
-            response = await getCheckIn(clusterType, page);
+            response = await getCheckIn(clusterType, currentPage);
           }
           break;
         default:
@@ -81,7 +69,7 @@ const CheckinSearchBar = ({
         setLastPage(response.data.lastPage);
       } else {
         setLogs([]);
-        setLastPage(0);
+        setLastPage(1);
         throw new Error('response 형식이 올바르지 않습니다.');
       }
     } catch (err) {
@@ -91,6 +79,7 @@ const CheckinSearchBar = ({
 
   const handleChange = (event) => {
     setLogs([]);
+    console.log(event.target.value);
     setClusterType(event.target.value);
   };
 
@@ -101,14 +90,14 @@ const CheckinSearchBar = ({
   };
 
   const handleChangeWithDebounce = debounce((e) => {
-    if (e.target.id === 'intra-id') setLogin(e.target.value);
-    else if (e.target.id === 'card-number') setCardId(e.target.value);
+    if (e.target.id === 'intra-id') setIntraId(e.target.value);
+    else if (e.target.id === 'card-number') setCardNum(e.target.value);
   }, 200);
 
   useEffect(() => {
     onSubmit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, page, clusterType, login, cardId, listSize]);
+  }, [logType, currentPage, clusterType, intraId, cardNum, listSize]);
 
   const Cluster = () => (
     <div className={classes.margin}>
@@ -176,15 +165,11 @@ const CheckinSearchBar = ({
       </Grid>
     </div>
   );
-  switch (type) {
-    case 0:
-      return Cluster();
+  switch (logType) {
     case 1:
       return Student();
     case 2:
       return Card();
-    case 3:
-      return Cluster();
     default:
       return Cluster();
   }

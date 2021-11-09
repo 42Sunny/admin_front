@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PaginationRounded from '../components/Paging';
 import CheckinSearchBar from '../components/CheckinSearchBar';
-import { CheckinLogTable } from '../components/CheckinLogTable';
+import CheckinLogTable from '../components/CheckinLogTable';
 
 import '../assets/css/AdminPage.css';
 import GridContainer from 'components/Grid/GridContainer';
+import useCriteria from '../hooks/useCriteria';
 
 const styles = {
   root: {
@@ -56,29 +56,25 @@ function a11yProps(index) {
 }
 
 function CheckInManagement() {
-  // eslint-disable-next-line no-unused-vars
-  const history = useHistory();
-  const [logType, setLogType] = useState(0);
-  const [logs, setLogs] = useState([]);
-  const [page, setPage] = useState(1);
-
-  const [clusterType, setClusterType] = useState('0');
-  const [login, setLogin] = useState('');
-  const [cardId, setCardId] = useState(0);
-
-  const [lastPage, setLastPage] = useState(1);
-
   const classes = useStyles();
 
-  const [listSize, setListSize] = useState(50);
+  const [logs, setLogs] = useState([]);
+  const {
+    criteria: { logType },
+    setLastPage,
+    setLogType,
+    setIntraId,
+    setCardNum,
+    setCurrentPage,
+  } = useCriteria();
 
   const handleChange = (event, newValue) => {
     setLogs([]);
-    setPage(1);
+    setCurrentPage(1);
     setLogType(newValue);
-    setLogin('');
-    setCardId(0);
-    setLastPage(0);
+    setIntraId('');
+    setCardNum('');
+    setLastPage(1);
   };
 
   return (
@@ -98,35 +94,11 @@ function CheckInManagement() {
         </Tabs>
       </Paper>
       <div className={classes.optionBox}>
-        <CheckinSearchBar
-          type={logType}
-          setLogs={setLogs}
-          page={page}
-          setPage={setPage}
-          clusterType={clusterType}
-          setClusterType={setClusterType}
-          login={login}
-          setLogin={setLogin}
-          cardId={cardId}
-          setCardId={setCardId}
-          setLastPage={setLastPage}
-          listSize={listSize}
-          isLightType={false}
-        />
+        <CheckinSearchBar setLogs={setLogs} isLightType={false} />
       </div>
-      <PaginationRounded lastPage={lastPage} setPage={setPage} />
+      <PaginationRounded />
       <GridContainer>
-        <CheckinLogTable
-          xs={12}
-          sm={12}
-          md={12}
-          logType={logType}
-          setListSize={setListSize}
-          setLogs={setLogs}
-          listSize={listSize}
-          page={page}
-          logs={logs}
-        />
+        <CheckinLogTable xs={12} sm={12} md={12} setLogs={setLogs} logs={logs} />
       </GridContainer>
     </>
   );
