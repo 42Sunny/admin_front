@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { getAllReserves } from 'api/visitorApi';
+import { getVisitData } from 'api/visitorApi';
 import { updateVisitorStatus } from 'api/visitorApi';
 import { useContext } from 'react';
 import { VisitorManagementContext } from '../../contexts/VisitorManagementContext';
@@ -18,21 +18,23 @@ const Options = () =>
     </option>
   ));
 
-const VisitStatus = (props) => {
+const VisitStatus = ({ status, visitorId }) => {
   const classes = makeStyles(styles)();
-  const { date, setCheckInData } = useContext(VisitorManagementContext);
+  const { startDate, endDate, setVisitData, page, setLastPage } =
+    useContext(VisitorManagementContext);
 
   const handleChange = async ({ target: { value } }) => {
-    await updateVisitorStatus(props.value.visitorId, value);
-    const res = await getAllReserves(date);
-    setCheckInData(res.data);
+    await updateVisitorStatus(visitorId, value);
+    const res = await getVisitData({ start: startDate, end: endDate, page });
+    setVisitData(res.data.checkInLogs);
+    setLastPage(res.data.lastPage);
   };
 
   return (
     <select
       name="status"
       onChange={handleChange}
-      defaultValue={props.value.status}
+      defaultValue={status}
       className={classes.statueSelect}
     >
       <Options />
