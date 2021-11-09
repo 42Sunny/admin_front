@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PaginationRounded() {
   const classes = useStyles();
   const {
-    criteria: { lastPage },
+    criteria: { lastPage, currentPage },
     setCurrentPage,
   } = useCriteria();
 
@@ -32,6 +32,7 @@ export default function PaginationRounded() {
         defaultPage={1}
         siblingCount={4}
         boundaryCount={1}
+        page={currentPage}
         onChange={handleChange}
       />
     </div>

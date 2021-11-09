@@ -34,6 +34,7 @@ const CheckinSearchBar = ({ isLightType }) => {
     setLastPage,
     setCardNum,
     setIntraId,
+    setCurrentPage,
   } = useCriteria();
 
   const { setLogs } = useCheckinLog();
@@ -69,6 +70,9 @@ const CheckinSearchBar = ({ isLightType }) => {
         datas = response.data.list;
         setLogs(datas);
         setLastPage(response.data.lastPage);
+        if (response.data.lastPage < currentPage) {
+          setCurrentPage(1);
+        }
       } else {
         setLogs([]);
         setLastPage(1);
@@ -81,7 +85,6 @@ const CheckinSearchBar = ({ isLightType }) => {
 
   const handleChange = (event) => {
     setLogs([]);
-    console.log(event.target.value);
     setClusterType(event.target.value);
   };
 
