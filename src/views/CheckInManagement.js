@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -10,6 +10,7 @@ import CheckinLogTable from '../components/CheckinLogTable';
 import '../assets/css/AdminPage.css';
 import GridContainer from 'components/Grid/GridContainer';
 import useCriteria from '../hooks/useCriteria';
+import useCheckinLog from 'hooks/useCheckinLog';
 
 const styles = {
   root: {
@@ -58,7 +59,6 @@ function a11yProps(index) {
 function CheckInManagement() {
   const classes = useStyles();
 
-  const [logs, setLogs] = useState([]);
   const {
     criteria: { logType },
     setLastPage,
@@ -67,6 +67,11 @@ function CheckInManagement() {
     setCardNum,
     setCurrentPage,
   } = useCriteria();
+
+  const {
+    checkinLog: { logs },
+    setLogs,
+  } = useCheckinLog();
 
   const handleChange = (event, newValue) => {
     setLogs([]);
@@ -94,11 +99,11 @@ function CheckInManagement() {
         </Tabs>
       </Paper>
       <div className={classes.optionBox}>
-        <CheckinSearchBar setLogs={setLogs} isLightType={false} />
+        <CheckinSearchBar isLightType={false} />
       </div>
       <PaginationRounded />
       <GridContainer>
-        <CheckinLogTable xs={12} sm={12} md={12} setLogs={setLogs} logs={logs} />
+        <CheckinLogTable xs={12} sm={12} md={12} logs={logs} />
       </GridContainer>
     </>
   );

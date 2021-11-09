@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { forceCheckOut } from 'api/checkinApi';
 import * as moment from 'moment';
 import useCriteria from '../hooks/useCriteria';
-
+import useCheckinLog from '../hooks/useCheckinLog';
 import { whiteColor, grayColor } from 'assets/jss/material-dashboard-react.js';
 
 const LOGTYPE = {
@@ -47,13 +47,18 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const CheckinLogTable = ({ setLogs, logs, xs, sm, md }) => {
+const CheckinLogTable = ({ xs, sm, md }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const {
     criteria: { currentPage, logType, listSize },
     setListSize,
   } = useCriteria();
+
+  const {
+    checkinLog: { logs },
+    setLogs,
+  } = useCheckinLog();
 
   const tableHead = ['ID', '시간', '출/입', '인트라 ID', '카드 번호', '클러스터', '강제 퇴실'];
 

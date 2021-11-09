@@ -14,7 +14,7 @@ import { debounce } from 'lodash';
 
 import { getCluster, getStudent, getCard, getCheckIn } from '../api/checkinApi';
 import useCriteria from '../hooks/useCriteria';
-
+import useCheckinLog from '../hooks/useCheckinLog';
 import '../assets/css/CheckinSearchBar.css';
 
 const useStyles = makeStyles(() => ({
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const CheckinSearchBar = ({ setLogs, isLightType }) => {
+const CheckinSearchBar = ({ isLightType }) => {
   const classes = useStyles();
 
   const {
@@ -35,6 +35,8 @@ const CheckinSearchBar = ({ setLogs, isLightType }) => {
     setCardNum,
     setIntraId,
   } = useCriteria();
+
+  const { setLogs } = useCheckinLog();
 
   const onSubmit = async (e) => {
     try {
