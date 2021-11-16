@@ -38,8 +38,8 @@ export const getCheckIn = async (ClusterType, page) => {
   return await instance.get(`/log/checkIn/${ClusterType}?page=${page}&listSize=${ALL_CARD_CNT}`);
 };
 
-export const reqMaxCapacity = async (date) => {
-  return await instance.get(`/config`, { params: { date } });
+export const reqMaxCapacity = async () => {
+  return await instance.get(`/config`);
 };
 
 export const setMaxCapacity = async (capacity) => {

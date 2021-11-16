@@ -34,8 +34,7 @@ export const ConfigCard = ({ category, xs, sm, md }) => {
 
   const getMaxCapacity = useCallback(async () => {
     try {
-      const today = new Date();
-      const { data } = await reqMaxCapacity(today.toISOString());
+      const { data } = await reqMaxCapacity();
       setClusterMaxConf({
         gaepo: data.gaepo,
         seocho: data.seocho,

@@ -1,6 +1,6 @@
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
-import { createContext } from 'react';
+import { createContext, useCallback } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getAllReserves } from 'api/visitorApi';
@@ -20,9 +20,9 @@ export const VisitorProvider = ({ children }) => {
   const [newVisitorAlert, setNewVisitorAlert] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
-  const getReserve = (date) => {
+  const getReserve = useCallback((date) => {
     getAllReserves(date).then((res) => setCheckInData(res.data));
-  };
+  }, []);
 
   const initSocket = () => {
     const sockJs = new SockJS(WS_URL);

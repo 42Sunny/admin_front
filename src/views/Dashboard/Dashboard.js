@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import GridContainer from 'components/Grid/GridContainer.js';
 import { useContext } from 'react';
 import { VisitorContext } from 'contexts/VisitorContext';
@@ -24,13 +24,20 @@ const styles = {
   },
 };
 
+const INITIAL_LIST_SIZE = 10;
+const INITIAL_LOG_TYPE = 3;
+const CHECKIN_HEAD_COUNT_TEXT = '카뎃 (입실/정원)';
+const VISITOR_HEAD_COUNT_TEXT = '방문자 (입실/대기)';
+const CLUSTER_TITLE = '클러스터';
+const HEAD_COUNT_TITLE = '인원 정보';
+const ENTRANCE_TITLE = '출입 정보';
+
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
 
   const { checkInData, getReserve } = useContext(VisitorContext);
-  const [logs, setLogs] = useState([]);
 
   const {
     criteria: { clusterType },
@@ -40,29 +47,31 @@ export default function Dashboard() {
 
   useEffect(() => {
     getReserve(getFomattedNow());
-    setListSize(10);
-    setLogType(3);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getReserve]);
+
+  useEffect(() => {
+    setListSize(INITIAL_LIST_SIZE);
+    setLogType(INITIAL_LOG_TYPE);
+  }, [setListSize, setLogType]);
 
   return (
     <div>
-      <h5>클러스터</h5>
-      <CheckinSearchBar setLogs={setLogs} isLightType={true} />
-      <h5>인원 정보</h5>
+      <h5>{CLUSTER_TITLE}</h5>
+      <CheckinSearchBar isLightType={true} />
+      <h5>{HEAD_COUNT_TITLE}</h5>
       <GridContainer>
-        <ConfigCard xs={12} sm={4} md={4} category="카뎃 (입실/정원)" />
+        <ConfigCard xs={12} sm={4} md={4} category={CHECKIN_HEAD_COUNT_TEXT} />
         <VisitorHeadCount
           xs={12}
           sm={4}
           md={4}
           checkInData={checkInData}
-          headerText={'방문자 (입실/대기)'}
+          headerText={VISITOR_HEAD_COUNT_TEXT}
         />
       </GridContainer>
-      <h5>출입 정보</h5>
+      <h5>{ENTRANCE_TITLE}</h5>
       <GridContainer>
-        <CheckinLogTable xs={12} sm={12} md={12} logType={3} setLogs={setLogs} logs={logs} />
+        <CheckinLogTable xs={12} sm={12} md={12} />
         <div className={classes.optionBox}>
           <PaginationRounded />
         </div>
