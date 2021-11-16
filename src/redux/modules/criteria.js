@@ -1,11 +1,11 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // actions
-const SET_CLUSTER_TYPE = '/criteria/SET_CLUSTER_TYPE';
+const SET_CLUSTER_TYPE = 'criteria/SET_CLUSTER_TYPE';
 const SET_INTRA_ID = 'criteria/SET_INTRA_ID';
 const SET_CARD_NUM = 'criteria/SET_CARD_NUM';
-const SET_CURRENT_PAGE = '/criteria/SET_CURRENT_PAGE';
-const SET_LAST_PAGE = '/criteria/SET_LAST_PAGE';
+const SET_CURRENT_PAGE = 'criteria/SET_CURRENT_PAGE';
+const SET_LAST_PAGE = 'criteria/SET_LAST_PAGE';
 const SET_LIST_SIZE = 'criteria/SET_LIST_SIZE';
 const SET_LOG_TYPE = 'criteria/SET_LOG_TYPE';
 

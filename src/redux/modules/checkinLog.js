@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // actions
-const SET_LOGS = '/checkinLog/SET_LOGS';
+const SET_LOGS = 'checkinLog/SET_LOGS';
 
 // action creators
 export const setLogs = createAction(SET_LOGS);
