@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // actions
-const SET_USER = '/user/SET_USER';
+const SET_USER = 'user/SET_USER';
 
 // action creators
 export const setUser = createAction(SET_USER); // { login }
