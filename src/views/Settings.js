@@ -108,8 +108,6 @@ const Settings = () => {
             env: {
               gaepo: Number.parseInt(capacity.gaepo),
               seocho: Number.parseInt(capacity.seocho),
-              begin_at: moment().toISOString(),
-              end_at: moment(new Date().setUTCFullYear(2022)).toISOString(),
             },
           });
         } catch (err) {
