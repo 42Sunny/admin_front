@@ -14,13 +14,6 @@ import useCriteria from '../hooks/useCriteria';
 import useCheckinLog from '../hooks/useCheckinLog';
 import { whiteColor, grayColor } from 'assets/jss/material-dashboard-react.js';
 
-const LOGTYPE = {
-  0: '클러스터',
-  1: '인트라 ID',
-  2: '카드 번호',
-  3: '카뎃',
-};
-
 const styles = {
   root: {
     flexGrow: 1,
@@ -45,6 +38,13 @@ const styles = {
   },
 };
 
+const LOGTYPE = {
+  0: '클러스터',
+  1: '인트라 ID',
+  2: '카드 번호',
+  3: '카뎃',
+};
+
 const useStyles = makeStyles(styles);
 
 const CheckinLogTable = ({ xs, sm, md }) => {
@@ -66,14 +66,14 @@ const CheckinLogTable = ({ xs, sm, md }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (e) => {
-    setListSize(e.target.innerText);
+  const handleClose = (event) => {
+    setListSize(event.target.innerText);
     setAnchorEl(null);
   };
 
-  const checkOutOnClick = async (e) => {
+  const checkOutOnClick = async (event) => {
     try {
-      const userId = e.target.dataset.idx;
+      const userId = event.target.dataset.idx;
       if (userId) {
         window.confirm('퇴실 처리 하시겠습니까?');
         await forceCheckOut(userId);

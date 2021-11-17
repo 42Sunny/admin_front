@@ -42,28 +42,28 @@ const CheckinSearchBar = ({ isLightType }) => {
   const onSubmit = async (e) => {
     try {
       let response;
-      switch (logType) {
-        case 0:
-          response = await getCluster(clusterType, currentPage, listSize);
-          break;
-        case 1:
-          if (intraId) response = await getStudent(intraId, currentPage, listSize);
-          else throw new Error('유효한 인트라 ID를 입력하세요.');
-          break;
-        case 2:
-          if (cardNum !== 0 && cardNum !== '')
-            response = await getCard(cardNum, currentPage, listSize);
-          else throw new Error('유효한 카드 번호를 입력하세요.');
-          break;
-        case 3:
-          if (isLightType) {
-            response = await getCheckIn(clusterType, currentPage, 10);
-          } else {
+      if (isLightType) {
+        response = await getCheckIn(clusterType, currentPage, 10);
+      } else {
+        switch (logType) {
+          case 0:
+            response = await getCluster(clusterType, currentPage, listSize);
+            break;
+          case 1:
+            if (intraId) response = await getStudent(intraId, currentPage, listSize);
+            else throw new Error('유효한 인트라 ID를 입력하세요.');
+            break;
+          case 2:
+            if (cardNum !== 0 && cardNum !== '')
+              response = await getCard(cardNum, currentPage, listSize);
+            else throw new Error('유효한 카드 번호를 입력하세요.');
+            break;
+          case 3:
             response = await getCheckIn(clusterType, currentPage);
-          }
-          break;
-        default:
-          break;
+            break;
+          default:
+            break;
+        }
       }
       if (response.data.list) {
         let datas;
