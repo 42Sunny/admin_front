@@ -12,6 +12,7 @@ import RegularButton from 'components/CustomButtons/Button.js';
 import CardBody from 'components/Card/CardBody.js';
 import { hexToRgb } from 'assets/jss/material-dashboard-react';
 import StaffTable from 'components/Staff/StaffTable.js';
+import moment from 'moment';
 
 const { whiteColor } = require('assets/jss/material-dashboard-react');
 
@@ -54,15 +55,27 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 let cmpCapValue = {
-  maxCapGaepo: '',
-  maxCapSeocho: '',
+  gaepo: '',
+  seocho: '',
 };
+
+/*
+{
+	"date": "2021-09-16",
+	"env": {
+		"gaepo": 124,
+		"seocho": 124, 
+		"begin_at": "2021-09-16T07:00:00.000Z",
+		"end_at": "2021-09-16T22:00:00.000Z"
+	}
+}
+*/
 
 const Settings = () => {
   const classes = useStyles();
   const [capacity, setCapacity] = useState({
-    maxCapGaepo: '',
-    maxCapSeocho: '',
+    gaepo: '',
+    seocho: '',
   });
 
   const getHeadCount = async () => {
@@ -70,8 +83,8 @@ const Settings = () => {
       const today = new Date();
       const response = await reqMaxCapacity(today.toISOString());
       cmpCapValue = {
-        maxCapGaepo: response.data.gaepo,
-        maxCapSeocho: response.data.seocho,
+        gaepo: response.data.gaepo,
+        seocho: response.data.seocho,
       };
       setCapacity(cmpCapValue);
     } catch (err) {
@@ -90,7 +103,15 @@ const Settings = () => {
     if (JSON.stringify(cmpCapValue) !== JSON.stringify(capacity)) {
       if (window.confirm('최대 입장 인원 값을 변경하시겠습니까?')) {
         try {
-          await setMaxCapacity(capacity);
+          await setMaxCapacity({
+            date: moment().format('YYYY-MM-DD'),
+            env: {
+              gaepo: Number.parseInt(capacity.gaepo),
+              seocho: Number.parseInt(capacity.seocho),
+              begin_at: moment().toISOString(),
+              end_at: moment(new Date().setUTCFullYear(2022)).toISOString(),
+            },
+          });
         } catch (err) {
           console.log(err);
         }
@@ -131,8 +152,8 @@ const Settings = () => {
                     padding: '0',
                     width: '100%',
                   }}
-                  id="maxCapGaepo"
-                  value={capacity.maxCapGaepo}
+                  id="gaepo"
+                  value={capacity.gaepo}
                   type="number"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -168,8 +189,8 @@ const Settings = () => {
                     padding: '0',
                     width: '100%',
                   }}
-                  id="maxCapSeocho"
-                  value={capacity.maxCapSeocho}
+                  id="seocho"
+                  value={capacity.seocho}
                   type="number"
                   onChange={handleChange}
                   onBlur={handleBlur}
