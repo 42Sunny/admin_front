@@ -4,9 +4,7 @@ import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
-
 import { grayColor } from 'assets/jss/material-dashboard-react.js';
-
 import { reqMaxCapacity, setMaxCapacity } from '../api/checkinApi.js';
 import RegularButton from 'components/CustomButtons/Button.js';
 import CardBody from 'components/Card/CardBody.js';
@@ -59,18 +57,6 @@ let cmpCapValue = {
   seocho: '',
 };
 
-/*
-{
-	"date": "2021-09-16",
-	"env": {
-		"gaepo": 124,
-		"seocho": 124, 
-		"begin_at": "2021-09-16T07:00:00.000Z",
-		"end_at": "2021-09-16T22:00:00.000Z"
-	}
-}
-*/
-
 const Settings = () => {
   const classes = useStyles();
   const [capacity, setCapacity] = useState({
@@ -80,8 +66,7 @@ const Settings = () => {
 
   const getHeadCount = async () => {
     try {
-      const today = new Date();
-      const response = await reqMaxCapacity(today.toISOString());
+      const response = await reqMaxCapacity();
       cmpCapValue = {
         gaepo: response.data.gaepo,
         seocho: response.data.seocho,
@@ -108,8 +93,6 @@ const Settings = () => {
             env: {
               gaepo: Number.parseInt(capacity.gaepo),
               seocho: Number.parseInt(capacity.seocho),
-              begin_at: moment().toISOString(),
-              end_at: moment(new Date().setUTCFullYear(2022)).toISOString(),
             },
           });
         } catch (err) {
