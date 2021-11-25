@@ -10,7 +10,6 @@ import RegularButton from 'components/CustomButtons/Button.js';
 import CardBody from 'components/Card/CardBody.js';
 import { hexToRgb } from 'assets/jss/material-dashboard-react';
 import StaffTable from 'components/Staff/StaffTable.js';
-import moment from 'moment';
 
 const { whiteColor } = require('assets/jss/material-dashboard-react');
 
@@ -89,8 +88,7 @@ const Settings = () => {
       if (window.confirm('최대 입장 인원 값을 변경하시겠습니까?')) {
         try {
           await setMaxCapacity({
-            date: moment().format('YYYY-MM-DD'),
-            env: {
+            values: {
               gaepo: Number.parseInt(capacity.gaepo),
               seocho: Number.parseInt(capacity.seocho),
             },
