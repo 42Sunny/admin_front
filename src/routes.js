@@ -4,8 +4,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import DescriptionIcon from '@material-ui/icons/Description';
 import DashboardPage from 'views/Dashboard/Dashboard.js';
 import VisitorManagement from 'views/VisitorManagement/VisitorManagementContainer';
-import CheckInManagement from 'views/CheckInManagement';
-import Settings from 'views/Settings';
+import CheckInManagement from 'views/CheckInManagement/CheckInManagement';
+import Settings from 'views/Settings/Settings';
 
 const dashboardRoutes = [
   {

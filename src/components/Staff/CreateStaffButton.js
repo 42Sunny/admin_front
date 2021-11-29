@@ -7,9 +7,7 @@ const CreateStaffButton = ({ onClick }) => {
   return (
     <button onClick={onClick} className={classes.addButton}>
       <div className={classes.addText}>직원 추가</div>
-      <Icon color="info" className={classes.addIcon}>
-        add_circle
-      </Icon>
+      <Icon className={classes.addIcon}>add_circle</Icon>
     </button>
   );
 };

@@ -10,8 +10,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import { forceCheckOut } from 'api/checkinApi';
 import * as moment from 'moment';
-import useCriteria from '../hooks/useCriteria';
-import useCheckinLog from '../hooks/useCheckinLog';
+import useCriteria from 'hooks/useCriteria';
+import useCheckinLog from 'hooks/useCheckinLog';
 import { whiteColor, grayColor } from 'assets/jss/material-dashboard-react.js';
 
 const styles = {

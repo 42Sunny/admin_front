@@ -3,12 +3,12 @@ import GridContainer from 'components/Grid/GridContainer.js';
 import { useContext } from 'react';
 import { VisitorContext } from 'contexts/VisitorContext';
 import { getFomattedNow } from 'utils/getFormattedNow';
-import { ConfigCard } from 'components/ConfigCard';
-import CheckinLogTable from 'components/CheckinLogTable';
-import CheckinSearchBar from 'components/CheckinSearchBar';
+import { ConfigCard } from 'components/Checkin/ConfigCard';
+import CheckinLogTable from 'components/Checkin/CheckinLogTable';
+import CheckinSearchBar from 'components/Checkin/CheckinSearchBar';
 import VisitorLogTable from 'components/Visitor/VisitorLogTable';
 import VisitorHeadCount from 'components/Visitor/VisitorHeadCount';
-import PaginationRounded from 'components/Paging';
+import PaginationRounded from 'components/Checkin/Paging';
 import { makeStyles } from '@material-ui/core/styles';
 import useCriteria from 'hooks/useCriteria';
 

@@ -1,53 +1,16 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import PaginationRounded from '../components/Paging';
-import CheckinSearchBar from '../components/CheckinSearchBar';
-import CheckinLogTable from '../components/CheckinLogTable';
+import PaginationRounded from 'components/Checkin/Paging';
+import CheckinSearchBar from 'components/Checkin/CheckinSearchBar';
+import CheckinLogTable from 'components/Checkin/CheckinLogTable';
 
-import '../assets/css/AdminPage.css';
+import 'assets/css/AdminPage.css';
 import GridContainer from 'components/Grid/GridContainer';
-import useCriteria from '../hooks/useCriteria';
+import useCriteria from 'hooks/useCriteria';
 import useCheckinLog from 'hooks/useCheckinLog';
-
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '500',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-    '& small': {
-      color: '#777',
-      fontSize: '65%',
-      fontWeight: '400',
-      lineHeight: '1',
-    },
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  optionBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '10vh',
-    minHeight: '40px',
-    boxSizing: 'border-box',
-  },
-};
-
-const useStyles = makeStyles(styles);
+import { useStyles } from './CheckInManagementStyles';
 
 function a11yProps(index) {
   return {

@@ -35,9 +35,7 @@ export const getCard = async (cardId, page, listSize) => {
 };
 
 export const getCheckIn = async (ClusterType, page) => {
-  return await instance.get(
-    `/log/cluster/${ClusterType}/checkin?page=${page}&listSize=${ALL_CARD_CNT}`,
-  );
+  return await instance.get(`/log/checkIn/${ClusterType}?page=${page}&listSize=${ALL_CARD_CNT}`);
 };
 
 export const reqMaxCapacity = async () => {
