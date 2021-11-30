@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser as sU } from '../redux/modules/user';
+import { setUserAction } from 'redux/modules/user';
 
 const useUser = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userReducer);
+  const user = useSelector(({ user }) => user);
 
   const setUser = useCallback(
     (param) => {
-      dispatch(sU(param));
+      dispatch(setUserAction(param));
     },
     [dispatch],
   );

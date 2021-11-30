@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -9,8 +9,9 @@ import CheckinLogTable from 'components/Checkin/CheckinLogTable';
 import 'assets/css/AdminPage.css';
 import GridContainer from 'components/Grid/GridContainer';
 import useCriteria from 'hooks/useCriteria';
-import useCheckinLog from 'hooks/useCheckinLog';
+import useCheckInLogs from 'hooks/useCheckInLogs';
 import { useStyles } from './CheckInManagementStyles';
+import { getCheckInLogs } from 'utils/getCheckInLogs';
 
 function a11yProps(index) {
   return {
@@ -19,11 +20,12 @@ function a11yProps(index) {
   };
 }
 
-function CheckInManagement() {
+const CheckInManagement = () => {
   const classes = useStyles();
 
+  const { setCheckInLogs } = useCheckInLogs();
   const {
-    criteria: { logType },
+    criteria: { logType, clusterNumber },
     setLastPage,
     setLogType,
     setIntraId,
@@ -31,13 +33,10 @@ function CheckInManagement() {
     setCurrentPage,
   } = useCriteria();
 
-  const {
-    checkinLog: { logs },
-    setLogs,
-  } = useCheckinLog();
+  useEffect(() => getCheckInLogs(setCheckInLogs, clusterNumber), [clusterNumber, setCheckInLogs]);
 
   const handleChange = (event, newValue) => {
-    setLogs([]);
+    setCheckInLogs([]);
     setCurrentPage(1);
     setLogType(newValue);
     setIntraId('');
@@ -62,14 +61,14 @@ function CheckInManagement() {
         </Tabs>
       </Paper>
       <div className={classes.optionBox}>
-        <CheckinSearchBar isLightType={false} />
+        <CheckinSearchBar />
       </div>
       <PaginationRounded />
       <GridContainer>
-        <CheckinLogTable xs={12} sm={12} md={12} logs={logs} />
+        <CheckinLogTable xs={12} sm={12} md={12} />
       </GridContainer>
     </>
   );
-}
+};
 
 export default CheckInManagement;

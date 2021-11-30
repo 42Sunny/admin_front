@@ -1,40 +1,46 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // actions
-const SET_CLUSTER_TYPE = 'criteria/SET_CLUSTER_TYPE';
+const SET_CLUSTER_NUMBER = 'criteria/SET_CLUSTER_NUMBER';
 const SET_INTRA_ID = 'criteria/SET_INTRA_ID';
 const SET_CARD_NUM = 'criteria/SET_CARD_NUM';
 const SET_CURRENT_PAGE = 'criteria/SET_CURRENT_PAGE';
 const SET_LAST_PAGE = 'criteria/SET_LAST_PAGE';
 const SET_LIST_SIZE = 'criteria/SET_LIST_SIZE';
 const SET_LOG_TYPE = 'criteria/SET_LOG_TYPE';
+const SET_MAX_SEOCHO = 'criteria/SET_MAX_SEOCHO';
+const SET_MAX_GAEPO = 'criteria/SET_MAX_GAEPO';
 
 // action creators
-export const setClusterType = createAction(SET_CLUSTER_TYPE);
-export const setIntraID = createAction(SET_INTRA_ID);
-export const setCardNum = createAction(SET_CARD_NUM);
-export const setCurrentPage = createAction(SET_CURRENT_PAGE);
-export const setLastPage = createAction(SET_LAST_PAGE);
-export const setListSize = createAction(SET_LIST_SIZE);
-export const setLogType = createAction(SET_LOG_TYPE);
+export const setClusterNumberAction = createAction(SET_CLUSTER_NUMBER);
+export const setIntraIDAction = createAction(SET_INTRA_ID);
+export const setCardNumAction = createAction(SET_CARD_NUM);
+export const setCurrentPageAction = createAction(SET_CURRENT_PAGE);
+export const setLastPageAction = createAction(SET_LAST_PAGE);
+export const setListSizeAction = createAction(SET_LIST_SIZE);
+export const setLogTypeAction = createAction(SET_LOG_TYPE);
+export const setMaxSeocho = createAction(SET_MAX_SEOCHO);
+export const setMaxGaepo = createAction(SET_MAX_GAEPO);
 
 // initalState
 const initialState = {
-  clusterType: '0',
+  clusterNumber: '0',
   intraId: '',
   cardNum: '',
   currentPage: 1,
   lastPage: 0,
-  listSize: 50,
-  logType: 0,
+  listSize: 10,
+  logType: 3,
+  maxSeocho: 0,
+  maxGaepo: 0,
 };
 
 // reducer
 export default handleActions(
   {
-    [SET_CLUSTER_TYPE]: (state, action) => ({
+    [SET_CLUSTER_NUMBER]: (state, action) => ({
       ...state,
-      clusterType: action.payload,
+      clusterNumber: action.payload,
     }),
     [SET_INTRA_ID]: (state, action) => ({
       ...state,
@@ -59,6 +65,14 @@ export default handleActions(
     [SET_LOG_TYPE]: (state, action) => ({
       ...state,
       logType: action.payload,
+    }),
+    [SET_MAX_GAEPO]: (state, action) => ({
+      ...state,
+      maxGaepo: action.payload,
+    }),
+    [SET_MAX_SEOCHO]: (state, action) => ({
+      ...state,
+      maxSeocho: action.payload,
     }),
   },
   initialState,

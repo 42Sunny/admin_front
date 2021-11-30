@@ -9,16 +9,16 @@ import useCriteria from 'hooks/useCriteria';
 
 const useStyles = makeStyles(styles);
 
-export const ConfigCard = ({ category, xs, sm, md }) => {
+export const CheckinHeadCount = ({ category, xs, sm, md }) => {
   const classes = useStyles();
   const {
-    criteria: { clusterType },
+    criteria: { clusterNumber },
   } = useCriteria();
 
   const [clusterConf, setClusterConf] = useState({});
   const [clusterMaxConf, setClusterMaxConf] = useState({});
 
-  const cluster = clusterType === '0' ? 'gaepo' : 'seocho';
+  const cluster = clusterNumber === '0' ? 'gaepo' : 'seocho';
 
   const getUsingCard = useCallback(async () => {
     try {

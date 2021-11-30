@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { getAllReserves } from 'api/visitorApi';
 import { getFomattedNow } from 'utils/getFormattedNow';
 import { SnackbarProvider, useSnackbar } from 'notistack';
+import moment from 'moment';
 
 const WS_URL = `${process.env.REACT_APP_VISITOR_API_URL}/ws`;
 const checkInPath = '/visitor';
@@ -27,11 +28,10 @@ const VisitorProvider = ({ children }) => {
   const [sockJS, setSockJS] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [socketChecker, setSocketChecker] = useState(null);
-  const [checkInData, setCheckInData] = useState([]);
-  const [newVisitorAlert, setNewVisitorAlert] = useState(false);
+  const [visitorCheckInLogs, setCheckInData] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
 
-  const getReserve = useCallback((date) => {
+  const getVisitorCheckInLogs = useCallback((date) => {
     getAllReserves(date).then((res) => setCheckInData(res.data));
   }, []);
 
@@ -56,8 +56,7 @@ const VisitorProvider = ({ children }) => {
         () => {
           stompClient.subscribe(checkInPath, (data) => {
             const { body } = data;
-            getReserve(getFomattedNow());
-            setNewVisitorAlert(true);
+            getVisitorCheckInLogs(getFomattedNow());
             enqueueSnackbar(body, options);
           });
         },
@@ -100,10 +99,8 @@ const VisitorProvider = ({ children }) => {
   return (
     <VisitorContext.Provider
       value={{
-        checkInData,
-        getReserve,
-        newVisitorAlert,
-        setNewVisitorAlert,
+        visitorCheckInLogs,
+        getVisitorCheckInLogs,
       }}
     >
       {children}

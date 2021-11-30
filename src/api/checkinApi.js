@@ -22,8 +22,8 @@ export const forceCheckOut = async (userId) => {
   return await instance.post(`/user/forceCheckOut/${userId}`);
 };
 
-export const getCluster = async (ClusterType, page, listSize) => {
-  return await instance.get(`/log/${CLUSTER[ClusterType]}?page=${page}&listSize=${listSize}`);
+export const getCluster = async (ClusterNumber, page, listSize) => {
+  return await instance.get(`/log/${CLUSTER[ClusterNumber]}?page=${page}&listSize=${listSize}`);
 };
 
 export const getStudent = async (login, page, listSize) => {
@@ -34,15 +34,15 @@ export const getCard = async (cardId, page, listSize) => {
   return await instance.get(`/log/card/${cardId}?page=${page}&listSize=${listSize}`);
 };
 
-export const getCheckIn = async (ClusterType, page) => {
-  return await instance.get(`/log/checkIn/${ClusterType}?page=${page}&listSize=${ALL_CARD_CNT}`);
+export const getCheckIn = async (ClusterNumber, page) => {
+  return await instance.get(`/log/checkIn/${ClusterNumber}?page=${page}&listSize=${ALL_CARD_CNT}`);
 };
 
-export const reqMaxCapacity = async () => {
+export const getConfig = async () => {
   return await instance.get(`/config`);
 };
 
-export const setMaxCapacity = async (capacity) => {
+export const setConfig = async (capacity) => {
   return await instance.put(`/config`, capacity);
 };
 

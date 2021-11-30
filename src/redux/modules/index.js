@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import userReducer from './user';
-import criteriaReducer from './criteria';
-import checkinLogReducer from './checkinLog';
+import user from './user';
+import criteria from './criteria';
+import checkInLogs from './checkInLogs';
 
 const rootReducer = combineReducers({
-  userReducer,
-  criteriaReducer,
-  checkinLogReducer,
+  user,
+  criteria,
+  checkInLogs,
 });
 
 export default rootReducer;

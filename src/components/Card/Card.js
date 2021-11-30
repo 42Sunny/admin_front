@@ -21,7 +21,7 @@ export default function Card(props) {
     [classes.cardPlain]: plain,
     [classes.cardProfile]: profile,
     [classes.cardChart]: chart,
-    [className]: className !== undefined,
+    [className]: className ?? null,
   });
   return (
     <div className={cardClasses} {...rest}>

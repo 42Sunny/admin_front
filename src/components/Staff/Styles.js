@@ -59,8 +59,7 @@ export const useStyles = makeStyles({
   cardBodyHeader: {
     width: '100%',
     display: 'flex',
-    // justifyContent: 'space-between',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   deleteButtonBox: {

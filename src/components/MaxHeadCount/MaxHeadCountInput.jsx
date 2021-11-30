@@ -4,7 +4,7 @@ import Card from 'components/Card/Card.js';
 import CardBody from 'components/Card/CardBody.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import RegularButton from 'components/CustomButtons/Button.js';
-import { setMaxCapacity } from 'api/checkinApi.js';
+import { setConfig } from 'api/checkinApi.js';
 import { useStyles } from './maxHeadCountInputStyle';
 
 const CONFIRM_MESSAGE = '최대 입장 인원 값을 변경하시겠습니까?';
@@ -23,7 +23,7 @@ const MaxHeadCountInput = ({ capacity, setCapacity, getHeadCount, cluster }) => 
   const handleClick = async (e) => {
     try {
       if (window.confirm(CONFIRM_MESSAGE)) {
-        await setMaxCapacity({
+        await setConfig({
           values: {
             gaepo: Number.parseInt(capacity.gaepo),
             seocho: Number.parseInt(capacity.seocho),

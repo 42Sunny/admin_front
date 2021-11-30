@@ -1,5 +1,5 @@
 import React from 'react';
-import StaffTable from 'components/Staff/StaffTable.js';
+import StaffTable from 'components/Staff/StaffTable';
 import MaxHeadCount from 'components/MaxHeadCount/MaxHeadCount';
 
 const Settings = () => {

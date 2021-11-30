@@ -2,7 +2,7 @@ import Dashboard from '@material-ui/icons/Dashboard';
 import Person from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DescriptionIcon from '@material-ui/icons/Description';
-import DashboardPage from 'views/Dashboard/Dashboard.js';
+import DashboardPage from 'views/Dashboard/Dashboard';
 import VisitorManagement from 'views/VisitorManagement/VisitorManagementContainer';
 import CheckInManagement from 'views/CheckInManagement/CheckInManagement';
 import Settings from 'views/Settings/Settings';
@@ -10,7 +10,7 @@ import Settings from 'views/Settings/Settings';
 const dashboardRoutes = [
   {
     path: '/dashboard',
-    name: '대시보드',
+    name: '클러스터 대시보드',
     icon: Dashboard,
     component: DashboardPage,
     layout: '',

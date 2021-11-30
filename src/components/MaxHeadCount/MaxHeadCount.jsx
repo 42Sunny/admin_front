@@ -1,4 +1,4 @@
-import { reqMaxCapacity } from 'api/checkinApi';
+import { getConfig } from 'api/checkinApi';
 import GridContainer from 'components/Grid/GridContainer';
 import React, { useEffect, useState } from 'react';
 import MaxHeadCountInput from './MaxHeadCountInput';
@@ -11,7 +11,7 @@ const MaxHeadCount = () => {
 
   const getHeadCount = async () => {
     try {
-      const response = await reqMaxCapacity();
+      const response = await getConfig();
       setCapacity({
         gaepo: response.data.gaepo,
         seocho: response.data.seocho,

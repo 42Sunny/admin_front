@@ -5,68 +5,63 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Button } from '@material-ui/core';
-import Looks4Icon from '@material-ui/icons/Looks4';
-import LooksTwoIcon from '@material-ui/icons/LooksTwo';
 import { debounce } from 'lodash';
 
 import { getCluster, getStudent, getCard, getCheckIn } from 'api/checkinApi';
 import useCriteria from 'hooks/useCriteria';
-import useCheckinLog from 'hooks/useCheckinLog';
+import useCheckInLogs from 'hooks/useCheckInLogs';
 import 'assets/css/CheckinSearchBar.css';
 import useStyles from './CheckinSearchBarStyles';
 
-const CheckinSearchBar = ({ isLightType }) => {
+const CheckinSearchBar = () => {
   const classes = useStyles();
 
   const {
-    criteria: { clusterType, currentPage, logType, cardNum, intraId, listSize },
-    setClusterType,
+    criteria: { clusterNumber, currentPage, logType, cardNum, intraId, listSize },
+    setClusterNumber,
     setLastPage,
     setCardNum,
     setIntraId,
     setCurrentPage,
   } = useCriteria();
 
-  const { setLogs } = useCheckinLog();
+  const { setCheckInLogs } = useCheckInLogs();
 
   const onSubmit = async (e) => {
     try {
       let response;
-      if (isLightType) {
-        response = await getCheckIn(clusterType, currentPage, 10);
-      } else {
-        switch (logType) {
-          case 0:
-            response = await getCluster(clusterType, currentPage, listSize);
-            break;
-          case 1:
-            if (intraId) response = await getStudent(intraId, currentPage, listSize);
-            else throw new Error('유효한 인트라 ID를 입력하세요.');
-            break;
-          case 2:
-            if (cardNum !== 0 && cardNum !== '')
-              response = await getCard(cardNum, currentPage, listSize);
-            else throw new Error('유효한 카드 번호를 입력하세요.');
-            break;
-          case 3:
-            response = await getCheckIn(clusterType, currentPage);
-            break;
-          default:
-            break;
-        }
+
+      switch (logType) {
+        case 0:
+          response = await getCluster(clusterNumber, currentPage, listSize);
+          break;
+        case 1:
+          if (intraId) response = await getStudent(intraId, currentPage, listSize);
+          else throw new Error('유효한 인트라 ID를 입력하세요.');
+          break;
+        case 2:
+          if (cardNum !== 0 && cardNum !== '')
+            response = await getCard(cardNum, currentPage, listSize);
+          else throw new Error('유효한 카드 번호를 입력하세요.');
+          break;
+        case 3:
+          response = await getCheckIn(clusterNumber, currentPage);
+          break;
+        default:
+          break;
       }
+
       if (response.data.list) {
         let datas;
         datas = response.data.list;
-        setLogs(datas);
+        setCheckInLogs(datas);
         setLastPage(response.data.lastPage);
         if (response.data.lastPage < currentPage) {
           setCurrentPage(1);
         }
       } else {
-        setLogs([]);
+        setCheckInLogs([]);
         setLastPage(1);
         throw new Error('response 형식이 올바르지 않습니다.');
       }
@@ -76,8 +71,8 @@ const CheckinSearchBar = ({ isLightType }) => {
   };
 
   const handleChange = (event) => {
-    setLogs([]);
-    setClusterType(event.target.value);
+    setCheckInLogs([]);
+    setClusterNumber(event.target.value);
   };
 
   const handleKeyDown = (event) => {
@@ -94,12 +89,13 @@ const CheckinSearchBar = ({ isLightType }) => {
   useEffect(() => {
     onSubmit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [logType, currentPage, clusterType, intraId, cardNum, listSize]);
+  }, [logType, currentPage, clusterNumber, intraId, cardNum, listSize]);
 
   const studentProps = {
     classes,
-    clusterType,
-    handleChange,
+    onSubmit,
+    handleChangeWithDebounce,
+    handleKeyDown,
   };
 
   const cardProps = {
@@ -111,9 +107,8 @@ const CheckinSearchBar = ({ isLightType }) => {
 
   const clusterProps = {
     classes,
-    onSubmit,
-    handleChangeWithDebounce,
-    handleKeyDown,
+    clusterNumber,
+    handleChange,
   };
 
   switch (logType) {
@@ -126,23 +121,9 @@ const CheckinSearchBar = ({ isLightType }) => {
   }
 };
 
-const Cluster = ({ classes, clusterType, handleChange }) => (
-  <div className={classes.margin}>
-    <FormControl component="fieldset">
-      <RadioGroup name="cluster" value={clusterType} onChange={handleChange} row>
-        <FormControlLabel value="0" control={<Radio color="default" size="small" />} label="개포" />
-        <FormControlLabel value="1" control={<Radio color="default" size="small" />} label="서초" />
-      </RadioGroup>
-    </FormControl>
-  </div>
-);
-
 const Student = ({ classes, onSubmit, handleChangeWithDebounce, handleKeyDown }) => (
   <div className={classes.margin}>
     <Grid container spacing={1} justifyContent="center" alignItems="flex-end">
-      <Grid item>
-        <AccountCircle />
-      </Grid>
       <Grid item>
         <TextField
           id="intra-id"
@@ -164,10 +145,6 @@ const Card = ({ classes, onSubmit, handleChangeWithDebounce, handleKeyDown }) =>
   <div className={classes.margin}>
     <Grid container spacing={1} justifyContent="center" alignItems="flex-end">
       <Grid item>
-        <Looks4Icon />
-        <LooksTwoIcon />
-      </Grid>
-      <Grid item>
         <TextField
           id="card-number"
           label="카드 번호"
@@ -182,6 +159,17 @@ const Card = ({ classes, onSubmit, handleChangeWithDebounce, handleKeyDown }) =>
         </Button>
       </Grid>
     </Grid>
+  </div>
+);
+
+const Cluster = ({ classes, clusterNumber, handleChange }) => (
+  <div className={classes.margin}>
+    <FormControl component="fieldset">
+      <RadioGroup name="cluster" value={clusterNumber} onChange={handleChange} row>
+        <FormControlLabel value="0" control={<Radio color="default" size="small" />} label="개포" />
+        <FormControlLabel value="1" control={<Radio color="default" size="small" />} label="서초" />
+      </RadioGroup>
+    </FormControl>
   </div>
 );
 

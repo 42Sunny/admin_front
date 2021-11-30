@@ -10,7 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { forceCheckOut } from 'api/checkinApi';
 import moment from 'moment';
 import useCriteria from 'hooks/useCriteria';
-import useCheckinLog from 'hooks/useCheckinLog';
+import useCheckInLogs from 'hooks/useCheckInLogs';
 import { useStyles } from './CheckinLogTableStyles';
 
 const LOGTYPE = {
@@ -30,10 +30,7 @@ const CheckinLogTable = ({ xs, sm, md }) => {
     setListSize,
   } = useCriteria();
 
-  const {
-    checkinLog: { logs },
-    setLogs,
-  } = useCheckinLog();
+  const { checkInLogs, setCheckInLogs } = useCheckInLogs();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,7 +47,7 @@ const CheckinLogTable = ({ xs, sm, md }) => {
       if (userId) {
         window.confirm('퇴실 처리 하시겠습니까?');
         await forceCheckOut(userId);
-        setLogs([]);
+        setCheckInLogs([]);
       } else {
         window.alert('유효한 인트라 ID가 아닙니다.');
       }
@@ -89,7 +86,7 @@ const CheckinLogTable = ({ xs, sm, md }) => {
             <Table
               tableHeaderColor="info"
               tableHead={tableHead}
-              tableData={logs.map((log, idx) => {
+              tableData={checkInLogs?.map((log, idx) => {
                 return [
                   log._id ?? (currentPage - 1) * listSize + idx + 1,
                   moment(log.created_at).format('MM월 DD일 HH:mm') ?? null,

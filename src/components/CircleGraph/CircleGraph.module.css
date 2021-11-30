@@ -1,0 +1,22 @@
+.OuterCircle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 15vw;
+  height: 15vw;
+  min-width: 200px;
+  min-height: 200px;
+}
+
+.InnerCircle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.3rem;
+  background-color: white;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+}

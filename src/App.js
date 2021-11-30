@@ -1,16 +1,18 @@
-import React, { useEffect, useContext, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { VisitorProviderWrapper } from 'contexts/VisitorContext';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { LoginContext } from 'contexts/LoginContext';
 import { checkAdmin } from 'api/checkinApi';
 import Admin from 'layouts/Admin';
 import Login from 'components/Login/Login';
 
 import 'assets/css/material-dashboard-react.css?v=1.10.0';
 import 'assets/css/input.css';
+import useUser from 'hooks/useUser';
+import useCriteria from 'hooks/useCriteria';
 
 const App = () => {
-  const { isLogin, setIsLogin } = useContext(LoginContext);
+  const { user, setUser } = useUser();
+  const { setMaxGaepo, setMaxSeocho } = useCriteria();
 
   const getCookieValue = (key) => {
     let cookieKey = key + '=';
@@ -31,29 +33,29 @@ const App = () => {
     try {
       const response = await checkAdmin();
       if (response.data['isAdmin']) {
-        setIsLogin(true);
+        setUser(response.data.user['_id']);
       } else {
         window.alert('접근 권한이 없습니다.');
-        setIsLogin(false);
+        setUser('');
       }
     } catch (err) {
       console.log(err);
     }
-  }, [setIsLogin]);
+  }, [setUser]);
 
   useEffect(() => {
     const token = getCookieValue(process.env.REACT_APP_AUTH_KEY);
     if (token !== '') {
       getUserData();
     } else {
-      setIsLogin(false);
+      setUser('');
     }
-  }, [getUserData, setIsLogin]);
+  }, [getUserData, setUser]);
 
   return (
     <BrowserRouter>
       <Switch>
-        {process.env.REACT_APP_AUTO_LOGIN || isLogin ? (
+        {user !== '' ? (
           <VisitorProviderWrapper>
             <Route path="*" component={Admin} />
           </VisitorProviderWrapper>
