@@ -1,13 +1,13 @@
 import React, { useEffect, useContext, useCallback } from 'react';
+import { VisitorProviderWrapper } from 'contexts/VisitorContext';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Login from 'components/Login/Login';
 import { LoginContext } from 'contexts/LoginContext';
-import Admin from 'layouts/Admin';
 import { checkAdmin } from 'api/checkinApi';
+import Admin from 'layouts/Admin';
+import Login from 'components/Login/Login';
 
 import 'assets/css/material-dashboard-react.css?v=1.10.0';
 import 'assets/css/input.css';
-import { VisitorProviderWrapper } from 'contexts/VisitorContext';
 
 const App = () => {
   const { isLogin, setIsLogin } = useContext(LoginContext);

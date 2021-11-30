@@ -7,36 +7,11 @@ import CardBody from 'components/Card/CardBody.js';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles } from '@material-ui/core/styles';
 import { forceCheckOut } from 'api/checkinApi';
-import * as moment from 'moment';
+import moment from 'moment';
 import useCriteria from 'hooks/useCriteria';
 import useCheckinLog from 'hooks/useCheckinLog';
-import { whiteColor, grayColor } from 'assets/jss/material-dashboard-react.js';
-
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  cardTitleWhite: {
-    color: whiteColor,
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: 'bold',
-    marginBottom: '3px',
-    textDecoration: 'none',
-    '& small': {
-      color: grayColor[1],
-      fontWeight: '400',
-      lineHeight: '1',
-    },
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-};
+import { useStyles } from './CheckinLogTableStyles';
 
 const LOGTYPE = {
   0: '클러스터',
@@ -45,7 +20,7 @@ const LOGTYPE = {
   3: '카뎃',
 };
 
-const useStyles = makeStyles(styles);
+const tableHead = ['ID', '시간', '출/입', '인트라 ID', '카드 번호', '클러스터', '강제 퇴실'];
 
 const CheckinLogTable = ({ xs, sm, md }) => {
   const classes = useStyles();
@@ -59,8 +34,6 @@ const CheckinLogTable = ({ xs, sm, md }) => {
     checkinLog: { logs },
     setLogs,
   } = useCheckinLog();
-
-  const tableHead = ['ID', '시간', '출/입', '인트라 ID', '카드 번호', '클러스터', '강제 퇴실'];
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -112,30 +85,32 @@ const CheckinLogTable = ({ xs, sm, md }) => {
           )}
         </CardHeader>
         <CardBody>
-          <Table
-            tableHeaderColor="info"
-            tableHead={tableHead}
-            tableData={logs.map((log, idx) => {
-              return [
-                log._id ?? (currentPage - 1) * listSize + idx + 1,
-                moment(log.created_at).format('MM월 DD일 HH:mm') ?? null,
-                logType === 3 ? log.state : log.type,
-                log.login,
-                log.card_no,
-                log.card_no > 999 ? '서초' : '개포',
-                logType === 3 ||
-                (log.User.card_no === log.card_no && log.User.log_id === log._id) ? (
-                  <button
-                    className="force-out-Btn"
-                    onClick={checkOutOnClick}
-                    data-idx={logType === 3 ? log._id : log.User._id}
-                  >
-                    퇴실 처리
-                  </button>
-                ) : null,
-              ];
-            })}
-          />
+          <div className={classes.tableBody}>
+            <Table
+              tableHeaderColor="info"
+              tableHead={tableHead}
+              tableData={logs.map((log, idx) => {
+                return [
+                  log._id ?? (currentPage - 1) * listSize + idx + 1,
+                  moment(log.created_at).format('MM월 DD일 HH:mm') ?? null,
+                  logType === 3 ? log.state : log.type,
+                  log.login,
+                  log.card_no,
+                  log.card_no > 999 ? '서초' : '개포',
+                  logType === 3 ||
+                  (log.User.card_no === log.card_no && log.User.log_id === log._id) ? (
+                    <button
+                      className="force-out-Btn"
+                      onClick={checkOutOnClick}
+                      data-idx={logType === 3 ? log._id : log.User._id}
+                    >
+                      퇴실 처리
+                    </button>
+                  ) : null,
+                ];
+              })}
+            />
+          </div>
         </CardBody>
       </Card>
     </GridItem>

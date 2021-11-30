@@ -8,7 +8,6 @@ import CheckinLogTable from 'components/Checkin/CheckinLogTable';
 import CheckinSearchBar from 'components/Checkin/CheckinSearchBar';
 import VisitorLogTable from 'components/Visitor/VisitorLogTable';
 import VisitorHeadCount from 'components/Visitor/VisitorHeadCount';
-import PaginationRounded from 'components/Checkin/Paging';
 import { makeStyles } from '@material-ui/core/styles';
 import useCriteria from 'hooks/useCriteria';
 
@@ -72,9 +71,6 @@ export default function Dashboard() {
       <h5>{ENTRANCE_TITLE}</h5>
       <GridContainer>
         <CheckinLogTable xs={12} sm={12} md={12} />
-        <div className={classes.optionBox}>
-          <PaginationRounded />
-        </div>
         <VisitorLogTable
           xs={12}
           sm={12}

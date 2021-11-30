@@ -6,7 +6,6 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import Looks4Icon from '@material-ui/icons/Looks4';
 import LooksTwoIcon from '@material-ui/icons/LooksTwo';
@@ -16,14 +15,7 @@ import { getCluster, getStudent, getCard, getCheckIn } from 'api/checkinApi';
 import useCriteria from 'hooks/useCriteria';
 import useCheckinLog from 'hooks/useCheckinLog';
 import 'assets/css/CheckinSearchBar.css';
-
-const useStyles = makeStyles(() => ({
-  margin: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-}));
+import useStyles from './CheckinSearchBarStyles';
 
 const CheckinSearchBar = ({ isLightType }) => {
   const classes = useStyles();
@@ -104,80 +96,93 @@ const CheckinSearchBar = ({ isLightType }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [logType, currentPage, clusterType, intraId, cardNum, listSize]);
 
-  const Cluster = () => (
-    <div className={classes.margin}>
-      <FormControl component="fieldset">
-        <RadioGroup name="cluster" value={clusterType} onChange={handleChange} row>
-          <FormControlLabel
-            value="0"
-            control={<Radio color="default" size="small" />}
-            label="개포"
-          />
-          <FormControlLabel
-            value="1"
-            control={<Radio color="default" size="small" />}
-            label="서초"
-          />
-        </RadioGroup>
-      </FormControl>
-    </div>
-  );
+  const studentProps = {
+    classes,
+    clusterType,
+    handleChange,
+  };
 
-  const Student = () => (
-    <div className={classes.margin}>
-      <Grid container spacing={1} justifyContent="center" alignItems="flex-end">
-        <Grid item>
-          <AccountCircle />
-        </Grid>
-        <Grid item>
-          <TextField
-            id="intra-id"
-            label="인트라 ID"
-            onChange={handleChangeWithDebounce}
-            onKeyDown={handleKeyDown}
-          />
-        </Grid>
-        <Grid item>
-          <Button variant="outlined" onClick={onSubmit}>
-            조회
-          </Button>
-        </Grid>
-      </Grid>
-    </div>
-  );
+  const cardProps = {
+    classes,
+    onSubmit,
+    handleChangeWithDebounce,
+    handleKeyDown,
+  };
 
-  const Card = () => (
-    <div className={classes.margin}>
-      <Grid container spacing={1} justifyContent="center" alignItems="flex-end">
-        <Grid item>
-          <Looks4Icon />
-          <LooksTwoIcon />
-        </Grid>
-        <Grid item>
-          <TextField
-            id="card-number"
-            label="카드 번호"
-            type="number"
-            onChange={handleChangeWithDebounce}
-            onKeyDown={handleKeyDown}
-          />
-        </Grid>
-        <Grid item>
-          <Button variant="outlined" onClick={onSubmit}>
-            조회
-          </Button>
-        </Grid>
-      </Grid>
-    </div>
-  );
+  const clusterProps = {
+    classes,
+    onSubmit,
+    handleChangeWithDebounce,
+    handleKeyDown,
+  };
+
   switch (logType) {
     case 1:
-      return Student();
+      return <Student {...studentProps} />;
     case 2:
-      return Card();
+      return <Card {...cardProps} />;
     default:
-      return Cluster();
+      return <Cluster {...clusterProps} />;
   }
 };
+
+const Cluster = ({ classes, clusterType, handleChange }) => (
+  <div className={classes.margin}>
+    <FormControl component="fieldset">
+      <RadioGroup name="cluster" value={clusterType} onChange={handleChange} row>
+        <FormControlLabel value="0" control={<Radio color="default" size="small" />} label="개포" />
+        <FormControlLabel value="1" control={<Radio color="default" size="small" />} label="서초" />
+      </RadioGroup>
+    </FormControl>
+  </div>
+);
+
+const Student = ({ classes, onSubmit, handleChangeWithDebounce, handleKeyDown }) => (
+  <div className={classes.margin}>
+    <Grid container spacing={1} justifyContent="center" alignItems="flex-end">
+      <Grid item>
+        <AccountCircle />
+      </Grid>
+      <Grid item>
+        <TextField
+          id="intra-id"
+          label="인트라 ID"
+          onChange={handleChangeWithDebounce}
+          onKeyDown={handleKeyDown}
+        />
+      </Grid>
+      <Grid item>
+        <Button variant="outlined" onClick={onSubmit}>
+          조회
+        </Button>
+      </Grid>
+    </Grid>
+  </div>
+);
+
+const Card = ({ classes, onSubmit, handleChangeWithDebounce, handleKeyDown }) => (
+  <div className={classes.margin}>
+    <Grid container spacing={1} justifyContent="center" alignItems="flex-end">
+      <Grid item>
+        <Looks4Icon />
+        <LooksTwoIcon />
+      </Grid>
+      <Grid item>
+        <TextField
+          id="card-number"
+          label="카드 번호"
+          type="number"
+          onChange={handleChangeWithDebounce}
+          onKeyDown={handleKeyDown}
+        />
+      </Grid>
+      <Grid item>
+        <Button variant="outlined" onClick={onSubmit}>
+          조회
+        </Button>
+      </Grid>
+    </Grid>
+  </div>
+);
 
 export default CheckinSearchBar;
