@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 
 const URL = process.env.REACT_APP_VISITOR_API_URL;
 const VERSION_PATH = '/v1';
@@ -53,9 +54,9 @@ const checkStaff = (staffName) => {
 
 const INIT_PAGE = 0;
 const INIT_SIZE = 10;
-const getVisitData = ({
-  start,
-  end,
+const getVisitorLogs = ({
+  start = null,
+  end = null,
   place = null,
   name = null,
   phone = null,
@@ -68,6 +69,8 @@ const getVisitData = ({
   size = INIT_SIZE,
 }) => {
   const searchCriteria = [];
+  if (start === null) start = new moment().format('YYYY-MM-DD');
+  if (end === null) end = new moment().format('YYYY-MM-DD');
   const data = { start, end, pagination: { page, size } };
   if (place !== null) data['place'] = place;
   if (name !== null) searchCriteria.push({ criteria: 'VISITOR_NAME', value: name });
@@ -92,5 +95,5 @@ export {
   getStaffs,
   deleteStaff,
   checkStaff,
-  getVisitData,
+  getVisitorLogs,
 };

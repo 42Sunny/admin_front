@@ -4,8 +4,9 @@ import GridItem from 'components/Grid/GridItem';
 import React from 'react';
 import CircleGraph from 'components/CircleGraph/CircleGraph';
 import { useStyles } from './HeadCountStyles';
+import Legend from 'components/Legend/Legend';
 
-const VisitorHeadCount = ({ xs, sm, md, targetPercent, content, title }) => {
+const VisitorHeadCount = ({ xs, sm, md, targetPercent, content, title, color, legends }) => {
   const classes = useStyles();
 
   return (
@@ -14,8 +15,11 @@ const VisitorHeadCount = ({ xs, sm, md, targetPercent, content, title }) => {
         <CardHeader color="info">
           <h4 className={classes.graphTitle}>{title}</h4>
         </CardHeader>
-        <div className={classes.graphBody}>
-          <CircleGraph targetPercent={targetPercent} content={content} />
+        <div>
+          <Legend legends={legends} />
+          <div className={classes.graphBody}>
+            <CircleGraph targetPercent={targetPercent} content={content} />
+          </div>
         </div>
       </Card>
     </GridItem>

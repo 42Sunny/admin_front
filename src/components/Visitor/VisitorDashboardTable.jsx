@@ -7,14 +7,14 @@ import Table from 'components/Table/Table';
 import useStyles from './VisitorDashboardTableStyles';
 import moment from 'moment';
 
-const tableHead = ['예약 시간', '입실', '직원', '소속', '이름', '목적', '상태'];
+const tableHead = ['예약 시간', '입실 시간', '직원', '소속', '방문자', '목적', '상태'];
 
 const VisitorLogTable = ({ xs, sm, md, checkInLogs, clusterNumber }) => {
   const classes = useStyles();
   const [tableData, setTableData] = useState();
 
   useEffect(() => {
-    setTableData(makeTableData(checkInLogs, clusterNumber));
+    setTableData(makeTableData(checkInLogs));
   }, [checkInLogs, clusterNumber]);
 
   return (
@@ -22,6 +22,7 @@ const VisitorLogTable = ({ xs, sm, md, checkInLogs, clusterNumber }) => {
       <Card>
         <CardHeader color="info">
           <h4 className={classes.title}>방문자 로그</h4>
+          <h6 className={classes.title}>{moment().format('YYYY년 MM월 DD일')}</h6>
         </CardHeader>
         <CardBody className={classes.content}>
           {tableData?.length ? (
@@ -35,9 +36,9 @@ const VisitorLogTable = ({ xs, sm, md, checkInLogs, clusterNumber }) => {
   );
 };
 
-const MakeData = (staffName, date, purpose, checkInTime, organization, name, status) => [
-  date && new moment(date).format('HH:mm'),
-  checkInTime && new moment(checkInTime).format('HH:mm'),
+const makeRow = ({ staffName, date, purpose, checkIn, organization, name, status }) => [
+  date,
+  checkIn && moment(checkIn).format('HH:mm'),
   staffName,
   organization,
   name,
@@ -45,29 +46,6 @@ const MakeData = (staffName, date, purpose, checkInTime, organization, name, sta
   status,
 ];
 
-const makeTableData = (checkInLogs, clusterNumber) => {
-  const result = [];
-  checkInLogs?.forEach((elem) => {
-    const { place, staffName, date, purpose, visitors } = elem;
-    if (clusterNumber === '0' && place === '개포') {
-      visitors.forEach(
-        ({ visitorId, checkInTime, checkOutTime, organization, name, phone, status }) => {
-          const temp = MakeData(staffName, date, purpose, checkInTime, organization, name, status);
-          result.push(temp);
-        },
-      );
-    }
-    if (clusterNumber === '1' && place === '서초') {
-      visitors.forEach((elem) => {
-        visitors.forEach((visitor) => {
-          const temp = MakeData(staffName, date, purpose, visitor);
-          result.push(temp);
-        });
-      });
-    }
-  });
-  result.reverse();
-  return result;
-};
+const makeTableData = (checkInLogs) => checkInLogs.map((log) => makeRow(log));
 
 export default VisitorLogTable;

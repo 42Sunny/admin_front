@@ -3,10 +3,10 @@ import SockJS from 'sockjs-client';
 import { createContext, useCallback } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getAllReserves } from 'api/visitorApi';
-import { getFomattedNow } from 'utils/getFormattedNow';
 import { SnackbarProvider, useSnackbar } from 'notistack';
-import moment from 'moment';
+import { getVisitorLogs } from 'api/visitorApi';
+import useCriteria from 'hooks/useCriteria';
+import { getClusterName } from 'utils/getCluster';
 
 const WS_URL = `${process.env.REACT_APP_VISITOR_API_URL}/ws`;
 const checkInPath = '/visitor';
@@ -30,10 +30,15 @@ const VisitorProvider = ({ children }) => {
   const [socketChecker, setSocketChecker] = useState(null);
   const [visitorCheckInLogs, setCheckInData] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
+  const {
+    criteria: { clusterNumber },
+  } = useCriteria();
 
-  const getVisitorCheckInLogs = useCallback((date) => {
-    getAllReserves(date).then((res) => setCheckInData(res.data));
-  }, []);
+  const getVisitorCheckInLogs = useCallback(async () => {
+    const result = await getVisitorLogs({ size: 1000, place: getClusterName(clusterNumber) });
+    if (result.data.error) setCheckInData([]);
+    else setCheckInData(result.data.checkInLogs);
+  }, [clusterNumber]);
 
   const initSocket = () => {
     const sockJS = new SockJS(WS_URL);
@@ -56,7 +61,7 @@ const VisitorProvider = ({ children }) => {
         () => {
           stompClient.subscribe(checkInPath, (data) => {
             const { body } = data;
-            getVisitorCheckInLogs(getFomattedNow());
+            getVisitorCheckInLogs();
             enqueueSnackbar(body, options);
           });
         },

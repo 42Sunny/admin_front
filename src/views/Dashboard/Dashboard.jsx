@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import GridContainer from 'components/Grid/GridContainer.js';
 import { useContext } from 'react';
 import { VisitorContext } from 'contexts/VisitorContext';
-import { getFomattedNow } from 'utils/getFormattedNow';
 import CheckinDashboardTable from 'components/Checkin/CheckinDashboardTable';
 import VisitorDashboardTable from 'components/Visitor/VisitorDashboardTable';
 import useCriteria from 'hooks/useCriteria';
 import ClusterSelector from 'components/ClusterSelector/ClusterSelector';
 import { useStyles } from './DashboardStyles';
-import { getCheckIn } from 'api/checkinApi';
 import useCheckInLogs from 'hooks/useCheckInLogs';
 import { getClusterNumber } from 'utils/getCluster';
 import HeadCount from 'components/HeadCount/HeadCount';
-import { getConfig } from 'api/checkinApi';
-import { getCheckInLogs } from 'utils/getCheckInLogs';
+import { updateCheckInLogs } from 'utils/updateCheckInLogs';
 import { getHeadCount } from 'utils/getHeadCount';
 
 const Dashboard = () => {
@@ -26,58 +23,43 @@ const Dashboard = () => {
     setMaxSeocho,
   } = useCriteria();
 
-  useEffect(() => getCheckInLogs(setCheckInLogs, clusterNumber), [clusterNumber, setCheckInLogs]);
+  useEffect(
+    () => updateCheckInLogs(setCheckInLogs, clusterNumber),
+    [clusterNumber, setCheckInLogs],
+  );
   useEffect(() => getHeadCount(setMaxGaepo, setMaxSeocho), [setMaxGaepo, setMaxSeocho]);
-  useEffect(() => getVisitorCheckInLogs(getFomattedNow()), [getVisitorCheckInLogs]);
+  useEffect(() => getVisitorCheckInLogs(), [clusterNumber, getVisitorCheckInLogs]);
 
+  const checkInEnteranceCount = useMemo(
+    () => checkInLogs.filter((log) => getClusterNumber(log) === clusterNumber).length,
+    [checkInLogs, clusterNumber],
+  );
+  const checkInMaxEnterance = clusterNumber === '0' ? maxGaepo : maxSeocho;
   const CheckInHeadCountProps = {
     title: '체크인 현황',
-    targetPercent: Number.parseInt(
-      (checkInLogs.filter((log) => getClusterNumber(log) === clusterNumber).length /
-        (clusterNumber === '0' ? maxGaepo : maxSeocho)) *
-        100,
-      10,
-    ),
-    content: (
-      <div>
-        <div>{`입실 : ${
-          checkInLogs.filter((log) => getClusterNumber(log) === clusterNumber).length
-        }`}</div>
-        <div>{`정원 : ${clusterNumber === '0' ? maxGaepo : maxSeocho}`}</div>
-      </div>
-    ),
+    targetPercent: Number.parseInt((checkInEnteranceCount / checkInMaxEnterance) * 100, 10),
+    content: <div>{`${checkInEnteranceCount}/${checkInMaxEnterance}`}</div>,
+    legends: [
+      { color: 'info', content: `입실 ${checkInEnteranceCount}명` },
+      { content: `총원 ${checkInMaxEnterance}명` },
+    ],
   };
+
+  const visitorEnteranceCount = visitorCheckInLogs?.filter((log) => log.status === '입실').length;
+  const visitorReserveCount = visitorCheckInLogs.length;
 
   const VisitorHeadCountProps = {
     title: '방문자 현황',
-    targetPercent: Number.parseInt(
-      (visitorCheckInLogs
-        ?.filter(({ place }) => getClusterNumber(place) === clusterNumber)
-        .reduce((cur, reserve) => [...cur, ...reserve.visitors], [])
-        .filter((visitor) => visitor.status === '입실').length /
-        visitorCheckInLogs
-          ?.filter(({ place }) => getClusterNumber(place) === clusterNumber)
-          .reduce((cur, elem) => cur + elem.visitors.length, 0)) *
-        100,
-      10,
-    ),
+    targetPercent: Number.parseInt((visitorEnteranceCount / visitorReserveCount) * 100, 10),
     content: (
       <div>
-        <div>
-          {`완료 : 
-          ${
-            visitorCheckInLogs
-              ?.filter(({ place }) => getClusterNumber(place) === clusterNumber)
-              .reduce((cur, reserve) => [...cur, ...reserve.visitors], [])
-              .filter((visitor) => visitor.status === '입실').length
-          }`}
-        </div>
-        <div>{`예약 : 
-          ${visitorCheckInLogs
-            ?.filter(({ place, visitors }) => getClusterNumber(place) === clusterNumber)
-            .reduce((cur, elem) => cur + elem.visitors.length, 0)}`}</div>
+        <div>{`${visitorEnteranceCount}/${visitorReserveCount}`}</div>
       </div>
     ),
+    legends: [
+      { color: 'info', content: `입실 ${visitorEnteranceCount}명` },
+      { content: `예약 ${visitorReserveCount}명` },
+    ],
   };
 
   return (

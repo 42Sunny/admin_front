@@ -5,7 +5,7 @@ const styles = {
   root: {
     flexGrow: 1,
   },
-  cardTitleWhite: {
+  title: {
     color: whiteColor,
     marginTop: '0px',
     minHeight: 'auto',
@@ -17,11 +17,6 @@ const styles = {
       fontWeight: '400',
       lineHeight: '1',
     },
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
   tableBody: {
     maxHeight: '50vh',

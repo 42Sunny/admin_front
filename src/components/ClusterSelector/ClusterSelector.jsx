@@ -1,5 +1,7 @@
 import { Tab, Tabs } from '@material-ui/core';
+import { useStyles } from './ClusterSelectorStyles';
 import useCriteria from 'hooks/useCriteria';
+import moment from 'moment';
 import React from 'react';
 
 function a11yProps(index) {
@@ -11,6 +13,7 @@ function a11yProps(index) {
 }
 
 const ClusterSelector = () => {
+  const classes = useStyles();
   const {
     criteria: { clusterNumber },
     setClusterNumber,
@@ -21,15 +24,18 @@ const ClusterSelector = () => {
   };
 
   return (
-    <Tabs
-      value={clusterNumber}
-      onChange={handleChange}
-      indicatorColor="primary"
-      textColor="primary"
-    >
-      <Tab label="개포" {...a11yProps(0)} />
-      <Tab label="서초" {...a11yProps(1)} />
-    </Tabs>
+    <div className={classes.body}>
+      <Tabs
+        value={clusterNumber}
+        onChange={handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+      >
+        <Tab label="개포" {...a11yProps(0)} />
+        <Tab label="서초" {...a11yProps(1)} />
+      </Tabs>
+      <div>{moment().format('YYYY년 MM월 DD일')}</div>
+    </div>
   );
 };
 

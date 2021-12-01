@@ -30,7 +30,7 @@ const initialState = {
   currentPage: 1,
   lastPage: 0,
   listSize: 10,
-  logType: 3,
+  logType: 0,
   maxSeocho: 0,
   maxGaepo: 0,
 };

@@ -8,11 +8,9 @@ import Login from 'components/Login/Login';
 import 'assets/css/material-dashboard-react.css?v=1.10.0';
 import 'assets/css/input.css';
 import useUser from 'hooks/useUser';
-import useCriteria from 'hooks/useCriteria';
 
 const App = () => {
   const { user, setUser } = useUser();
-  const { setMaxGaepo, setMaxSeocho } = useCriteria();
 
   const getCookieValue = (key) => {
     let cookieKey = key + '=';

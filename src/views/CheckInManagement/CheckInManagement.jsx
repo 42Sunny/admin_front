@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import PaginationRounded from 'components/Checkin/Paging';
+import Paging from 'components/Checkin/Paging';
 import CheckinSearchBar from 'components/Checkin/CheckinSearchBar';
 import CheckinLogTable from 'components/Checkin/CheckinLogTable';
 
@@ -11,7 +11,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import useCriteria from 'hooks/useCriteria';
 import useCheckInLogs from 'hooks/useCheckInLogs';
 import { useStyles } from './CheckInManagementStyles';
-import { getCheckInLogs } from 'utils/getCheckInLogs';
+import { updateCheckInLogs } from 'utils/updateCheckInLogs';
 
 function a11yProps(index) {
   return {
@@ -33,15 +33,18 @@ const CheckInManagement = () => {
     setCurrentPage,
   } = useCriteria();
 
-  useEffect(() => getCheckInLogs(setCheckInLogs, clusterNumber), [clusterNumber, setCheckInLogs]);
+  useEffect(
+    () => updateCheckInLogs(setCheckInLogs, clusterNumber),
+    [clusterNumber, setCheckInLogs],
+  );
 
   const handleChange = (event, newValue) => {
-    setCheckInLogs([]);
     setCurrentPage(1);
     setLogType(newValue);
     setIntraId('');
     setCardNum('');
     setLastPage(1);
+    updateCheckInLogs(setCheckInLogs, clusterNumber);
   };
 
   return (
@@ -63,7 +66,7 @@ const CheckInManagement = () => {
       <div className={classes.optionBox}>
         <CheckinSearchBar />
       </div>
-      <PaginationRounded />
+      <Paging />
       <GridContainer>
         <CheckinLogTable xs={12} sm={12} md={12} />
       </GridContainer>

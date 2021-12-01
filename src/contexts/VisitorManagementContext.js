@@ -1,4 +1,4 @@
-import { getVisitData } from 'api/visitorApi';
+import { getVisitorLogs } from 'api/visitorApi';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
 import moment from 'moment';
 import { createContext, useEffect, useState, useCallback } from 'react';
@@ -63,7 +63,7 @@ const VisitorManagementProvider = ({ children }) => {
       }
       if (place !== PLACE_ALL.value) data['place'] = place;
 
-      const response = await getVisitData(data);
+      const response = await getVisitorLogs(data);
       const {
         data: { error },
       } = response;

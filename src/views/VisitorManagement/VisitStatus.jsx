@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { getVisitData } from 'api/visitorApi';
+import { getVisitorLogs } from 'api/visitorApi';
 import { updateVisitorStatus } from 'api/visitorApi';
 import { useContext } from 'react';
 import { VisitorManagementContext } from '../../contexts/VisitorManagementContext';
@@ -25,7 +25,7 @@ const VisitStatus = ({ status, visitorId }) => {
 
   const handleChange = async ({ target: { value } }) => {
     await updateVisitorStatus(visitorId, value);
-    const res = await getVisitData({ start: startDate, end: endDate, page });
+    const res = await getVisitorLogs({ start: startDate, end: endDate, page });
     setVisitData(res.data.checkInLogs);
     setLastPage(res.data.lastPage);
   };

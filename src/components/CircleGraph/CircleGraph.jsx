@@ -1,8 +1,9 @@
+import { infoColor } from 'assets/jss/material-dashboard-react';
 import React, { useEffect, useState } from 'react';
 import classes from './CircleGraph.module.css';
 
 const outerCircleStyle = (percent) => ({
-  background: `conic-gradient(#1CBBCF ${percent}%, rgba(0, 0, 0, 0.1) 0%)`,
+  background: `conic-gradient(${infoColor[1]} ${percent}%, rgba(0, 0, 0, 0.1) 0%)`,
 });
 
 const CircleGraph = ({ targetPercent, content }) => {

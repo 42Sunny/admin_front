@@ -10,7 +10,7 @@ import useCheckInLogs from 'hooks/useCheckInLogs';
 import { useStyles } from './CheckinDashBoardTableStyles';
 import { getClusterNumber } from 'utils/getCluster';
 
-const tableHead = ['시간', '인트라 ID', '카드 번호', '강제 퇴실'];
+const tableHead = ['체크인 시간', '인트라 ID', '카드 번호', '강제 퇴실'];
 
 const CheckinLogTable = ({ xs, sm, md }) => {
   const classes = useStyles();
@@ -38,8 +38,9 @@ const CheckinLogTable = ({ xs, sm, md }) => {
   return (
     <GridItem xs={xs} sm={sm} md={md}>
       <Card>
-        <CardHeader color="info" className={classes.header}>
-          <h4 className={classes.cardTitleWhite}>체크인 로그</h4>
+        <CardHeader color="info">
+          <h4 className={classes.title}>체크인 로그</h4>
+          <h6 className={classes.title}>{moment().format('YYYY년 MM월 DD일')}</h6>
         </CardHeader>
         <CardBody className={classes.content}>
           <div className={classes.tableBody}>
@@ -49,7 +50,7 @@ const CheckinLogTable = ({ xs, sm, md }) => {
               tableData={checkInLogs
                 .filter((log) => clusterNumber === getClusterNumber(log))
                 .map((log, idx) => [
-                  moment(log.created_at).format('MM월 DD일 HH:mm') ?? null,
+                  moment(log.created_at).format('HH:mm') ?? null,
                   log.login,
                   log.card_no,
                   <button className="force-out-Btn" onClick={checkOutOnClick} id={log._id}>
