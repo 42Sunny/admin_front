@@ -8,33 +8,19 @@ import Login from 'components/Login/Login';
 import 'assets/css/material-dashboard-react.css?v=1.10.0';
 import 'assets/css/input.css';
 import useUser from 'hooks/useUser';
+import getCookieValue from 'utils/getCookieValue';
 
 const App = () => {
   const { user, setUser } = useUser();
-
-  const getCookieValue = (key) => {
-    let cookieKey = key + '=';
-    let result = '';
-    const cookieArr = document.cookie.split(';');
-
-    for (let i = 0; i < cookieArr.length; i++) {
-      if (cookieArr[i][0] === ' ') cookieArr[i] = cookieArr[i].substring(1);
-      if (cookieArr[i].indexOf(cookieKey) === 0) {
-        result = cookieArr[i].slice(cookieKey.length, cookieArr[i].length);
-        return result;
-      }
-    }
-    return result;
-  };
 
   const getUserData = useCallback(async () => {
     try {
       const response = await checkAdmin();
       if (response.data['isAdmin']) {
-        setUser(response.data.user['_id']);
+        setUser(true);
       } else {
         window.alert('접근 권한이 없습니다.');
-        setUser('');
+        setUser(false);
       }
     } catch (err) {
       console.log(err);
@@ -46,7 +32,7 @@ const App = () => {
     if (token !== '') {
       getUserData();
     } else {
-      setUser('');
+      setUser(false);
     }
   }, [getUserData, setUser]);
 

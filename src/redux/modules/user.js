@@ -7,7 +7,7 @@ const SET_USER = 'user/SET_USER';
 export const setUserAction = createAction(SET_USER);
 
 // initalState
-const initialState = '';
+const initialState = false;
 
 // reducer
 export default handleActions(
