@@ -16,7 +16,7 @@ pipelines:
             - export REACT_APP_COOKIE_DOMAIN=$REACT_APP_COOKIE_DOMAIN
             - export REACT_APP_X_42CADET_CHECKIN_AUTH_KEY=$REACT_APP_X_42CADET_CHECKIN_AUTH_KEY
             - export REACT_APP_X_42CADET_VISITOR_AUTH_KEY=$REACT_APP_X_42CADET_VISITOR_AUTH_KEY
-            - REACT_APP_ENVIRONMENT=develop npm run test_build
+            - REACT_APP_ENVIRONMENT=develop npm run build:test
           artifacts:
             - build/**
       - step:
@@ -39,3 +39,43 @@ pipelines:
                 AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
                 AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
                 DISTRIBUTION_ID: E2CLQK6449UY6A
+    main:
+      - step:
+          name: Install & Build
+          deployment: production
+          caches:
+            - node
+          script:
+            - npm install
+            - export REACT_APP_CHECKIN_API_URL=$REACT_APP_CHECKIN_API_URL
+            - export REACT_APP_VISITOR_API_URL=$REACT_APP_VISITOR_API_URL
+            - export REACT_APP_VERSION=$REACT_APP_VERSION
+            - export REACT_APP_AUTH_KEY=$REACT_APP_AUTH_KEY
+            - export REACT_APP_COOKIE_DOMAIN=$REACT_APP_COOKIE_DOMAIN
+            - export REACT_APP_X_42CADET_CHECKIN_AUTH_KEY=$REACT_APP_X_42CADET_CHECKIN_AUTH_KEY
+            - export REACT_APP_X_42CADET_VISITOR_AUTH_KEY=$REACT_APP_X_42CADET_VISITOR_AUTH_KEY
+            - REACT_APP_ENVIRONMENT=production npm run build:prod
+          artifacts:
+            - build/**
+      - step:
+          name: Deploy to S3
+          trigger: manual
+          script:
+            - pipe: atlassian/aws-s3-deploy:1.1.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+                S3_BUCKET: admin.42seoul.io
+                ACL: 'public-read'
+                LOCAL_PATH: 'build'
+      - step:
+          name: Invalidate Cloudfront Cache
+          trigger: manual
+          script:
+            - pipe: atlassian/aws-cloudfront-invalidate:0.6.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+                DISTRIBUTION_ID: E3SIDABTSNEJDA
