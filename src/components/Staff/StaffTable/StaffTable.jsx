@@ -7,10 +7,10 @@ import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import { useStyles } from './StaffTableStyles';
 import Table from 'components/Table/Table';
-import CreateStaffModal from '../CreateStaffModal/CreateStaffModal';
-import CreateStaffButton from '../CreateStaffButton/CreateStaffButton';
+import CreateStaffModal from '../CreateStaffModal';
+import CreateStaffButton from '../CreateStaffButton';
 import SearchStaff from '../SearchStaff/SearchStaff';
-import StaffPagination from '../StaffPagination/StaffPagination';
+import StaffPagination from '../StaffPagination';
 import useStaffTable from './useStaffTable';
 
 const tableHead = ['소속', '이름', '번호', ''];
