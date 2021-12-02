@@ -4,52 +4,61 @@ import moment from 'moment';
 const URL = process.env.REACT_APP_VISITOR_API_URL;
 const VERSION_PATH = '/v1';
 const makeApiPath = (path) => `${VERSION_PATH}${path}`;
-const METHOD_GET = 'get';
-const METHOD_POST = 'post';
-const METHOD_PUT = 'put';
-const METHOD_DELETE = 'delete';
+// const METHOD_GET = 'get';
+// const METHOD_POST = 'post';
+// const METHOD_PUT = 'put';
+// const METHOD_DELETE = 'delete';
 
-const apiHandler = async (method, path, data) => {
-  return await axios(
-    {
-      method,
-      url: `${URL}${path}`,
-      data,
-      headers: {
-        'X-42Cadet-Auth-Key': process.env.REACT_APP_X_42CADET_VISITOR_AUTH_KEY,
-      },
-    },
-    { withCredentials: true },
-  );
-};
+// const apiHandler = async (method, path, data) => {
+//   return await axios(
+//     {
+//       method,
+//       url: `${URL}${path}`,
+//       data,
+//       headers: {
+//         'X-42Cadet-Auth-Key': process.env.REACT_APP_X_42CADET_VISITOR_AUTH_KEY,
+//       },
+//     },
+//     { withCredentials: true },
+//   );
+// };
+
+const instance = axios.create({
+  baseURL: URL,
+  withCredentials: true,
+  headers: {
+    'X-42Cadet-Auth-Key': process.env.REACT_APP_X_42CADET_VISITOR_AUTH_KEY,
+    cookie: document.cookie,
+  },
+});
 
 const getAllReserves = (date) => {
   const data = { date };
-  return apiHandler(METHOD_POST, makeApiPath('/info/reserve/date'), data);
+  return instance.post(makeApiPath('/info/reserve/date'), data);
 };
 
 const updateVisitorStatus = (id, status) => {
   const data = { visitor: { id, status } };
-  return apiHandler(METHOD_PUT, makeApiPath('/info/visitor/status'), data);
+  return instance.put(makeApiPath('/info/visitor/status'), data);
 };
 
 const addStaff = (name, phone, department) => {
   const data = { name, phone, department };
-  return apiHandler(METHOD_POST, makeApiPath('/admin/staff/save'), data);
+  return instance.post(makeApiPath('/admin/staff/save'), data);
 };
 
 const deleteStaff = (staffId) => {
   const data = { staffId: Number.parseInt(staffId) };
-  return apiHandler(METHOD_DELETE, makeApiPath('/admin/staff'), data);
+  return instance.delete(makeApiPath('/admin/staff'), data);
 };
 
 const getStaffs = () => {
-  return apiHandler(METHOD_GET, makeApiPath('/admin/staff'), {});
+  return instance.get(makeApiPath('/admin/staff'));
 };
 
 const checkStaff = (staffName) => {
   const data = { staffName };
-  return apiHandler(METHOD_POST, makeApiPath('/staff'), data);
+  return instance.post(makeApiPath('/staff'), data);
 };
 
 const INIT_PAGE = 0;
@@ -84,11 +93,11 @@ const getVisitorLogs = ({
   if (staffPhone !== null) searchCriteria.push({ criteria: 'STAFF_PHONE', value: staffPhone });
   if (searchCriteria.length !== 0) data['searchCriteria'] = searchCriteria;
 
-  return apiHandler(METHOD_POST, makeApiPath('/info/log/date'), data);
+  return instance.post(makeApiPath('/info/log/date'), data);
 };
 
 export {
-  apiHandler,
+  // apiHandler,
   getAllReserves,
   updateVisitorStatus,
   addStaff,

@@ -8,6 +8,7 @@ pipelines:
           caches:
             - node
           script:
+            - echo $REACT_APP_ENVIRONMENT
             - npm install
             - export REACT_APP_CHECKIN_API_URL=$REACT_APP_CHECKIN_API_URL
             - export REACT_APP_VISITOR_API_URL=$REACT_APP_VISITOR_API_URL
@@ -16,7 +17,8 @@ pipelines:
             - export REACT_APP_COOKIE_DOMAIN=$REACT_APP_COOKIE_DOMAIN
             - export REACT_APP_X_42CADET_CHECKIN_AUTH_KEY=$REACT_APP_X_42CADET_CHECKIN_AUTH_KEY
             - export REACT_APP_X_42CADET_VISITOR_AUTH_KEY=$REACT_APP_X_42CADET_VISITOR_AUTH_KEY
-            - REACT_APP_ENVIRONMENT=develop npm run build:test
+            - export REACT_APP_ENVIRONMENT=$REACT_APP_ENVIRONMENT
+            - npm run build:test
           artifacts:
             - build/**
       - step:
@@ -46,6 +48,7 @@ pipelines:
           caches:
             - node
           script:
+            - echo $REACT_APP_ENVIRONMENT
             - npm install
             - export REACT_APP_CHECKIN_API_URL=$REACT_APP_CHECKIN_API_URL
             - export REACT_APP_VISITOR_API_URL=$REACT_APP_VISITOR_API_URL
@@ -54,7 +57,8 @@ pipelines:
             - export REACT_APP_COOKIE_DOMAIN=$REACT_APP_COOKIE_DOMAIN
             - export REACT_APP_X_42CADET_CHECKIN_AUTH_KEY=$REACT_APP_X_42CADET_CHECKIN_AUTH_KEY
             - export REACT_APP_X_42CADET_VISITOR_AUTH_KEY=$REACT_APP_X_42CADET_VISITOR_AUTH_KEY
-            - REACT_APP_ENVIRONMENT=production npm run build:prod
+            - export REACT_APP_ENVIRONMENT=$REACT_APP_ENVIRONMENT
+            - npm run build:prod
           artifacts:
             - build/**
       - step:
@@ -71,7 +75,6 @@ pipelines:
                 LOCAL_PATH: 'build'
       - step:
           name: Invalidate Cloudfront Cache
-          trigger: manual
           script:
             - pipe: atlassian/aws-cloudfront-invalidate:0.6.0
               variables:
