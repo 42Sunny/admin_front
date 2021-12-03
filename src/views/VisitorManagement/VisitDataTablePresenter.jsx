@@ -1,3 +1,4 @@
+import useStyles from './VisitorManagementStyles';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
@@ -11,6 +12,7 @@ import Table from 'components/Table/Table';
 import VisitDataTableBodyHeader from './VisitDataTableBodyHeader';
 
 const VisitDataTablePresenter = () => {
+  const classes = useStyles();
   const {
     checkGaepo,
     setCheckGaepo,
@@ -31,7 +33,7 @@ const VisitDataTablePresenter = () => {
             <CardHeader color="info">
               <VisitDataTableHeader />
             </CardHeader>
-            <CardBody>
+            <CardBody className={classes.cardBody}>
               <VisitDataTableBodyHeader
                 setCheckGaepo={setCheckGaepo}
                 setCheckSeocho={setCheckSeocho}

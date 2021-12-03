@@ -1,10 +1,9 @@
-import { makeStyles } from '@material-ui/core';
+import useStyles from './VisitorManagementStyles';
 import useVisitData from 'hooks/useVisitData';
 import React from 'react';
-import styles from './VisitorManagementStyles';
 
 const VisitDataTableDatePicker = () => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   const { startDate, endDate, setStartDate, setEndDate } = useVisitData();
 
   const handleStartDateChange = ({ target: { value } }) => {

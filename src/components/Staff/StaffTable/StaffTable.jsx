@@ -17,11 +17,11 @@ const tableHead = ['소속', '이름', '번호', ''];
 
 const StaffTable = () => {
   const classes = useStyles();
-  const [openCreateStaffModal, setOpenCreateStaffModal] = useState(false);
+  const [isVisibleStaffModal, setIsVisibleModal] = useState(false);
   const { searchValue, tableData, setSearchValue, reloadData, paginationProps } = useStaffTable();
 
-  const handleOpenCreateStaffModal = () => setOpenCreateStaffModal(true);
-  const handleCloseCreateStaffModal = () => setOpenCreateStaffModal(false);
+  const openCreateStaffModal = () => setIsVisibleModal(true);
+  const closeCreateStaffModal = () => setIsVisibleModal(false);
 
   return (
     <>
@@ -31,7 +31,7 @@ const StaffTable = () => {
             <CardHeader color="info">
               <div className={classes.header}>
                 <h4 className={classes.title}>직원 관리</h4>
-                <CreateStaffButton onClick={handleOpenCreateStaffModal} />
+                <CreateStaffButton onClick={openCreateStaffModal} />
               </div>
             </CardHeader>
             <CardBody className={classes.body}>
@@ -45,8 +45,8 @@ const StaffTable = () => {
         </GridItem>
       </GridContainer>
       <CreateStaffModal
-        open={openCreateStaffModal}
-        onClose={handleCloseCreateStaffModal}
+        open={isVisibleStaffModal}
+        onClose={closeCreateStaffModal}
         reloadData={reloadData}
       />
     </>

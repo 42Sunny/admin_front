@@ -1,12 +1,11 @@
-import { makeStyles } from '@material-ui/core';
+import useStyles from './VisitorManagementStyles';
 import React from 'react';
 import VisitDataTableDatePicker from './VisitDataTableDatePicker';
-import styles from './VisitorManagementStyles';
 
 const HEADER_NAME = '출입 관리';
 
 const VisitDataTableHeader = () => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
 
   return (
     <div className={classes.header}>

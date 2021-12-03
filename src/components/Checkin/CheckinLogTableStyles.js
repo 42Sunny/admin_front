@@ -24,7 +24,7 @@ const styles = {
     alignItems: 'center',
   },
   tableBody: {
-    maxHeight: '50vh',
+    minHeight: '80vh',
     overflow: 'scroll',
   },
 };

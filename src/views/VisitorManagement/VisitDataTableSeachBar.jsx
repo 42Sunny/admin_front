@@ -1,10 +1,9 @@
-import { makeStyles } from '@material-ui/core';
 import { Icon } from '@mui/material';
 import { SEARCH_OPTIONS } from './Define';
-import styles from './VisitorManagementStyles';
+import useStyles from './VisitorManagementStyles';
 
 const VisitDataTableSeachBar = ({ searchOption, setSearchOption, searchValue, setSearchValue }) => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   return (
     <div className={classes.searchContainer}>
       <div className={classes.searchBox}>

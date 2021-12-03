@@ -48,11 +48,26 @@ export const useStyles = makeStyles({
     padding: '0',
     width: '100%',
   },
-  button: {
+  submitButton: {
     margin: '0px',
+  },
+  exitButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderStyle: 'none',
+    backgroundColor: 'rgba(0,0,0,0)',
+    color: 'white',
+    '&:hover': {
+      color: 'rgba(255,255,255,0.6)',
+    },
   },
   error: {
     color: 'red',
     paddingLeft: '20px',
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
 });

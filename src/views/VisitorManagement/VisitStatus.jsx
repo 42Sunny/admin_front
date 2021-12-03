@@ -1,9 +1,8 @@
-import { makeStyles } from '@material-ui/core';
 import { getVisitorLogs } from 'api/visitorApi';
 import { updateVisitorStatus } from 'api/visitorApi';
 import { useContext } from 'react';
-import { VisitorManagementContext } from '../../contexts/VisitorManagementContext';
-import styles from './VisitorManagementStyles';
+import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
+import useStyles from './VisitorManagementStyles';
 
 const StatusOptions = [
   { value: '대기', name: '대기' },
@@ -19,7 +18,7 @@ const Options = () =>
   ));
 
 const VisitStatus = ({ status, visitorId }) => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   const { startDate, endDate, setVisitData, page, setLastPage } =
     useContext(VisitorManagementContext);
 

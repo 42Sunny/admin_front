@@ -1,5 +1,4 @@
-import { Modal } from '@material-ui/core';
-import { checkStaff } from 'api/visitorApi';
+import { Icon, Modal } from '@material-ui/core';
 import { addStaff } from 'api/visitorApi';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
@@ -7,47 +6,17 @@ import CardHeader from 'components/Card/CardHeader';
 import RegularButton from 'components/CustomButtons/Button';
 import React, { useEffect, useState } from 'react';
 import { useStyles } from './CreateStaffModalStyles';
-
-const DUPLICATE_NAME_ERROR_MESSAGE = '이미 사용중인 이름입니다.';
-const INVALIDE_PHONE_ERROR_MESSAGE = '번호 형식이 올바르지 않습니다.';
-const INVALIDE_NAME_ERROR_MESSAGE = '공백으로 지정할 수 없습니다.';
-const INPUT_DEPARTMENT_NAME = 'department';
-const INPUT_NAME_NAME = 'name';
-const INPUT_PHONE_NAME = 'phone';
-const PHONE_REG_EXP = /^01\d{8,9}$/; // 휴대폰 번호 유효성 검사 정규표현식
-
-const CREATE_CONFIRM_MESSAGE = (department, name, phone) =>
-  `소속 : ${department}\n이름 : ${name}\n번호 : ${phone}\n해당 내용을 직원을 추가하시겠습니까?`;
-
-const getOnlyNumber = (num) => {
-  const phoneArray = Array.from(num);
-  const filteredArray = phoneArray.filter((elem) => isNaN(elem) === false && elem !== ' ');
-  const filtered = filteredArray.join('');
-  return filtered;
-};
-
-const checkPhone = (phone) => {
-  const phoneArray = Array.from(phone);
-  const filteredArray = phoneArray.filter((elem) => isNaN(elem) === false && elem !== ' ');
-  const filtered = filteredArray.join('');
-  if (PHONE_REG_EXP.exec(filtered) !== null) return true;
-  return INVALIDE_PHONE_ERROR_MESSAGE;
-};
-
-const checkName = async (name) => {
-  if (name === '') return INVALIDE_NAME_ERROR_MESSAGE;
-  const { data } = await checkStaff(name);
-  if (data.code === '2000') return DUPLICATE_NAME_ERROR_MESSAGE;
-  return true;
-};
-
-const checkContents = async (name, phone) => {
-  const checkNameResult = await checkName(name);
-  const checkPhoneResult = checkPhone(phone);
-  if (checkNameResult !== true) return checkNameResult;
-  if (checkPhoneResult !== true) return checkPhoneResult;
-  return true;
-};
+import {
+  checkContents,
+  CREATE_CONFIRM_MESSAGE,
+  CREATE_STAFF_MODAL_ADD_BUTTON_TEXT as CREATE_STAFF_MODAL_SUBMIT_BUTTON_TEXT,
+  CREATE_STAFF_MODAL_SUBTITLE,
+  CREATE_STAFF_MODAL_TITLE,
+  getOnlyNumber,
+  INPUT_DEPARTMENT_NAME,
+  INPUT_NAME_NAME,
+  INPUT_PHONE_NAME,
+} from './CreateStaffModalUtils';
 
 const CreateStaffModal = ({ open, onClose, reloadData }) => {
   const classes = useStyles();
@@ -66,22 +35,23 @@ const CreateStaffModal = ({ open, onClose, reloadData }) => {
     else if (name === INPUT_DEPARTMENT_NAME) setDepartment(value);
   };
 
-  const handleClick = async () => {
+  const submitData = async () => {
+    setErrorMessage('');
     const checkContentsResult = await checkContents(name, phone);
     if (checkContentsResult === true) {
       if (window.confirm(CREATE_CONFIRM_MESSAGE(department, name, phone)) === true) {
-        addStaff(name, getOnlyNumber(phone), department).then(() => {
-          setName('');
-          setPhone('');
-          setDepartment('');
-          onClose();
-          reloadData();
-        });
+        await addStaff(name, getOnlyNumber(phone), department);
+        setName('');
+        setPhone('');
+        setDepartment('');
+        reloadData();
       }
     } else {
       setErrorMessage(checkContentsResult);
     }
   };
+
+  const exitModal = () => onClose();
 
   useEffect(() => {
     setName('');
@@ -90,47 +60,51 @@ const CreateStaffModal = ({ open, onClose, reloadData }) => {
     setErrorMessage('');
   }, [open]);
 
+  const inputsProps = [
+    {
+      name: INPUT_DEPARTMENT_NAME,
+      value: department,
+      onChange: handleChange,
+      placeholder: '소속',
+      className: classes.input,
+    },
+    {
+      name: INPUT_NAME_NAME,
+      value: name,
+      onChange: handleChange,
+      placeholder: '이름',
+      className: classes.input,
+    },
+    {
+      name: INPUT_PHONE_NAME,
+      value: phone,
+      onChange: handleChange,
+      placeholder: '휴대폰 번호',
+      type: 'tel',
+      className: classes.input,
+    },
+  ];
+
   return (
     <Modal open={open} onClose={onClose}>
       <div className={classes.container}>
         <Card>
-          <CardHeader color="info">
-            <h4 className={classes.title}>직원 추가</h4>
-            <p className={classes.subTitle}>추가하고자하는 직원 정보를 입력해주세요.</p>
+          <CardHeader color="info" className={classes.header}>
+            <div>
+              <h4 className={classes.title}>{CREATE_STAFF_MODAL_TITLE}</h4>
+              <p className={classes.subTitle}>{CREATE_STAFF_MODAL_SUBTITLE}</p>
+            </div>
+            <button onClick={exitModal} className={classes.exitButton}>
+              <Icon>close</Icon>
+            </button>
           </CardHeader>
           <CardBody>
             <div className={classes.inputContainer}>
-              <input
-                name={INPUT_DEPARTMENT_NAME}
-                value={department}
-                onChange={handleChange}
-                placeholder="소속"
-                className={classes.input}
-              />
-              <input
-                name={INPUT_NAME_NAME}
-                value={name}
-                onChange={handleChange}
-                placeholder="이름"
-                className={classes.input}
-              />
-              <input
-                name={INPUT_PHONE_NAME}
-                value={phone}
-                type={'tel'}
-                onChange={handleChange}
-                placeholder="휴대폰 번호"
-                className={classes.input}
-              />
-              <RegularButton
-                color="info"
-                onClick={() => {
-                  setErrorMessage('');
-                  handleClick();
-                }}
-                className={classes.button}
-              >
-                추가
+              {inputsProps.map((props) => (
+                <input {...props} key={props.name} />
+              ))}
+              <RegularButton color="info" onClick={submitData} className={classes.submitButton}>
+                {CREATE_STAFF_MODAL_SUBMIT_BUTTON_TEXT}
               </RegularButton>
             </div>
             <div className={classes.error}>{errorMessage}</div>

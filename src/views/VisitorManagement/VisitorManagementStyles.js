@@ -1,3 +1,5 @@
+import { makeStyles } from '@material-ui/core';
+
 const styles = {
   header: {
     display: 'flex',
@@ -100,6 +102,11 @@ const styles = {
     },
   },
   pageSelectContent: { fontSize: '1.3rem' },
+  cardBody: {
+    minHeight: '80vh',
+  },
 };
 
-export default styles;
+const useStyles = makeStyles(styles);
+
+export default useStyles;

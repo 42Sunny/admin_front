@@ -1,11 +1,10 @@
-import { makeStyles } from '@material-ui/core';
+import useStyles from './VisitorManagementStyles';
 import useVisitData from 'hooks/useVisitData';
 import React from 'react';
 import { PLACE_ALL, PLACE_GAEPO, PLACE_SEOCHO } from './Define';
-import styles from './VisitorManagementStyles';
 
 const VisitDataTablePlaceSelector = () => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   const { place, setPlace } = useVisitData();
 
   const handleChange = ({ target: { value } }) => {
