@@ -10,9 +10,12 @@ import { getClusterName } from 'utils/getCluster';
 
 const WS_URL = `${process.env.REACT_APP_VISITOR_API_URL}/ws`;
 const checkInPath = '/visitor';
-const options = { variant: 'info', anchorOrigin: { vertical: 'bottom', horizontal: 'right' } };
+const enqueueSnackbarOptions = {
+  variant: 'info',
+  anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
+};
 const LOST_SOCKET_CONNECTION_MESSAGE = '서버와 연결이 끊겼습니다. 새로고침 해주세요.';
-const SOCKET_CONNECTION_CHECK_IDLE = 5000;
+const SOCKET_CONNECTION_CHECK_IDLE = 7000;
 
 export const VisitorContext = createContext({});
 
@@ -25,6 +28,7 @@ export const VisitorProviderWrapper = ({ children }) => (
 const VisitorProvider = ({ children }) => {
   // eslint-disable-next-line no-unused-vars
   const [stompClient, setStompClient] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [sockJS, setSockJS] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [socketChecker, setSocketChecker] = useState(null);
@@ -40,7 +44,7 @@ const VisitorProvider = ({ children }) => {
     else setCheckInData(result.data.checkInLogs);
   }, [clusterNumber]);
 
-  const initSocket = () => {
+  const initSocket = useCallback(() => {
     const sockJS = new SockJS(WS_URL);
     const stompClient = Stomp.over(sockJS);
 
@@ -62,44 +66,23 @@ const VisitorProvider = ({ children }) => {
           stompClient.subscribe(checkInPath, (data) => {
             const { body } = data;
             getVisitorCheckInLogs();
-            enqueueSnackbar(body, options);
+            enqueueSnackbar(body, enqueueSnackbarOptions);
           });
         },
         (error) => {
           if (process.env.REACT_APP_DEBUG) console.log(`>>> Error\n${error}`);
+          setSocketChecker((socketChecker) =>
+            createSocketChecker(socketChecker, sockJS, enqueueSnackbar),
+          );
         },
       );
     }
 
     setSockJS(sockJS);
     setStompClient(stompClient);
-  };
+  }, [enqueueSnackbar, getVisitorCheckInLogs]);
 
-  useEffect(() => {
-    initSocket();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const createSocketChecker = useCallback(
-    (sockJS) => {
-      setSocketChecker((socketChecker) => {
-        if (socketChecker !== null) clearInterval(socketChecker);
-        return window.setInterval(() => {
-          if (sockJS?.readyState === 3) {
-            enqueueSnackbar(LOST_SOCKET_CONNECTION_MESSAGE, {
-              variant: 'error',
-              anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
-            });
-          }
-        }, SOCKET_CONNECTION_CHECK_IDLE);
-      });
-    },
-    [enqueueSnackbar],
-  );
-
-  useEffect(() => {
-    if (sockJS !== null) createSocketChecker(sockJS);
-  }, [createSocketChecker, sockJS]);
+  useEffect(() => initSocket(), [initSocket]);
 
   return (
     <VisitorContext.Provider
@@ -111,4 +94,16 @@ const VisitorProvider = ({ children }) => {
       {children}
     </VisitorContext.Provider>
   );
+};
+
+const createSocketChecker = (socketChecker, sockJS, enqueueSnackbar) => {
+  if (socketChecker !== null) clearInterval(socketChecker);
+  return window.setInterval(() => {
+    if (sockJS?.readyState === 3) {
+      enqueueSnackbar(LOST_SOCKET_CONNECTION_MESSAGE, {
+        variant: 'error',
+        anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
+      });
+    }
+  }, SOCKET_CONNECTION_CHECK_IDLE);
 };
