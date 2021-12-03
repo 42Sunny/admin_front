@@ -1,25 +1,23 @@
-const { useState, useMemo } = require('react');
+const { useState, useMemo, useCallback } = require('react');
 
 const usePagination = (args) => {
   const [page, setPage] = useState(args?.page ?? 1);
-  const [length, setLength] = useState(args?.length ?? []);
+  const [length, setLength] = useState(args?.length ?? 0);
   const size = args?.size ?? 10;
+  const lastPage = useMemo(() => Math.ceil(length / size), [length, size]);
 
-  return useMemo(
-    () => ({
-      page,
-      setPage,
-      length,
-      setPaginationLength: setLength,
-      current: {
-        start: (page - 1) * size + 1 > length ? length : (page - 1) * size + 1,
-        end: page * size > length ? length : page * size,
-      },
-      increase: () => page < Math.ceil(length / size) && setPage((page) => page + 1),
-      decrease: () => page > 1 && setPage((page) => page - 1),
-    }),
-    [length, page, size],
-  );
+  return {
+    page,
+    current: {
+      start: (page - 1) * size + 1 > length ? length : (page - 1) * size + 1,
+      end: page * size > length ? length : page * size,
+    },
+    paginationLength: length,
+    setPage,
+    setPaginationLength: setLength,
+    increase: useCallback(() => setPage((page) => (page < lastPage ? page + 1 : page)), [lastPage]),
+    decrease: useCallback(() => setPage((page) => (page > 1 ? page - 1 : page)), []),
+  };
 };
 
 export default usePagination;
