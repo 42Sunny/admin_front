@@ -1,8 +1,7 @@
-import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import VisitDataTablePageSelect from './VisitDataTablePageSelect';
 import VisitorManagementSearchBar from './VisitDataTableSeachBar';
-import styles from './VisitorManagementStyles';
+import useStyles from './VisitorManagementStyles';
 
 const VisitDataTableBodyHeader = ({
   setCheckGaepo,
@@ -14,7 +13,8 @@ const VisitDataTableBodyHeader = ({
   searchValue,
   setSearchValue,
 }) => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
+
   return (
     <div className={classes.bodyHeader}>
       <VisitorManagementSearchBar

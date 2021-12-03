@@ -1,11 +1,10 @@
-import { makeStyles } from '@material-ui/core';
+import useStyles from './VisitorManagementStyles';
 import useVisitData from 'hooks/useVisitData';
 import React from 'react';
-import styles from './VisitorManagementStyles';
 
 const VisitDataTablePageSelect = () => {
   const { page, setPage, lastPage } = useVisitData();
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
 
   const onIncrease = () => {
     if (page + 1 < lastPage) {
