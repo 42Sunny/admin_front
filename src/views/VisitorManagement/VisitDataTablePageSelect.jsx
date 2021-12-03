@@ -1,34 +1,35 @@
-import useStyles from './VisitorManagementStyles';
 import useVisitData from 'hooks/useVisitData';
-import React from 'react';
+import React, { useContext } from 'react';
+import Pagination from 'components/Pagination/Pagination';
+import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
 
 const VisitDataTablePageSelect = () => {
   const { page, setPage, lastPage } = useVisitData();
-  const classes = useStyles();
 
-  const onIncrease = () => {
-    if (page + 1 < lastPage) {
-      setPage((page) => page + 1);
-    }
+  const {
+    allCount: { all },
+  } = useContext(VisitorManagementContext);
+
+  const paginationProps = {
+    paginationLength: all,
+    start: all >= page * 10 + 1 ? page * 10 + 1 : 0,
+    end: all >= (page + 1) * 10 ? (page + 1) * 10 : all,
+    decrease: () => {
+      if (page > 0) {
+        setPage((page) => page - 1);
+      }
+    },
+    increase: () => {
+      if (page + 1 < lastPage) {
+        setPage((page) => page + 1);
+      }
+    },
+    clickDescription: () => {
+      setPage(0);
+    },
   };
 
-  const onDecrease = () => {
-    if (page > 0) {
-      setPage((page) => page - 1);
-    }
-  };
-
-  return (
-    <div className={classes.pageSelectBox}>
-      <button className={classes.pageSelectButton} onClick={onDecrease}>
-        {'<'}
-      </button>
-      <div className={classes.pageSelectContent}>{page + 1}</div>
-      <button className={classes.pageSelectButton} onClick={onIncrease}>
-        {'>'}
-      </button>
-    </div>
-  );
+  return <Pagination {...paginationProps} />;
 };
 
 export default VisitDataTablePageSelect;

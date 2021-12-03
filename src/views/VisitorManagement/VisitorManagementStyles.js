@@ -88,11 +88,9 @@ const styles = {
     gap: '0.3rem',
   },
   pageSelectButton: {
-    backgroundColor: 'white',
-    borderStyle: 'solid',
+    backgroundColor: 'rgba(0,0,0,0)',
+    borderStyle: 'none',
     borderRadius: '0.3rem',
-    borderWidth: '1px',
-    borderColor: 'black',
     fontSize: '1.1rem',
     '&:active': {
       backgroundColor: '#1a1a1a',
@@ -103,7 +101,11 @@ const styles = {
   },
   pageSelectContent: { fontSize: '1.3rem' },
   cardBody: {
-    minHeight: '80vh',
+    minHeight: '650px',
+  },
+  cardHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
 };
 

@@ -1,4 +1,3 @@
-import { hexToRgb } from 'assets/jss/material-dashboard-react';
 import { grayColor } from 'assets/jss/material-dashboard-react';
 
 const { makeStyles } = require('@material-ui/core');
@@ -25,7 +24,7 @@ export const useStyles = makeStyles({
     },
   },
   subTitle: {
-    color: 'rgba(' + hexToRgb(whiteColor) + ',.62)',
+    color: whiteColor,
     margin: '0',
     fontSize: '14px',
     marginTop: '0',

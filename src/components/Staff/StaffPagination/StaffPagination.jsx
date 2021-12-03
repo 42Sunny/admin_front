@@ -1,23 +1,18 @@
-import React from 'react';
-import { useStyles } from './StaffPaginationStyles';
+import Pagination from 'components/Pagination';
+import React, { useCallback } from 'react';
 
 const StaffPagination = ({ paginationLength, current, increase, decrease, setPage }) => {
-  const classes = useStyles();
+  const paginationProps = {
+    paginationLength,
+    start: current.start,
+    end: current.end,
+    increase,
+    decrease,
+    setPage,
+    clickDescription: useCallback(() => setPage(1), [setPage]),
+  };
 
-  const handleClick = () => setPage(1);
-
-  return (
-    <div className={classes.container}>
-      <button
-        className={classes.description}
-        onClick={handleClick}
-      >{`${paginationLength}개 중 ${current.start}~${current.end}`}</button>
-      <div className={classes.controller}>
-        <button onClick={decrease}>{'<'}</button>
-        <button onClick={increase}>{'>'}</button>
-      </div>
-    </div>
-  );
+  return <Pagination {...paginationProps} />;
 };
 
 export default StaffPagination;

@@ -10,6 +10,7 @@ import { VisitorManagementContext } from '../../contexts/VisitorManagementContex
 import VisitDataTableHeader from './VisitDataTableHeader';
 import Table from 'components/Table/Table';
 import VisitDataTableBodyHeader from './VisitDataTableBodyHeader';
+import VisitDataTableCount from './VisitDataTableCount';
 
 const VisitDataTablePresenter = () => {
   const classes = useStyles();
@@ -29,8 +30,9 @@ const VisitDataTablePresenter = () => {
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <GridItem xs={12} sm={12} md={12}>
+          <VisitDataTableCount />
           <Card>
-            <CardHeader color="info">
+            <CardHeader color="info" className={classes.cardHeader}>
               <VisitDataTableHeader />
             </CardHeader>
             <CardBody className={classes.cardBody}>
