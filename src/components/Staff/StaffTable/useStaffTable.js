@@ -50,17 +50,19 @@ const useStaffTable = () => {
 };
 
 const makeTableData = (rawTableData, reloadData) =>
-  rawTableData.reduce(
-    (prev, cur) => [
-      ...prev,
-      [
-        cur.department,
-        cur.name,
-        useFormattedPhone(cur.phone),
-        <DeleteStaffButton {...cur} reloadData={reloadData} />,
-      ],
-    ],
-    [],
-  );
+  rawTableData
+    ? rawTableData.reduce(
+        (prev, cur) => [
+          ...prev,
+          [
+            cur.department,
+            cur.name,
+            useFormattedPhone(cur.phone),
+            <DeleteStaffButton {...cur} reloadData={reloadData} />,
+          ],
+        ],
+        [],
+      )
+    : [];
 
 export default useStaffTable;

@@ -6,7 +6,7 @@ const CreateStaffButton = ({ onClick }) => {
   const classes = useStyles();
   return (
     <button onClick={onClick} className={classes.button}>
-      <div className={classes.text}>직원 추가</div>
+      <div className={classes.text}>직원 등록</div>
       <Icon className={classes.icon}>add_circle</Icon>
     </button>
   );
