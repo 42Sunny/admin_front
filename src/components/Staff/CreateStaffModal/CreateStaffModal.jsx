@@ -6,7 +6,7 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import RegularButton from 'components/CustomButtons/Button';
 import React, { useEffect, useState } from 'react';
-import { useStyles } from './Styles';
+import { useStyles } from './CreateStaffModalStyles';
 
 const DUPLICATE_NAME_ERROR_MESSAGE = '이미 사용중인 이름입니다.';
 const INVALIDE_PHONE_ERROR_MESSAGE = '번호 형식이 올바르지 않습니다.';
@@ -15,6 +15,7 @@ const INPUT_DEPARTMENT_NAME = 'department';
 const INPUT_NAME_NAME = 'name';
 const INPUT_PHONE_NAME = 'phone';
 const PHONE_REG_EXP = /^01\d{8,9}$/; // 휴대폰 번호 유효성 검사 정규표현식
+
 const CREATE_CONFIRM_MESSAGE = (department, name, phone) =>
   `소속 : ${department}\n이름 : ${name}\n번호 : ${phone}\n해당 내용을 직원을 추가하시겠습니까?`;
 
@@ -48,7 +49,7 @@ const checkContents = async (name, phone) => {
   return true;
 };
 
-const CreateStaffModal = ({ open, onClose, setChangeValue }) => {
+const CreateStaffModal = ({ open, onClose, reloadData }) => {
   const classes = useStyles();
   const [department, setDepartment] = useState('');
   const [name, setName] = useState('');
@@ -74,7 +75,7 @@ const CreateStaffModal = ({ open, onClose, setChangeValue }) => {
           setPhone('');
           setDepartment('');
           onClose();
-          setChangeValue(true);
+          reloadData();
         });
       }
     } else {
@@ -91,14 +92,14 @@ const CreateStaffModal = ({ open, onClose, setChangeValue }) => {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <div className={classes.StaffInputBox}>
+      <div className={classes.container}>
         <Card>
           <CardHeader color="info">
-            <h4 className={classes.cardTitleWhite}>직원 추가</h4>
-            <p className={classes.cardCategoryWhite}>추가하고자하는 직원 정보를 입력해주세요.</p>
+            <h4 className={classes.title}>직원 추가</h4>
+            <p className={classes.subTitle}>추가하고자하는 직원 정보를 입력해주세요.</p>
           </CardHeader>
           <CardBody>
-            <div className={classes.inputBox}>
+            <div className={classes.inputContainer}>
               <input
                 name={INPUT_DEPARTMENT_NAME}
                 value={department}
@@ -127,12 +128,12 @@ const CreateStaffModal = ({ open, onClose, setChangeValue }) => {
                   setErrorMessage('');
                   handleClick();
                 }}
-                className={classes.inputButton}
+                className={classes.button}
               >
                 추가
               </RegularButton>
             </div>
-            <div className={classes.errorBox}>{errorMessage}</div>
+            <div className={classes.error}>{errorMessage}</div>
           </CardBody>
         </Card>
       </div>
