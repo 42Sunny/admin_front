@@ -161,8 +161,8 @@ const makeTableData = (visitData) => {
   const results = visitData.map((elem) => [
     elem.place,
     elem.checkInDate,
-    elem.checkIn ? new moment(elem.checkIn).format('HH:mm') : '',
-    elem.oraganization,
+    elem.checkIn ? moment(elem.checkIn).format('HH:mm') : '',
+    elem.organization,
     elem.name,
     useFormattedPhone(elem.phone),
     elem.purpose,

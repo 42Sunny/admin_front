@@ -17,13 +17,20 @@ const useStaffTable = () => {
   } = pagination;
 
   const reloadData = useCallback(async () => {
-    const { data } = await getStaffs();
-    const rawTableData = makeTableData(data, reloadData);
-    setRawTableData(rawTableData);
-    setSearchedTableData([]);
-    setSearchValue('');
-    setPaginationLength(rawTableData.length);
-    setPage(1);
+    try {
+      const { data } = await getStaffs();
+      const rawTableData = makeTableData(data, reloadData);
+      setRawTableData(rawTableData);
+      setPaginationLength(rawTableData.length);
+      setSearchValue('');
+      setPage(1);
+      // TODO : 불러오는데 에러가 발생하면 그것을 처리할 로직이 필요하다.
+    } catch {
+      setRawTableData([]);
+      setPaginationLength(0);
+      setSearchValue('');
+      setPage(1);
+    }
   }, [setPage, setPaginationLength]);
 
   useEffect(() => {
@@ -50,7 +57,7 @@ const useStaffTable = () => {
 };
 
 const makeTableData = (rawTableData, reloadData) =>
-  rawTableData
+  Array.isArray(rawTableData)
     ? rawTableData.reduce(
         (prev, cur) => [
           ...prev,
