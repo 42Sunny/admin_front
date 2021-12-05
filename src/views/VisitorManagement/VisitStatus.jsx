@@ -1,6 +1,6 @@
 import { getVisitorLogs } from 'api/visitorApi';
 import { updateVisitorStatus } from 'api/visitorApi';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
 import useStyles from './VisitorManagementStyles';
 
@@ -25,17 +25,16 @@ const VisitStatus = ({ defaultStatus, visitorId }) => {
     useContext(VisitorManagementContext);
 
   const handleChange = async ({ target: { value } }) => {
-    if (value === '퇴실') {
-      if (window.confirm('퇴실 시키겠습니까?')) await updateVisitorStatus(visitorId, value);
-      else return;
-    } else {
-      await updateVisitorStatus(visitorId, value);
-    }
+    await updateVisitorStatus(visitorId, value);
     const res = await getVisitorLogs({ start: startDate, end: endDate, page });
     setVisitData(res.data.checkInLogs);
     setLastPage(res.data.lastPage);
     setStatus(value);
   };
+
+  useEffect(() => {
+    setStatus(defaultStatus);
+  }, [defaultStatus]);
 
   return (
     <select name="status" onChange={handleChange} value={status} className={classes.statueSelect}>

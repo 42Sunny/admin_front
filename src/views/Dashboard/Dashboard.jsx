@@ -46,7 +46,7 @@ const Dashboard = () => {
   };
 
   const visitorEnteranceCount = visitorCheckInLogs?.filter((log) => log.status === '입실').length;
-  const visitorReserveCount = visitorCheckInLogs.length;
+  const visitorReserveCount = visitorCheckInLogs?.length;
 
   const VisitorHeadCountProps = {
     title: '방문자 현황',
@@ -58,7 +58,7 @@ const Dashboard = () => {
     ),
     legends: [
       { color: 'info', content: `입실 ${visitorEnteranceCount}명` },
-      { content: `예약 ${visitorReserveCount}명` },
+      { content: `전체 ${visitorReserveCount}명` },
     ],
   };
 

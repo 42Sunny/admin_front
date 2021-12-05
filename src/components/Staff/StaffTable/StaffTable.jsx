@@ -18,7 +18,8 @@ const tableHead = ['소속', '이름', '번호', ''];
 const StaffTable = () => {
   const classes = useStyles();
   const [isVisibleStaffModal, setIsVisibleModal] = useState(false);
-  const { searchValue, tableData, setSearchValue, reloadData, paginationProps } = useStaffTable();
+  const { searchValue, tableData, setSearchValue, reloadData, lazyReloadData, paginationProps } =
+    useStaffTable();
 
   const openCreateStaffModal = () => setIsVisibleModal(true);
   const closeCreateStaffModal = () => setIsVisibleModal(false);
@@ -36,7 +37,11 @@ const StaffTable = () => {
             </CardHeader>
             <CardBody className={classes.body}>
               <div className={classes.bodyHeader}>
-                <SearchStaff searchValue={searchValue} setSearchValue={setSearchValue} />
+                <SearchStaff
+                  searchValue={searchValue}
+                  setSearchValue={setSearchValue}
+                  reloadData={lazyReloadData}
+                />
                 <StaffPagination {...paginationProps} />
               </div>
               <Table tableHeaderColor="info" tableHead={tableHead} tableData={tableData} />

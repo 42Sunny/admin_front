@@ -26,4 +26,15 @@ export const useStyles = makeStyles({
     justifyContent: 'space-between',
     padding: '5px',
   },
+  icon: {
+    fontSize: '1.7rem',
+    borderRadius: '0.3rem',
+    '&:hover': {
+      backgroundColor: 'rgba(0,0,0,0.1)',
+    },
+    '&:active': {
+      backgroundColor: 'rgba(0,0,0,0.3)',
+      transition: '0.5s',
+    },
+  },
 });

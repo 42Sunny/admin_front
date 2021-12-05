@@ -10,12 +10,44 @@ import {
   SEARCH_OPTION_PHONE,
   SEARCH_OPTION_STAFF_NAME,
   SEARCH_OPTION_STATUS,
-} from '../views/VisitorManagement/Define';
+} from 'views/VisitorManagement/Define';
 import { debounce } from 'lodash';
 import VisitStatus from 'views/VisitorManagement/VisitStatus';
 import CheckoutButton from 'components/CheckoutButton/CheckoutButton';
+import CheckinButton from 'components/CheckinButton/CheckinButton';
 
-const VisitorManagementContext = createContext({});
+const VisitorManagementContext = createContext({
+  visitData: [],
+  setVisitData: (any) => {},
+
+  startDate: '',
+  setStartDate: (any) => {},
+
+  endDate: '',
+  setEndDate: (any) => {},
+
+  place: '',
+  setPlace: (any) => {},
+
+  tableData: [],
+  setTableData: (any) => {},
+
+  searchOption: '',
+  setSearchOption: (any) => {},
+
+  searchValue: '',
+  setSearchValue: (any) => {},
+
+  page: 0,
+  setPage: (any) => {},
+
+  lastPage: 0,
+  setLastPage: (any) => {},
+
+  allData: [],
+  allCount: 0,
+  updateTable: (any) => {},
+});
 
 const VisitorManagementProvider = ({ children }) => {
   const [visitData, setVisitData] = useState([]);
@@ -113,6 +145,17 @@ const VisitorManagementProvider = ({ children }) => {
 
         allData,
         allCount,
+
+        reloadTable: () =>
+          lazyGetData(setVisitData, {
+            endDate,
+            page,
+            place,
+            searchOption,
+            searchValue,
+            startDate,
+            setLastPage,
+          }),
       }}
     >
       {children}
@@ -127,11 +170,11 @@ const updateData = async (
   const data = { start: startDate, end: endDate, page, size };
 
   if (searchValue !== '') {
-    if (searchOption === SEARCH_OPTION_NAME.value) data['name'] = searchValue;
     if (searchOption === SEARCH_OPTION_ORGANIZATION.value) data['organization'] = searchValue;
-    if (searchOption === SEARCH_OPTION_PHONE.value) data['phone'] = searchValue;
     if (searchOption === SEARCH_OPTION_STAFF_NAME.value) data['staffName'] = searchValue;
     if (searchOption === SEARCH_OPTION_STATUS.value) data['status'] = searchValue;
+    if (searchOption === SEARCH_OPTION_PHONE.value) data['phone'] = searchValue;
+    if (searchOption === SEARCH_OPTION_NAME.value) data['name'] = searchValue;
   }
   if (place !== PLACE_ALL.value) data['place'] = place;
   if (size) data['size'] = Number.parseInt(size, 10);
@@ -154,7 +197,6 @@ const updateData = async (
 };
 
 const makeTableData = (visitData) => {
-  // visitData가 배열이 아닐 때, 반환
   if (!Array.isArray(visitData)) {
     return [];
   }
@@ -162,14 +204,23 @@ const makeTableData = (visitData) => {
   const results = visitData.map((elem) => [
     elem.place,
     elem.checkInDate,
-    elem.checkIn ? moment(elem.checkIn).format('HH:mm') : '',
-    elem.checkOut ?? <CheckoutButton visitorId={elem.id} />,
     elem.organization,
     elem.name,
     useFormattedPhone(elem.phone),
     elem.purpose,
     elem.staffName,
     useFormattedPhone(elem.staffPhone),
+    '11:11',
+    elem.checkIn ? (
+      moment(elem.checkIn).format('HH:mm')
+    ) : (
+      <CheckinButton visitorId={elem.id} status={elem.status} />
+    ),
+    elem.checkOut ? (
+      moment(elem.checkIn).format('HH:mm')
+    ) : (
+      <CheckoutButton visitorId={elem.id} status={elem.status} />
+    ),
     <VisitStatus visitorId={elem.id} defaultStatus={elem.status} />,
   ]);
   return results;

@@ -17,16 +17,8 @@ const styles = {
   },
   content: {
     height: '40vh',
-    overflowY: 'scroll',
+    overflowY: 'auto',
     overflowX: 'hidden',
-    '&::webkit-scrollbar': {
-      width: '0.3rem',
-      background: 'black !important',
-    },
-    '&::webkit-scrollbar-thumb': {
-      width: '0.3rem',
-      background: 'black !important',
-    },
   },
 };
 

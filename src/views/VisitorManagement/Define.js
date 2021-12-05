@@ -17,14 +17,15 @@ export const SEARCH_OPTIONS = [
 export const VISITOR_TABLE_HEAD = [
   <VisitorManagementPlaceSelector />,
   '날짜',
-  '입실 시간',
-  '퇴실 시간',
   '방문자 소속',
   '방문자 이름',
   '방문자 번호',
   '방문 목적',
   '직원 이름',
   '직원 번호',
+  '예약 시간',
+  '입실 시간',
+  '퇴실 시간',
   '상태',
 ];
 

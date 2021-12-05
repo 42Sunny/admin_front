@@ -63,7 +63,17 @@ const styles = {
     borderStyle: 'none',
     fontSize: '0.9rem',
   },
-  searchIcon: { fontSize: '1.7rem' },
+  searchIcon: {
+    fontSize: '1.7rem',
+    borderRadius: '0.3rem',
+    '&:hover': {
+      backgroundColor: 'rgba(0,0,0,0.1)',
+    },
+    '&:active': {
+      backgroundColor: 'rgba(0,0,0,0.3)',
+      transition: '0.5s',
+    },
+  },
 
   bodyHeader: {
     display: 'flex',

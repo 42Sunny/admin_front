@@ -1,9 +1,13 @@
 import { Icon } from '@mui/material';
+import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
 import { SEARCH_OPTIONS } from './Define';
 import useStyles from './VisitorManagementStyles';
+import { useContext } from 'react';
 
 const VisitDataTableSeachBar = ({ searchOption, setSearchOption, searchValue, setSearchValue }) => {
   const classes = useStyles();
+  const { reloadTable } = useContext(VisitorManagementContext);
+
   return (
     <div className={classes.searchContainer}>
       <div className={classes.searchBox}>
@@ -25,8 +29,11 @@ const VisitDataTableSeachBar = ({ searchOption, setSearchOption, searchValue, se
           onChange={({ target: { value }, nativeEvent: { data } }) => {
             if (data !== '\\') setSearchValue(value);
           }}
+          onKeyDown={reloadTable}
         />
-        <Icon className={classes.searchIcon}>search</Icon>
+        <Icon className={classes.searchIcon} onClick={reloadTable}>
+          search
+        </Icon>
       </div>
     </div>
   );

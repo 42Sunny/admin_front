@@ -2,7 +2,7 @@ import { Icon } from '@material-ui/core';
 import React from 'react';
 import { useStyles } from './SearchStaffStyles';
 
-const SearchStaff = ({ searchValue, setSearchValue }) => {
+const SearchStaff = ({ searchValue, setSearchValue, reloadData }) => {
   const classes = useStyles();
 
   return (
@@ -16,7 +16,7 @@ const SearchStaff = ({ searchValue, setSearchValue }) => {
           }}
           value={searchValue}
         />
-        <Icon>search</Icon>
+        <Icon className={classes.icon}>search</Icon>
       </div>
     </div>
   );
