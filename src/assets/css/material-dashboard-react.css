@@ -478,23 +478,3 @@ footer ul li a:hover {
   right: auto;
   left: 80px;
 }
-
-html {
-  letter-spacing: normal !important;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-html::-webkit-scrollbar {
-  display: none;
-}
-
-* {
-  letter-spacing: normal !important;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-*::-webkit-scrollbar {
-  display: none;
-}

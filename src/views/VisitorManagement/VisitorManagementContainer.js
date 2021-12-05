@@ -1,5 +1,5 @@
 import React from 'react';
-import { VisitorManagementProvider } from '../../contexts/VisitorManagementContext';
+import { VisitorManagementProvider } from 'contexts/VisitorManagementContext';
 import VisitorManagementPresenter from './VisitDataTablePresenter';
 
 const VisitorManagementContainer = () => {

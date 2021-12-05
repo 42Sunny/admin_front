@@ -7,7 +7,7 @@ import Table from 'components/Table/Table';
 import useStyles from './VisitorDashboardTableStyles';
 import moment from 'moment';
 
-const tableHead = ['예약 시간', '입실 시간', '직원', '소속', '방문자', '목적', '상태'];
+const tableHead = ['예약 시간', '입실 시간', '퇴실 시간', '직원', '소속', '방문자', '목적', '상태'];
 
 const VisitorLogTable = ({ xs, sm, md, checkInLogs, clusterNumber }) => {
   const classes = useStyles();
@@ -39,6 +39,7 @@ const VisitorLogTable = ({ xs, sm, md, checkInLogs, clusterNumber }) => {
 const makeRow = ({ staffName, date, purpose, checkIn, organization, name, status }) => [
   date,
   checkIn && moment(checkIn).format('HH:mm'),
+  '',
   staffName,
   organization,
   name,

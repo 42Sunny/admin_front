@@ -14,10 +14,11 @@ export const SEARCH_OPTIONS = [
   SEARCH_OPTION_STATUS,
 ];
 
-export const TABLE_HEAD = [
+export const VISITOR_TABLE_HEAD = [
   <VisitorManagementPlaceSelector />,
   '날짜',
-  '체크인',
+  '입실 시간',
+  '퇴실 시간',
   '방문자 소속',
   '방문자 이름',
   '방문자 번호',

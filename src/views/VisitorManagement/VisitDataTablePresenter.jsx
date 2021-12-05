@@ -5,7 +5,7 @@ import CardHeader from 'components/Card/CardHeader';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import { useContext } from 'react';
-import { TABLE_HEAD } from './Define';
+import { VISITOR_TABLE_HEAD } from './Define';
 import { VisitorManagementContext } from '../../contexts/VisitorManagementContext';
 import VisitDataTableHeader from './VisitDataTableHeader';
 import Table from 'components/Table/Table';
@@ -26,6 +26,17 @@ const VisitDataTablePresenter = () => {
     setSearchValue,
   } = useContext(VisitorManagementContext);
 
+  const visitDataTableBodyHeaderProps = {
+    setCheckGaepo,
+    setCheckSeocho,
+    checkGaepo,
+    checkSeocho,
+    searchOption,
+    setSearchOption,
+    searchValue,
+    setSearchValue,
+  };
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -36,17 +47,8 @@ const VisitDataTablePresenter = () => {
               <VisitDataTableHeader />
             </CardHeader>
             <CardBody className={classes.cardBody}>
-              <VisitDataTableBodyHeader
-                setCheckGaepo={setCheckGaepo}
-                setCheckSeocho={setCheckSeocho}
-                checkGaepo={checkGaepo}
-                checkSeocho={checkSeocho}
-                searchOption={searchOption}
-                setSearchOption={setSearchOption}
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-              />
-              <Table tableHeaderColor="info" tableHead={TABLE_HEAD} tableData={tableData} />
+              <VisitDataTableBodyHeader {...visitDataTableBodyHeaderProps} />
+              <Table tableHeaderColor="info" tableHead={VISITOR_TABLE_HEAD} tableData={tableData} />
             </CardBody>
           </Card>
         </GridItem>

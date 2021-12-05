@@ -13,6 +13,7 @@ import {
 } from '../views/VisitorManagement/Define';
 import { debounce } from 'lodash';
 import VisitStatus from 'views/VisitorManagement/VisitStatus';
+import CheckoutButton from 'components/CheckoutButton/CheckoutButton';
 
 const VisitorManagementContext = createContext({});
 
@@ -162,13 +163,14 @@ const makeTableData = (visitData) => {
     elem.place,
     elem.checkInDate,
     elem.checkIn ? moment(elem.checkIn).format('HH:mm') : '',
+    elem.checkOut ?? <CheckoutButton visitorId={elem.id} />,
     elem.organization,
     elem.name,
     useFormattedPhone(elem.phone),
     elem.purpose,
     elem.staffName,
     useFormattedPhone(elem.staffPhone),
-    <VisitStatus visitorId={elem.id} status={elem.status} />,
+    <VisitStatus visitorId={elem.id} defaultStatus={elem.status} />,
   ]);
   return results;
 };
