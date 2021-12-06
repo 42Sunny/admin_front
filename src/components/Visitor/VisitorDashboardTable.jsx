@@ -36,10 +36,19 @@ const VisitorLogTable = ({ xs, sm, md, checkInLogs, clusterNumber }) => {
   );
 };
 
-const makeRow = ({ staffName, date, purpose, checkIn, organization, name, status }) => [
-  date,
+const makeRow = ({
+  staffName,
+  reserveDate,
+  purpose,
+  checkIn,
+  checkOut,
+  organization,
+  name,
+  status,
+}) => [
+  reserveDate && moment(reserveDate).format('HH:mm'),
   checkIn && moment(checkIn).format('HH:mm'),
-  '',
+  checkOut && moment(checkOut).format('HH:mm'),
   staffName,
   organization,
   name,
