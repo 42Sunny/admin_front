@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserAction } from 'redux/modules/user';
+import { setLoginAction } from 'redux/modules/login';
 
-const useUser = () => {
+const useLogin = () => {
   const dispatch = useDispatch();
-  const user = useSelector(({ user }) => user);
+  const login = useSelector(({ login }) => login);
 
-  const setUser = useCallback(
+  const setLogin = useCallback(
     (param) => {
-      dispatch(setUserAction(param));
+      dispatch(setLoginAction(param));
     },
     [dispatch],
   );
 
-  return { user, setUser };
+  return { login, setLogin };
 };
 
-export default useUser;
+export default useLogin;

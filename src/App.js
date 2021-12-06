@@ -11,35 +11,35 @@ import useUser from 'hooks/useUser';
 import getCookieValue from 'utils/getCookieValue';
 
 const App = () => {
-  const { user, setUser } = useUser();
+  const { login, setLogin } = useUser();
 
   const getUserData = useCallback(async () => {
     try {
       const response = await checkAdmin();
       if (response.data['isAdmin']) {
-        setUser(true);
+        setLogin(true);
       } else {
         window.alert('접근 권한이 없습니다.');
-        setUser(false);
+        setLogin(false);
       }
     } catch (err) {
       console.log(err);
     }
-  }, [setUser]);
+  }, [setLogin]);
 
   useEffect(() => {
     const token = getCookieValue(process.env.REACT_APP_AUTH_KEY);
     if (token !== '') {
       getUserData();
     } else {
-      setUser(false);
+      setLogin(false);
     }
-  }, [getUserData, setUser]);
+  }, [getUserData, setLogin]);
 
   return (
     <BrowserRouter>
       <Switch>
-        {user !== '' ? (
+        {login === true ? (
           <VisitorProviderWrapper>
             <Route path="*" component={Admin} />
           </VisitorProviderWrapper>

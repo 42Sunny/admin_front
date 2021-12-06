@@ -1,10 +1,10 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // actions
-const SET_USER = 'user/SET_USER';
+const SET_LOGIN = 'user/SET_LOGIN';
 
 // action creators
-export const setUserAction = createAction(SET_USER);
+export const setLoginAction = createAction(SET_LOGIN);
 
 // initalState
 const initialState = false;
@@ -12,7 +12,7 @@ const initialState = false;
 // reducer
 export default handleActions(
   {
-    [SET_USER]: (state, action) => action.payload,
+    [SET_LOGIN]: (state, action) => action.payload,
   },
   initialState,
 );
