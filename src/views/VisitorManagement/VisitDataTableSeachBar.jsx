@@ -6,7 +6,7 @@ import { useContext } from 'react';
 
 const VisitDataTableSeachBar = ({ searchOption, setSearchOption, searchValue, setSearchValue }) => {
   const classes = useStyles();
-  const { reloadTable } = useContext(VisitorManagementContext);
+  const { reloadData } = useContext(VisitorManagementContext);
 
   return (
     <div className={classes.searchContainer}>
@@ -29,9 +29,9 @@ const VisitDataTableSeachBar = ({ searchOption, setSearchOption, searchValue, se
           onChange={({ target: { value }, nativeEvent: { data } }) => {
             if (data !== '\\') setSearchValue(value);
           }}
-          onKeyDown={reloadTable}
+          onKeyDown={reloadData}
         />
-        <Icon className={classes.searchIcon} onClick={reloadTable}>
+        <Icon className={classes.searchIcon} onClick={reloadData}>
           search
         </Icon>
       </div>

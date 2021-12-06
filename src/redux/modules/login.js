@@ -7,7 +7,7 @@ const SET_LOGIN = 'user/SET_LOGIN';
 export const setLoginAction = createAction(SET_LOGIN);
 
 // initalState
-const initialState = false;
+const initialState = true;
 
 // reducer
 export default handleActions(

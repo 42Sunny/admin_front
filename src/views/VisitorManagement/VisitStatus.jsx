@@ -1,4 +1,3 @@
-import { getVisitorLogs } from 'api/visitorApi';
 import { updateVisitorStatus } from 'api/visitorApi';
 import { useContext, useState, useEffect } from 'react';
 import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
@@ -21,15 +20,11 @@ const Options = () =>
 const VisitStatus = ({ defaultStatus, visitorId }) => {
   const classes = useStyles();
   const [status, setStatus] = useState(defaultStatus);
-  const { startDate, endDate, setVisitData, page, setLastPage } =
-    useContext(VisitorManagementContext);
+  const { reloadData } = useContext(VisitorManagementContext);
 
   const handleChange = async ({ target: { value } }) => {
     await updateVisitorStatus(visitorId, value);
-    const res = await getVisitorLogs({ start: startDate, end: endDate, page });
-    setVisitData(res.data.checkInLogs);
-    setLastPage(res.data.lastPage);
-    setStatus(value);
+    reloadData();
   };
 
   useEffect(() => {

@@ -47,6 +47,7 @@ const VisitorManagementContext = createContext({
   allData: [],
   allCount: 0,
   updateTable: (any) => {},
+  reloadData: () => {},
 });
 
 const VisitorManagementProvider = ({ children }) => {
@@ -89,7 +90,7 @@ const VisitorManagementProvider = ({ children }) => {
   const lazyGetData = useMemo(() => debounce((setData, arg) => updateData(setData, arg), 500), []);
 
   const lazyGetAllData = useMemo(
-    () => debounce((setData, arg) => updateAllData(setData, arg), 500),
+    () => debounce((startDate, arg) => updateAllData(startDate, arg), 500),
     [updateAllData],
   );
 
@@ -146,7 +147,7 @@ const VisitorManagementProvider = ({ children }) => {
         allData,
         allCount,
 
-        reloadTable: () =>
+        reloadData: () => {
           lazyGetData(setVisitData, {
             endDate,
             page,
@@ -155,7 +156,9 @@ const VisitorManagementProvider = ({ children }) => {
             searchValue,
             startDate,
             setLastPage,
-          }),
+          });
+          lazyGetAllData(startDate, { endDate, place });
+        },
       }}
     >
       {children}
@@ -203,21 +206,21 @@ const makeTableData = (visitData) => {
 
   const results = visitData.map((elem) => [
     elem.place,
-    elem.checkInDate,
+    elem.reserveDate ? moment(elem.reserveDate).format('YYYY-MM-DD') : '',
     elem.organization,
     elem.name,
     useFormattedPhone(elem.phone),
     elem.purpose,
     elem.staffName,
     useFormattedPhone(elem.staffPhone),
-    '11:11',
+    elem.reserveDate ? moment(elem.reserveDate).format('HH:mm') : '',
     elem.checkIn ? (
       moment(elem.checkIn).format('HH:mm')
     ) : (
       <CheckinButton visitorId={elem.id} status={elem.status} />
     ),
     elem.checkOut ? (
-      moment(elem.checkIn).format('HH:mm')
+      moment(elem.checkOut).format('HH:mm')
     ) : (
       <CheckoutButton visitorId={elem.id} status={elem.status} />
     ),
