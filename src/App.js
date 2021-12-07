@@ -7,39 +7,39 @@ import Login from 'components/Login/Login';
 
 import 'assets/css/material-dashboard-react.css?v=1.10.0';
 import 'assets/css/input.css';
-import useUser from 'hooks/useUser';
+import useLogin from 'hooks/useLogin';
 import getCookieValue from 'utils/getCookieValue';
 
 const App = () => {
-  const { login, setLogin } = useUser();
+  const { isLogin, login, logout } = useLogin();
 
   const getUserData = useCallback(async () => {
     try {
       const response = await checkAdmin();
       if (response.data['isAdmin']) {
-        setLogin(true);
+        login();
       } else {
         window.alert('접근 권한이 없습니다.');
-        setLogin(false);
+        logout();
       }
     } catch (err) {
       console.log(err);
     }
-  }, [setLogin]);
+  }, [login, logout]);
 
   useEffect(() => {
     const token = getCookieValue(process.env.REACT_APP_AUTH_KEY);
     if (token !== '') {
       getUserData();
     } else {
-      setLogin(false);
+      logout();
     }
-  }, [getUserData, setLogin]);
+  }, [getUserData, logout]);
 
   return (
     <BrowserRouter>
       <Switch>
-        {login === true ? (
+        {isLogin === true ? (
           <VisitorProviderWrapper>
             <Route path="*" component={Admin} />
           </VisitorProviderWrapper>

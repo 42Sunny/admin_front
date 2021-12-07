@@ -5,20 +5,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from 'components/CustomButtons/Button.js';
 
 import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
-import useUser from 'hooks/useUser';
+import useLogin from 'hooks/useLogin';
 
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
-  const { setUser } = useUser();
+  const { logout } = useLogin();
+
   const handleClickProfile = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
       document.cookie =
         process.env.REACT_APP_AUTH_KEY + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-      setUser('');
+      logout();
     }
   };
+
   return (
     <div className={classes.manager}>
       <Button
