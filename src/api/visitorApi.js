@@ -93,6 +93,7 @@ const checkStaff = (staffName) => {
 
 const INIT_PAGE = 0;
 const INIT_SIZE = 10;
+
 const getVisitorLogs = ({
   start = new moment().format('YYYY-MM-DD'),
   end = new moment().format('YYYY-MM-DD'),

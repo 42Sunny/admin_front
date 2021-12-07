@@ -40,7 +40,7 @@ const VisitorProvider = ({ children }) => {
 
   const getVisitorCheckInLogs = useCallback(async () => {
     const result = await getVisitorLogs({ size: 1000, place: getClusterName(clusterNumber) });
-    if (result.data.error) setCheckInData([]);
+    if (result?.data.error) setCheckInData([]);
     else setCheckInData(result ? result.data.checkInLogs : []);
   }, [clusterNumber]);
 
