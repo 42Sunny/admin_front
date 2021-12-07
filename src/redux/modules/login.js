@@ -1,8 +1,8 @@
 import { createAction, handleActions } from 'redux-actions';
 
 // actions
-const LOGIN = 'user/LOGIN';
-const LOGOUT = 'user/LOGOUT';
+const LOGIN = 'login/LOGIN';
+const LOGOUT = 'login/LOGOUT';
 
 // action creators
 export const loginAction = createAction(LOGIN);

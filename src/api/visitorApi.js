@@ -1,5 +1,8 @@
 import axios from 'axios';
 import moment from 'moment';
+import { logoutAction } from 'redux/modules/login';
+import getCookieValue from 'utils/getCookieValue';
+import store from 'redux/configureStore';
 
 const URL = process.env.REACT_APP_VISITOR_API_URL;
 const VERSION_PATH = '/v1';
@@ -33,33 +36,59 @@ const getToVisitor = (url, data) => instance.get(url, data);
 const putToVisitor = (url, data) => instance.put(url, data);
 const deleteToVisitor = (url, data) => apiHandler('delete', url, data);
 
+const isExpiredCookie = () => {
+  const value = getCookieValue(process.env.REACT_APP_AUTH_KEY);
+  if (value === '') {
+    window.alert('쿠키가 만료되었습니다. 다시 로그인해주세요.');
+    store.dispatch(logoutAction());
+    return true;
+  }
+  return false;
+};
+
+const authPostToVisitor = (url, data) => {
+  if (isExpiredCookie === false) postToVisitor(url, data);
+};
+
+const authGetToVisitor = (url, data) => {
+  if (isExpiredCookie === false) getToVisitor(url, data);
+};
+
+const authPutToVisitor = (url, data) => {
+  if (isExpiredCookie === false) putToVisitor(url, data);
+};
+
+const authDeleteToVisitor = (url, data) => {
+  if (isExpiredCookie === false) deleteToVisitor(url, data);
+};
+
 const getAllReserves = (date) => {
   const data = { date };
-  return postToVisitor(makeAPIPath('/info/reserve/date'), data);
+  return authPostToVisitor(makeAPIPath('/info/reserve/date'), data);
 };
 
 const updateVisitorStatus = (id, status) => {
   const data = { visitor: { id, status } };
-  return putToVisitor(makeAPIPath('/info/visitor/status'), data);
+  return authPutToVisitor(makeAPIPath('/info/visitor/status'), data);
 };
 
 const addStaff = (name, phone, department) => {
   const data = { name, phone, department };
-  return postToVisitor(makeAPIPath('/admin/staff/save'), data);
+  return authPostToVisitor(makeAPIPath('/admin/staff/save'), data);
 };
 
 const deleteStaff = (staffId) => {
   const data = { staffId: Number.parseInt(staffId) };
-  return deleteToVisitor(makeAPIPath('/admin/staff'), data);
+  return authDeleteToVisitor(makeAPIPath('/admin/staff'), data);
 };
 
 const getStaffs = () => {
-  return getToVisitor(makeAPIPath('/admin/staff'));
+  return authGetToVisitor(makeAPIPath('/admin/staff'));
 };
 
 const checkStaff = (staffName) => {
   const data = { staffName };
-  return postToVisitor(makeAPIPath('/staff'), data);
+  return authPostToVisitor(makeAPIPath('/staff'), data);
 };
 
 const INIT_PAGE = 0;
@@ -92,7 +121,7 @@ const getVisitorLogs = ({
   if (staffPhone !== null) searchCriteria.push({ criteria: 'STAFF_PHONE', value: staffPhone });
   if (searchCriteria.length !== 0) data['searchCriteria'] = searchCriteria;
 
-  return postToVisitor(makeAPIPath('/info/log/date'), data);
+  return authPostToVisitor(makeAPIPath('/info/log/date'), data);
 };
 
 export {
