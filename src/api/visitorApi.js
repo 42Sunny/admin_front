@@ -47,19 +47,19 @@ const isExpiredCookie = () => {
 };
 
 const authPostToVisitor = (url, data) => {
-  if (isExpiredCookie === false) postToVisitor(url, data);
+  if (isExpiredCookie() === false) postToVisitor(url, data);
 };
 
 const authGetToVisitor = (url, data) => {
-  if (isExpiredCookie === false) getToVisitor(url, data);
+  if (isExpiredCookie() === false) getToVisitor(url, data);
 };
 
 const authPutToVisitor = (url, data) => {
-  if (isExpiredCookie === false) putToVisitor(url, data);
+  if (isExpiredCookie() === false) putToVisitor(url, data);
 };
 
 const authDeleteToVisitor = (url, data) => {
-  if (isExpiredCookie === false) deleteToVisitor(url, data);
+  if (isExpiredCookie() === false) deleteToVisitor(url, data);
 };
 
 const getAllReserves = (date) => {
