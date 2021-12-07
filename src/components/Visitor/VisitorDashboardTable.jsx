@@ -56,6 +56,6 @@ const makeRow = ({
   status,
 ];
 
-const makeTableData = (checkInLogs) => checkInLogs.map((log) => makeRow(log));
+const makeTableData = (checkInLogs) => (checkInLogs ? checkInLogs.map((log) => makeRow(log)) : []);
 
 export default VisitorLogTable;

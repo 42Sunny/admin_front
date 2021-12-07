@@ -46,20 +46,20 @@ const isExpiredCookie = () => {
   return false;
 };
 
-const authPostToVisitor = (url, data) => {
-  if (isExpiredCookie() === false) postToVisitor(url, data);
+const authPostToVisitor = async (url, data) => {
+  if (isExpiredCookie() === false) return await postToVisitor(url, data);
 };
 
-const authGetToVisitor = (url, data) => {
-  if (isExpiredCookie() === false) getToVisitor(url, data);
+const authGetToVisitor = async (url, data) => {
+  if (isExpiredCookie() === false) return await getToVisitor(url, data);
 };
 
-const authPutToVisitor = (url, data) => {
-  if (isExpiredCookie() === false) putToVisitor(url, data);
+const authPutToVisitor = async (url, data) => {
+  if (isExpiredCookie() === false) return await putToVisitor(url, data);
 };
 
-const authDeleteToVisitor = (url, data) => {
-  if (isExpiredCookie() === false) deleteToVisitor(url, data);
+const authDeleteToVisitor = async (url, data) => {
+  if (isExpiredCookie() === false) return await deleteToVisitor(url, data);
 };
 
 const getAllReserves = (date) => {
