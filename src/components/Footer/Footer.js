@@ -12,7 +12,7 @@ import packageJson from '../../../package.json';
 const useStyles = makeStyles(styles);
 const DEVELOPERS = ['jayi', 'jihuhwan', 'gpark', 'jaehchoi', 'eun-park'];
 const footerItems = [
-  { key: '개발자 정보', value: DEVELOPERS.map((develop) => `${develop}`).join(', ') },
+  { key: '개발자 정보', value: DEVELOPERS.join(', ') },
   {
     key: '가이드',
     value: (

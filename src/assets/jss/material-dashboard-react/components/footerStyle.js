@@ -28,13 +28,26 @@ const footerStyle = {
     display: 'flex',
     '& > div:nth-child(1)': {
       width: '30%',
+      color: 'black',
+      fontWeight: '700',
     },
     '& > div:nth-child(2)': {
       width: '70%',
     },
     '& a': {
       textDecoration: 'none',
-      color: primaryColor,
+      color: 'black',
+      fontWeight: '500',
+    },
+    '& a:hover': {
+      textDecoration: 'none',
+      color: 'black',
+      fontWeight: '700',
+    },
+    '& a:visited': {
+      textDecoration: 'none',
+      fontWeight: '500',
+      color: 'black',
     },
   },
 };
