@@ -9,7 +9,7 @@ type PropTypes = {
   header: string | JSX.Element;
   tableProps: {
     tableHead: string[];
-    tableData: (string | JSX.Element)[][];
+    tableData: (string | JSX.Element | null | Date)[][];
   };
 };
 

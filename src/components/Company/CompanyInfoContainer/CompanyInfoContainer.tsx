@@ -20,23 +20,11 @@ const CompanyInfoContainer = () => {
   const props = {
     header: <Header />,
     tableProps: {
-      tableHead: ['업체 이름', '대표 번호', '입실', '수정', '삭제'],
+      tableHead: ['업체 이름', '대표 번호', '입실', '삭제'],
       tableData: [
-        ['42 Seoul', '010-0000-0000', <Icon>login</Icon>, <Icon>edit</Icon>, <Icon>delete</Icon>],
-        [
-          '웅진 코웨이',
-          '010-1234-5678',
-          <Icon>login</Icon>,
-          <Icon>edit</Icon>,
-          <Icon>delete</Icon>,
-        ],
-        [
-          'Innovation Academy',
-          '010-2222-2222',
-          <Icon>login</Icon>,
-          <Icon>edit</Icon>,
-          <Icon>delete</Icon>,
-        ],
+        ['42 Seoul', '010-0000-0000', <Icon>login</Icon>, <Icon>delete</Icon>],
+        ['웅진 코웨이', '010-1234-5678', <Icon>login</Icon>, <Icon>delete</Icon>],
+        ['Innovation Academy', '010-2222-2222', <Icon>login</Icon>, <Icon>delete</Icon>],
       ],
     },
   };
