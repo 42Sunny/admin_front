@@ -29,7 +29,7 @@ const App = () => {
 
   useEffect(() => {
     const token = getCookieValue(process.env.REACT_APP_AUTH_KEY);
-    if (token === '' || token === undefined) {
+    if (token === '') {
       logout();
     } else {
       getUserData();

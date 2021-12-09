@@ -38,7 +38,7 @@ const deleteToVisitor = (url, data) => apiHandler('delete', url, data);
 
 const isExpiredCookie = () => {
   const value = getCookieValue(process.env.REACT_APP_AUTH_KEY);
-  if (value === '' || value === undefined) {
+  if (value === '') {
     window.alert('쿠키가 만료되었습니다. 다시 로그인해주세요.');
     store.dispatch(logoutAction());
     return true;
