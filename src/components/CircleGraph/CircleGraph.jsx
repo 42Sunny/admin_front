@@ -10,12 +10,13 @@ const CircleGraph = ({ targetPercent, content }) => {
   const [percent, setPercent] = useState(0);
 
   useEffect(() => {
+    let currentPercnet = 0;
     const renderer = setInterval(() => {
-      if (percent === targetPercent) clearInterval(renderer);
-      setPercent((percent) => (percent < targetPercent ? percent + 1 : targetPercent));
+      if (currentPercnet === targetPercent) clearInterval(renderer);
+      currentPercnet = currentPercnet < targetPercent ? currentPercnet + 1 : targetPercent;
+      setPercent(currentPercnet);
     }, 10);
     return () => clearInterval(renderer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetPercent]);
 
   return (

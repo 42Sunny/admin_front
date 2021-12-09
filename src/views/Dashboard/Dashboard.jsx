@@ -37,7 +37,10 @@ const Dashboard = () => {
   const checkInMaxEnterance = clusterNumber === '0' ? maxGaepo : maxSeocho;
   const CheckInHeadCountProps = {
     title: '체크인 현황',
-    targetPercent: Number.parseInt((checkInEnteranceCount / checkInMaxEnterance) * 100, 10),
+    targetPercent:
+      checkInMaxEnterance !== 0
+        ? Number.parseInt((checkInEnteranceCount / checkInMaxEnterance) * 100, 10)
+        : 0,
     content: <div>{`${checkInEnteranceCount}/${checkInMaxEnterance}`}</div>,
     legends: [
       { color: 'info', content: `입실 ${checkInEnteranceCount}명` },
@@ -50,7 +53,10 @@ const Dashboard = () => {
 
   const VisitorHeadCountProps = {
     title: '방문자 현황',
-    targetPercent: Number.parseInt((visitorEnteranceCount / visitorReserveCount) * 100, 10),
+    targetPercent:
+      visitorReserveCount !== 0
+        ? Number.parseInt((visitorEnteranceCount / visitorReserveCount) * 100, 10)
+        : 0,
     content: (
       <div>
         <div>{`${visitorEnteranceCount}/${visitorReserveCount}`}</div>

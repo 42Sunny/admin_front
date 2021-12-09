@@ -10,7 +10,7 @@ import styles from 'assets/jss/material-dashboard-react/components/footerStyle.j
 import packageJson from '../../../package.json';
 
 const useStyles = makeStyles(styles);
-const DEVELOPERS = ['jayi', 'jihuhwan', 'gpark', 'jaehchoi', 'eun-park'];
+const DEVELOPERS = ['jayi', 'juhlee', 'jihuhwan', 'gpark', 'jaehchoi', 'eun-park'];
 const footerItems = [
   { key: '개발자 정보', value: DEVELOPERS.join(', ') },
   {
