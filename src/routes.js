@@ -7,7 +7,7 @@ import VisitorManagement from 'views/VisitorManagement/VisitorManagementContaine
 import CheckInManagement from 'views/CheckInManagement/CheckInManagement';
 import Settings from 'views/Settings/Settings';
 import { Business } from '@material-ui/icons';
-import OrganizationManagement from 'views/OrganizationManagement/OrganizationManagement';
+import CompanyManagement from 'views/CompanyManagement/CompanyManagement';
 
 const dashboardRoutes = [
   {
@@ -32,10 +32,10 @@ const dashboardRoutes = [
     layout: '',
   },
   {
-    path: '/organization/management',
+    path: '/company/management',
     name: '업체 출입 관리',
     icon: Business,
-    component: OrganizationManagement,
+    component: CompanyManagement,
     layout: '',
   },
   {
