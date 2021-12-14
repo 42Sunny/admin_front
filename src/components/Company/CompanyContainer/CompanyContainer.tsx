@@ -5,11 +5,12 @@ import React from 'react';
 import CompanyTable from '../CompanyTable/CompanyTable';
 import useCompanyContainerStyles from './CompanyContainerStyles';
 
+export type CompanyTableDataType = string | JSX.Element | null;
 type PropTypes = {
   header: string | JSX.Element;
   tableProps: {
     tableHead: string[];
-    tableData: (string | JSX.Element | null | Date)[][];
+    tableData: CompanyTableDataType[][];
   };
 };
 

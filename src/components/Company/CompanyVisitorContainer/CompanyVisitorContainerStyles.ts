@@ -6,11 +6,19 @@ const styles = {
     display: 'flex',
     width: '100%',
     'flex-direction': 'column',
-    gap: '0.4rem',
+    gap: '0.7rem',
   },
   title: {},
-  datePicker: {
-    fontSize: '1.1rem',
+  datePicker: {},
+  dateInput: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    color: 'white',
+    fontSize: '1.2rem',
+    padding: '0rem',
+    borderStyle: 'none',
+    borderWidth: '0.1rem',
+    'box-sizing': 'border-box',
+    fontFamily: 'Spoqa Han Sans Neo',
   },
 };
 

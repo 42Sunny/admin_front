@@ -1,65 +1,23 @@
-import axios from 'axios';
 import moment from 'moment';
-import { logoutAction } from 'redux/modules/login';
-import getCookieValue from 'utils/getCookieValue';
-import store from 'redux/configureStore';
-
-const URL = process.env.REACT_APP_VISITOR_API_URL;
+import { isExpiredCookie } from 'utils/isExpiredCookie';
+import { visitorAPIHandler } from './APIHandler';
 const VERSION_PATH = '/v1';
 const makeAPIPath = (path) => `${VERSION_PATH}${path}`;
 
-const instance = axios.create({
-  baseURL: URL,
-  withCredentials: true,
-  headers: {
-    'X-42Cadet-Auth-Key': process.env.REACT_APP_X_42CADET_VISITOR_AUTH_KEY,
-  },
-});
-
-const apiHandler = async (method, path, data) => {
-  return await axios(
-    {
-      method,
-      url: `${URL}${path}`,
-      data,
-      headers: {
-        'X-42Cadet-Auth-Key': process.env.REACT_APP_X_42CADET_VISITOR_AUTH_KEY,
-        cookie: document.cookie,
-      },
-    },
-    { withCredentials: true },
-  );
-};
-
-const postToVisitor = (url, data) => instance.post(url, data);
-const getToVisitor = (url, data) => instance.get(url, data);
-const putToVisitor = (url, data) => instance.put(url, data);
-const deleteToVisitor = (url, data) => apiHandler('delete', url, data);
-
-const isExpiredCookie = () => {
-  const value = getCookieValue(process.env.REACT_APP_AUTH_KEY);
-  if (value === '') {
-    window.alert('쿠키가 만료되었습니다. 다시 로그인해주세요.');
-    store.dispatch(logoutAction());
-    return true;
-  }
-  return false;
-};
-
 const authPostToVisitor = async (url, data) => {
-  if (isExpiredCookie() === false) return await postToVisitor(url, data);
+  if (isExpiredCookie() === false) return await visitorAPIHandler('post', url, data);
 };
 
 const authGetToVisitor = async (url, data) => {
-  if (isExpiredCookie() === false) return await getToVisitor(url, data);
+  if (isExpiredCookie() === false) return await visitorAPIHandler('get', url, data);
 };
 
 const authPutToVisitor = async (url, data) => {
-  if (isExpiredCookie() === false) return await putToVisitor(url, data);
+  if (isExpiredCookie() === false) return await visitorAPIHandler('put', url, data);
 };
 
 const authDeleteToVisitor = async (url, data) => {
-  if (isExpiredCookie() === false) return await deleteToVisitor(url, data);
+  if (isExpiredCookie() === false) return await visitorAPIHandler('delete', url, data);
 };
 
 const getAllReserves = (date) => {

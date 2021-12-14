@@ -1,8 +1,9 @@
 import CustomTable from 'components/Table/Table';
 import React from 'react';
+import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 import useCompanyTableStyles from './CompanyTableStyles';
 
-type PropTypes = { tableHead: string[]; tableData: (string | JSX.Element | Date | null)[][] };
+type PropTypes = { tableHead: string[]; tableData: CompanyTableDataType[][] };
 
 const CompanyTable = ({ tableHead, tableData }: PropTypes) => {
   const classes = useCompanyTableStyles();
