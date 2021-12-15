@@ -1,3 +1,3 @@
-import { visitorAPIWrapper } from './APIWrapper';
+import { visitorAPIInstance } from './APIHandler';
 
-export const getCompanies = () => visitorAPIWrapper<any>('get', '/v1/company', {});
+export const getCompanies = () => visitorAPIInstance.get('/v1/admin/staff');

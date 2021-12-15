@@ -1,23 +1,38 @@
 import moment from 'moment';
+import forceLogout from 'utils/forceLogout';
 import { isExpiredCookie } from 'utils/isExpiredCookie';
-import { visitorAPIHandler } from './APIHandler';
+import { visitorAPIInstance } from './APIHandler';
 const VERSION_PATH = '/v1';
 const makeAPIPath = (path) => `${VERSION_PATH}${path}`;
 
 const authPostToVisitor = async (url, data) => {
-  if (isExpiredCookie() === false) return await visitorAPIHandler('post', url, data);
+  if (isExpiredCookie() === true) {
+    forceLogout();
+    return Promise.reject({ data: { error: { message: '쿠키가 만료되었습니다.' } } });
+  } else {
+    return await visitorAPIInstance.post(url, data);
+  }
 };
 
 const authGetToVisitor = async (url, data) => {
-  if (isExpiredCookie() === false) return await visitorAPIHandler('get', url, data);
+  if (isExpiredCookie() === true) {
+    return forceLogout();
+  }
+  return await visitorAPIInstance.get(url, data);
 };
 
 const authPutToVisitor = async (url, data) => {
-  if (isExpiredCookie() === false) return await visitorAPIHandler('put', url, data);
+  if (isExpiredCookie() === true) {
+    return forceLogout();
+  }
+  return await visitorAPIInstance.put(url, data);
 };
 
 const authDeleteToVisitor = async (url, data) => {
-  if (isExpiredCookie() === false) return await visitorAPIHandler('delete', url, data);
+  if (isExpiredCookie() === true) {
+    return forceLogout();
+  }
+  return await visitorAPIInstance.delete(url, { data });
 };
 
 const getAllReserves = (date) => {
