@@ -5,35 +5,21 @@ import { visitorAPIInstance } from './APIHandler';
 const VERSION_PATH = '/v1';
 const makeAPIPath = (path) => `${VERSION_PATH}${path}`;
 
-const authPostToVisitor = async (url, data) => {
+const authAPIToVisitor = (APIFunction) => async (url, data) => {
   if (isExpiredCookie() === true) {
     forceLogout();
     return Promise.reject({ data: { error: { message: '쿠키가 만료되었습니다.' } } });
-  } else {
-    return await visitorAPIInstance.post(url, data);
   }
+  return await APIFunction(url, data);
 };
 
-const authGetToVisitor = async (url, data) => {
-  if (isExpiredCookie() === true) {
-    return forceLogout();
-  }
-  return await visitorAPIInstance.get(url, data);
-};
+const authPostToVisitor = authAPIToVisitor(visitorAPIInstance.post);
 
-const authPutToVisitor = async (url, data) => {
-  if (isExpiredCookie() === true) {
-    return forceLogout();
-  }
-  return await visitorAPIInstance.put(url, data);
-};
+const authGetToVisitor = authAPIToVisitor(visitorAPIInstance.get);
 
-const authDeleteToVisitor = async (url, data) => {
-  if (isExpiredCookie() === true) {
-    return forceLogout();
-  }
-  return await visitorAPIInstance.delete(url, { data });
-};
+const authPutToVisitor = authAPIToVisitor(visitorAPIInstance.put);
+
+const authDeleteToVisitor = authAPIToVisitor(visitorAPIInstance.delete);
 
 const getAllReserves = (date) => {
   const data = { date };
@@ -52,7 +38,7 @@ const addStaff = (name, phone, department) => {
 
 const deleteStaff = (staffId) => {
   const data = { staffId: Number.parseInt(staffId) };
-  return authDeleteToVisitor(makeAPIPath('/admin/staff'), data);
+  return authDeleteToVisitor(makeAPIPath('/admin/staff'), { data });
 };
 
 const getStaffs = () => {

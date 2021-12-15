@@ -186,7 +186,7 @@ const updateData = async (
   if (size) criteria['size'] = Number.parseInt(size, 10);
 
   const { data, error } = await getVisitorLogs(criteria);
-  if (error !== null) return [];
+  if (error !== undefined) return [];
   const { checkInLogs, lastPage } = data;
   setData(checkInLogs);
   if (setLastPage) setLastPage(lastPage);

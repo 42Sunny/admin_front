@@ -12,10 +12,10 @@ const APIInstance = (baseURL?: string, x_42cadet_auth_key?: string) => {
 
   instance.interceptors.response.use(
     (response) => {
-      return { ...response, error: null };
+      return { ...response, error: response?.data?.error };
     },
     (error) => {
-      return Promise.reject({ data: { error } });
+      return Promise.reject(error);
     },
   );
 
