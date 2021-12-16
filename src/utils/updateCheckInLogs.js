@@ -1,4 +1,4 @@
-import { getCheckIn } from 'api/checkinApi';
+import { getCheckIn } from 'API/checkinApi';
 
 export const updateCheckInLogs = async (setCheckInLogs, clusterNumber) => {
   try {

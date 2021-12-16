@@ -1,4 +1,4 @@
-import { getConfig } from 'api/checkinApi';
+import { getConfig } from 'API/checkinApi';
 import GridContainer from 'components/Grid/GridContainer';
 import React, { useEffect, useState } from 'react';
 import MaxHeadCountInput from './MaxHeadCountInput';

@@ -1,4 +1,4 @@
-import { updateVisitorStatus } from 'api/visitorApi';
+import { updateVisitorStatus } from 'API/visitorApi';
 import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
 import React, { useContext } from 'react';
 import useStyles from './CheckoutButtonStyles';

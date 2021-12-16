@@ -4,7 +4,7 @@ import GridItem from 'components/Grid/GridItem.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
-import { reqUsingCard, reqMaxCapacity } from 'api/checkinApi';
+import { reqUsingCard, reqMaxCapacity } from 'API/checkinApi';
 import useCriteria from 'hooks/useCriteria';
 
 const useStyles = makeStyles(styles);

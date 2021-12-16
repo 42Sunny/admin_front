@@ -1,4 +1,4 @@
-import { getStaffs } from 'api/visitorApi';
+import { getStaffs } from 'API/visitorApi';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
 import { useState, useCallback, useEffect } from 'react';
 import usePagination from 'hooks/usePagination';

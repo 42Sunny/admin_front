@@ -1,4 +1,4 @@
-const { getConfig } = require('api/checkinApi');
+import { getConfig } from 'API/checkinApi';
 
 export const getHeadCount = async (setMaxGaepo, setMaxSeocho) => {
   try {

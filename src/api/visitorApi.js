@@ -1,7 +1,7 @@
 import moment from 'moment';
 import forceLogout from 'utils/forceLogout';
 import { isExpiredCookie } from 'utils/isExpiredCookie';
-import { visitorAPIInstance } from './APIHandler';
+import { visitorAPIInstance } from 'API/APIInstance';
 const VERSION_PATH = '/v1';
 const makeAPIPath = (path) => `${VERSION_PATH}${path}`;
 
@@ -53,6 +53,20 @@ const checkStaff = (staffName) => {
 const INIT_PAGE = 0;
 const INIT_SIZE = 10;
 
+const criteria = {
+  visitor: {
+    name: 'VISITOR_NAME',
+    phone: 'VISITOR_PHONE',
+    status: 'VISITOR_STATUS',
+    oraganization: 'VISITOR_ORGANIZATION',
+  },
+  staff: {
+    department: 'STAFF_DEPARTMENT',
+    name: 'STAFF_NAME',
+    phone: 'STAFF_PHONE',
+  },
+};
+
 const getVisitorLogs = ({
   start = new moment().format('YYYY-MM-DD'),
   end = new moment().format('YYYY-MM-DD'),
@@ -69,16 +83,18 @@ const getVisitorLogs = ({
 }) => {
   const searchCriteria = [];
   const data = { start, end, pagination: { page, size } };
-  if (place !== null) data['place'] = place;
-  if (name !== null) searchCriteria.push({ criteria: 'VISITOR_NAME', value: name });
-  if (phone !== null) searchCriteria.push({ criteria: 'VISITOR_PHONE', value: phone });
-  if (status !== null) searchCriteria.push({ criteria: 'VISITOR_STATUS', value: status });
+
+  if (place !== null) data.place = place;
+  if (name !== null) searchCriteria.push({ criteria: criteria.visitor.name, value: name });
+  if (phone !== null) searchCriteria.push({ criteria: criteria.visitor.phone, value: phone });
+  if (status !== null) searchCriteria.push({ criteria: criteria.visitor.status, value: status });
   if (oraganization !== null)
-    searchCriteria.push({ criteria: 'VISITOR_ORGANIZATION', value: oraganization });
+    searchCriteria.push({ criteria: criteria.staff.oraganization, value: oraganization });
   if (staffDepartment !== null)
-    searchCriteria.push({ criteria: 'STAFF_DEPARTMENT', value: staffDepartment });
-  if (staffName !== null) searchCriteria.push({ criteria: 'STAFF_NAME', value: staffName });
-  if (staffPhone !== null) searchCriteria.push({ criteria: 'STAFF_PHONE', value: staffPhone });
+    searchCriteria.push({ criteria: criteria.staff.department, value: staffDepartment });
+  if (staffName !== null) searchCriteria.push({ criteria: criteria.staff.name, value: staffName });
+  if (staffPhone !== null)
+    searchCriteria.push({ criteria: criteria.staff.phone, value: staffPhone });
   if (searchCriteria.length !== 0) data['searchCriteria'] = searchCriteria;
 
   return authPostToVisitor(makeAPIPath('/info/log/date'), data);

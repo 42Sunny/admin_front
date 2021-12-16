@@ -18,7 +18,7 @@ import Button from 'components/CustomButtons/Button.js';
 import { useRouteName } from 'hooks';
 
 import styles from 'assets/jss/material-dashboard-react/components/headerStyle.js';
-import { checkAdmin } from 'api/checkinApi.js';
+import { checkAdmin } from 'API/checkinApi.js';
 
 const useStyles = makeStyles(styles);
 

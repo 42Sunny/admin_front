@@ -3,7 +3,7 @@ import Table from 'components/Table/Table.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
-import { forceCheckOut } from 'api/checkinApi';
+import { forceCheckOut } from 'API/checkinApi';
 import moment from 'moment';
 import useCriteria from 'hooks/useCriteria';
 import useCheckInLogs from 'hooks/useCheckInLogs';

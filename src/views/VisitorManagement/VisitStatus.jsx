@@ -1,4 +1,4 @@
-import { updateVisitorStatus } from 'api/visitorApi';
+import { updateVisitorStatus } from 'API/visitorApi';
 import { useContext, useState, useEffect } from 'react';
 import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
 import useStyles from './VisitorManagementStyles';

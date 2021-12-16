@@ -1,4 +1,4 @@
-import { getVisitorLogs } from 'api/visitorApi';
+import { getVisitorLogs } from 'API/visitorApi';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
 import moment from 'moment';
 import { createContext, useEffect, useState, useCallback, useMemo } from 'react';
