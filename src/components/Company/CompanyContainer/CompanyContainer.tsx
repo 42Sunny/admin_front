@@ -1,6 +1,7 @@
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
+import Pagination from 'components/Pagination';
 import React from 'react';
 import CompanyTable from '../CompanyTable/CompanyTable';
 import useCompanyContainerStyles from './CompanyContainerStyles';
@@ -12,9 +13,17 @@ type PropTypes = {
     tableHead: string[];
     tableData: CompanyTableDataType[][];
   };
+  paginationProps: {
+    paginationLength: number;
+    start: number;
+    end: number;
+    increase?: React.MouseEventHandler<HTMLButtonElement>;
+    decrease?: React.MouseEventHandler<HTMLButtonElement>;
+    clickDescription?: React.MouseEventHandler<HTMLButtonElement>;
+  };
 };
 
-const CompanyContainer = ({ header, tableProps }: PropTypes) => {
+const CompanyContainer = ({ header, tableProps, paginationProps }: PropTypes) => {
   const classes = useCompanyContainerStyles();
   return (
     <Card className={classes.container}>
@@ -22,6 +31,9 @@ const CompanyContainer = ({ header, tableProps }: PropTypes) => {
         <div className={classes.header}>{header}</div>
       </CardHeader>
       <CardBody className={classes.body}>
+        <div className={classes.bodyHeader}>
+          <Pagination {...paginationProps} />
+        </div>
         <CompanyTable {...tableProps} />
       </CardBody>
     </Card>

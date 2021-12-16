@@ -4,7 +4,7 @@ import { createAction, handleActions } from 'redux-actions';
 const SET_COMPANY_INFO = 'companyInfo/SET_COMPANY_INFO';
 
 // action creators
-export const setCompanyInfoAction = createAction(SET_COMPANY_INFO, () => {});
+export const setCompanyInfoAction = createAction(SET_COMPANY_INFO);
 
 export type CompanyInfoType = {
   id: number;
@@ -13,7 +13,23 @@ export type CompanyInfoType = {
 };
 
 // initalState
-const initialState: CompanyInfoType[] = [];
+const initialState: CompanyInfoType[] = [
+  {
+    id: 0,
+    name: '42 Seoul',
+    phone: '0000000000',
+  },
+  {
+    id: 1,
+    name: '42 Seoul',
+    phone: '00000001111',
+  },
+  {
+    id: 2,
+    name: '42 Seoul',
+    phone: '00000002222',
+  },
+];
 
 // reducer
 export default handleActions(

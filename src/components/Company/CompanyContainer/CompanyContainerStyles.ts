@@ -8,7 +8,14 @@ const styles = {
     height: '600px',
     'box-sizing': 'border-box',
   },
-  body: {},
+  body: {
+    display: 'flex',
+    'flex-direction': 'column',
+  },
+  bodyHeader: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 };
 
 const useCompanyContainerStyles = makeStyles(styles);

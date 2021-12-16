@@ -5,7 +5,19 @@ const SET_COMPANY_VISITOR = 'companyVisitor/SET_COMPANY_VISITOR';
 const UPDATE_COMPANY_VISITOR = 'companyVisitor/UPDATE_COMPANY_VISITOR';
 
 // action creators
-export const setCompanyVisitorAction = createAction(SET_COMPANY_VISITOR, () => [
+export const setCompanyVisitorAction = createAction(SET_COMPANY_VISITOR);
+export const updateCompanyVisitorAction = createAction(UPDATE_COMPANY_VISITOR);
+
+export type CompanyVisitorType = {
+  id: number;
+  companyName: string;
+  visitorName: string;
+  checkinTime: Date;
+  checkoutTime: Date | null;
+};
+
+// initalState
+const initialState: CompanyVisitorType[] = [
   {
     companyName: '42 Seoul',
     visitorName: '이재하',
@@ -27,24 +39,13 @@ export const setCompanyVisitorAction = createAction(SET_COMPANY_VISITOR, () => [
     checkoutTime: null,
     id: 3,
   },
-]);
-export const updateCompanyVisitorAction = createAction(UPDATE_COMPANY_VISITOR);
-
-export type CompanyVisitorType = {
-  id: number;
-  companyName: string;
-  visitorName: string;
-  checkinTime: Date;
-  checkoutTime: Date | null;
-};
-
-// initalState
-const initialState: CompanyVisitorType[] = [];
+];
 
 // reducer
 export default handleActions(
   {
     [SET_COMPANY_VISITOR]: (state, action) => action.payload,
+    [UPDATE_COMPANY_VISITOR]: (state, action) => action.payload,
   },
   initialState,
 );

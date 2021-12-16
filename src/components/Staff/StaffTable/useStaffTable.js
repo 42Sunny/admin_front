@@ -24,7 +24,7 @@ const useStaffTable = () => {
       setPaginationLength(rawTableData.length);
       setSearchValue('');
       setPage(1);
-      // TODO : 불러오는데 에러가 발생하면 그것을 처리할 로직이 필요하다.
+      // TODO: 불러오는데 에러가 발생하면 그것을 처리할 로직이 필요하다.
     } catch {
       setRawTableData([]);
       setPaginationLength(0);

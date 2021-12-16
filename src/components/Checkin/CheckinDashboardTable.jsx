@@ -24,7 +24,7 @@ const CheckinLogTable = ({ xs, sm, md }) => {
     try {
       const userId = event.target.id;
       if (userId) {
-        window.confirm('퇴실 처리 하시겠습니까?');
+        window.confirm('퇴실 처리하시겠습니까?');
         await forceCheckOut(userId);
         setCheckInLogs([]);
       } else {
