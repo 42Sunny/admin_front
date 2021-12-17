@@ -13,6 +13,6 @@ if (env === 'development') {
 } else {
   configureStore = () => createStore(rootReducer, applyMiddleware(ReduxThunk));
 }
-
-export default configureStore();
+const rootStore = configureStore();
+export default rootStore;
 export type RootState = ReturnType<typeof rootReducer>;

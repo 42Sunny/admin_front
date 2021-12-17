@@ -2,10 +2,11 @@ import { useFormattedPhone as formattedPhone } from 'hooks/useFormattedPhone';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/configureStore';
-import { CompanyInfoType, setCompanyInfoAction } from 'redux/modules/companyInfo';
+import { CompanyInfoResponseType, setCompanyInfoAction } from 'redux/modules/companyInfo';
 import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
+import { getCompany } from 'API/Visitor/getCompany';
 
 const useCompanyInfo = () => {
   const companyInfo = useSelector(({ companyInfo }: RootState) => companyInfo);
@@ -35,6 +36,15 @@ const useCompanyInfo = () => {
     setTableData(rawTableData.slice(start - 1, end));
   }, [end, rawTableData, start]);
 
+  const updateCompanyInfo = useCallback(async () => {
+    const res = await getCompany();
+    dispatch(setCompanyInfoAction(res.data));
+  }, [dispatch]);
+
+  useEffect(() => {
+    updateCompanyInfo();
+  }, [updateCompanyInfo]);
+
   return {
     tableData,
     updateCompanyVisitor,
@@ -49,14 +59,14 @@ const useCompanyInfo = () => {
   };
 };
 
-type CompanyInfoDataType = {
+type CompanyInfoObjType = {
   deleteButton: JSX.Element;
   enteranceButton: JSX.Element;
   name: string;
   phone: string;
 };
 
-const dataToTableData = (info: CompanyInfoType): CompanyInfoDataType => ({
+const dataToTableData = (info: CompanyInfoResponseType): CompanyInfoObjType => ({
   deleteButton: React.createElement(IconButton, {
     id: info.id.toString(),
     icon: 'delete',
@@ -71,7 +81,7 @@ const dataToTableData = (info: CompanyInfoType): CompanyInfoDataType => ({
   phone: formattedPhone(info.phone),
 });
 
-const TableDataToArray = (info: CompanyInfoDataType) => [
+const TableDataToArray = (info: CompanyInfoObjType) => [
   info.name,
   info.phone,
   info.enteranceButton,
@@ -80,7 +90,9 @@ const TableDataToArray = (info: CompanyInfoDataType) => [
 
 const handleEnteranceClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
   const name = window.prompt('방문자 이름을 입력해주세요.');
-  if (name !== null && name !== '') {
+  const place = window.prompt('장소를 입력해주세요. (개포, 서초)');
+  // TODO: modal로 변경 예정.
+  if (name !== null && name !== '' && (place === '개포' || place === '서초')) {
     // TODO: API가 생성되는대로...
   }
 };

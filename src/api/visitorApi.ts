@@ -2,41 +2,42 @@ import moment from 'moment';
 import forceLogout from 'utils/forceLogout';
 import { isExpiredCookie } from 'utils/isExpiredCookie';
 import { visitorAPIInstance } from 'API/APIInstance';
+import { AxiosResponse } from 'axios';
 const VERSION_PATH = '/v1';
-const makeAPIPath = (path) => `${VERSION_PATH}${path}`;
+export const makeAPIPath = (path: string) => `${VERSION_PATH}${path}`;
 
-const authAPIToVisitor = (APIFunction) => async (url, data) => {
-  if (isExpiredCookie() === true) {
-    forceLogout();
-    return Promise.reject({ data: { error: { message: '쿠키가 만료되었습니다.' } } });
-  }
-  return await APIFunction(url, data);
-};
+const authAPIToVisitor =
+  (APIFunction: (url: string, data?: any) => Promise<AxiosResponse<any>>) =>
+  async <T = any, R = any>(url: string, data?: T): Promise<AxiosResponse<R>> => {
+    if (isExpiredCookie() === true) {
+      forceLogout();
+      return Promise.reject({ data: { error: { message: '쿠키가 만료되었습니다.' } } });
+    }
+    return await APIFunction(url, data);
+  };
 
-const authPostToVisitor = authAPIToVisitor(visitorAPIInstance.post);
+export const authPostToVisitor = authAPIToVisitor(visitorAPIInstance.post);
+export const authGetToVisitor = authAPIToVisitor(visitorAPIInstance.get);
+export const authPutToVisitor = authAPIToVisitor(visitorAPIInstance.put);
+export const authDeleteToVisitor = authAPIToVisitor(visitorAPIInstance.delete);
+export const authPatchToVisitor = authAPIToVisitor(visitorAPIInstance.patch);
 
-const authGetToVisitor = authAPIToVisitor(visitorAPIInstance.get);
-
-const authPutToVisitor = authAPIToVisitor(visitorAPIInstance.put);
-
-const authDeleteToVisitor = authAPIToVisitor(visitorAPIInstance.delete);
-
-const getAllReserves = (date) => {
+const getAllReserves = (date: Date) => {
   const data = { date };
   return authPostToVisitor(makeAPIPath('/info/reserve/date'), data);
 };
 
-const updateVisitorStatus = (id, status) => {
+const updateVisitorStatus = (id: string, status: string) => {
   const data = { visitor: { id, status } };
   return authPutToVisitor(makeAPIPath('/info/visitor/status'), data);
 };
 
-const addStaff = (name, phone, department) => {
+const addStaff = (name: string, phone: string, department: string) => {
   const data = { name, phone, department };
   return authPostToVisitor(makeAPIPath('/admin/staff/save'), data);
 };
 
-const deleteStaff = (staffId) => {
+const deleteStaff = (staffId: string) => {
   const data = { staffId: Number.parseInt(staffId) };
   return authDeleteToVisitor(makeAPIPath('/admin/staff'), { data });
 };
@@ -45,7 +46,7 @@ const getStaffs = () => {
   return authGetToVisitor(makeAPIPath('/admin/staff'));
 };
 
-const checkStaff = (staffName) => {
+const checkStaff = (staffName: string) => {
   const data = { staffName };
   return authPostToVisitor(makeAPIPath('/staff'), data);
 };
@@ -67,9 +68,20 @@ const criteria = {
   },
 };
 
+type RequestDataType = {
+  start: string;
+  end: string;
+  pagination: {
+    page: number;
+    size: number;
+  };
+  place?: string;
+  searchCriteria?: { criteria?: string; value?: string }[];
+};
+
 const getVisitorLogs = ({
-  start = new moment().format('YYYY-MM-DD'),
-  end = new moment().format('YYYY-MM-DD'),
+  start = moment().format('YYYY-MM-DD'),
+  end = moment().format('YYYY-MM-DD'),
   place = null,
   name = null,
   phone = null,
@@ -81,15 +93,15 @@ const getVisitorLogs = ({
   page = INIT_PAGE,
   size = INIT_SIZE,
 }) => {
-  const searchCriteria = [];
-  const data = { start, end, pagination: { page, size } };
+  const searchCriteria: { criteria?: string; value?: string }[] = [];
+  const data: RequestDataType = { start, end, pagination: { page, size } };
 
   if (place !== null) data.place = place;
   if (name !== null) searchCriteria.push({ criteria: criteria.visitor.name, value: name });
   if (phone !== null) searchCriteria.push({ criteria: criteria.visitor.phone, value: phone });
   if (status !== null) searchCriteria.push({ criteria: criteria.visitor.status, value: status });
   if (oraganization !== null)
-    searchCriteria.push({ criteria: criteria.staff.oraganization, value: oraganization });
+    searchCriteria.push({ criteria: criteria.visitor.oraganization, value: oraganization });
   if (staffDepartment !== null)
     searchCriteria.push({ criteria: criteria.staff.department, value: staffDepartment });
   if (staffName !== null) searchCriteria.push({ criteria: criteria.staff.name, value: staffName });

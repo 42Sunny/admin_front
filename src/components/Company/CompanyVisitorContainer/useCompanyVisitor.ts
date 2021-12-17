@@ -1,27 +1,37 @@
+import { exitCompanyVisitor } from 'API/Visitor/exitCompanyVisitor';
+import { getCompanyVisitor } from 'API/Visitor/getCompanyVisitor';
 import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/configureStore';
-import { CompanyVisitorType } from 'redux/modules/companyVisitor';
+import { CompanyVisitorResponseType, setCompanyVisitorAction } from 'redux/modules/companyVisitor';
 import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 
-export type CompanyVisitorDataType = {
+export type CompanyVisitorObjType = {
   checkinDate: string;
   checkinTime: string;
   checkoutTime: string | JSX.Element;
   visitorName: string;
   companyName: string;
+  place: string;
 };
 
-type UseCompanyVisitorArgTypes = {
+type ArgTypes = {
   startDate: string;
   endDate: string;
 };
 
-const useCompanyVisitor = ({ startDate, endDate }: UseCompanyVisitorArgTypes) => {
+const argForGetAllData = (startDate: string, endDate: string) => ({
+  start: new Date(startDate),
+  end: new Date(endDate),
+  pagination: { size: 1000, page: 0 },
+});
+
+const useCompanyVisitor = ({ startDate, endDate }: ArgTypes) => {
   const companyVisitor = useSelector(({ companyVisitor }: RootState) => companyVisitor);
+  const dispatch = useDispatch();
   const [rawTableData, setRawTableData] = useState<CompanyTableDataType[][]>([]);
   const [tableData, setTableData] = useState<CompanyTableDataType[][]>([]);
   const {
@@ -33,16 +43,70 @@ const useCompanyVisitor = ({ startDate, endDate }: UseCompanyVisitorArgTypes) =>
     setPage,
   } = usePagination();
 
+  const handleExitButtonClick = useCallback(
+    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      if (window.confirm('퇴실 처리하시겠습니까?')) {
+        exitCompanyVisitor(event.currentTarget.id);
+        const res = await getCompanyVisitor(argForGetAllData(startDate, endDate));
+        dispatch(setCompanyVisitorAction(res.data));
+      }
+    },
+    [dispatch, endDate, startDate],
+  );
+
+  const createExitButton = useCallback(
+    (id: number) =>
+      React.createElement(IconButton, {
+        id: id.toString(),
+        children: '퇴실',
+        icon: 'logout',
+        onClick: handleExitButtonClick,
+      }),
+    [handleExitButtonClick],
+  );
+
+  const dataToTableData = useCallback(
+    (visitor: CompanyVisitorResponseType): CompanyVisitorObjType => ({
+      place: visitor.place,
+      checkinDate: moment(visitor.checkinTime).format('YYYY-MM-DD'),
+      checkinTime: moment(visitor.checkinTime).format('HH:mm'),
+      checkoutTime: visitor.checkoutTime
+        ? moment(visitor.checkoutTime).format('HH:mm')
+        : createExitButton(visitor.id),
+      visitorName: visitor.visitorName,
+      companyName: visitor.companyName,
+    }),
+    [createExitButton],
+  );
+
+  const ObjToArray = (visitor: CompanyVisitorObjType) => [
+    visitor.place,
+    visitor.checkinDate,
+    visitor.companyName,
+    visitor.visitorName,
+    visitor.checkinTime,
+    visitor.checkoutTime,
+  ];
+
   useEffect(() => {
-    const tableData = companyVisitor.map((elem) => TableDataToArray(dataToTableData(elem)));
+    const tableData = companyVisitor.map((elem) => ObjToArray(dataToTableData(elem)));
     setPage(1);
     setRawTableData(tableData);
     setPaginationLength(tableData.length);
-  }, [companyVisitor, setPage, setPaginationLength]);
+  }, [companyVisitor, dataToTableData, setPage, setPaginationLength]);
 
   useEffect(() => {
     setTableData(rawTableData.slice(start - 1, end));
   }, [end, rawTableData, start]);
+
+  const updateCompanyVisitor = useCallback(async () => {
+    const res = await getCompanyVisitor(argForGetAllData(startDate, endDate));
+    dispatch(setCompanyVisitorAction(res.data));
+  }, [startDate, endDate, dispatch]);
+
+  useEffect(() => {
+    updateCompanyVisitor();
+  }, [updateCompanyVisitor]);
 
   return {
     tableData,
@@ -55,35 +119,6 @@ const useCompanyVisitor = ({ startDate, endDate }: UseCompanyVisitorArgTypes) =>
       clickDescription: () => setPage(0),
     },
   };
-};
-
-const dataToTableData = (visitor: CompanyVisitorType): CompanyVisitorDataType => ({
-  checkinDate: moment(visitor.checkinTime).format('YYYY-MM-DD'),
-  checkinTime: moment(visitor.checkinTime).format('HH:mm'),
-  checkoutTime: visitor.checkoutTime
-    ? moment(visitor.checkoutTime).format('HH:mm')
-    : React.createElement(IconButton, {
-        id: visitor.id.toString(),
-        children: '퇴실',
-        icon: 'logout',
-        onClick: handleDeleteButtonClick,
-      }),
-  visitorName: visitor.visitorName,
-  companyName: visitor.companyName,
-});
-
-const TableDataToArray = (visitor: CompanyVisitorDataType) => [
-  visitor.checkinDate,
-  visitor.companyName,
-  visitor.visitorName,
-  visitor.checkinTime,
-  visitor.checkoutTime,
-];
-
-const handleDeleteButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-  if (window.confirm('퇴실 처리하시겠습니까?')) {
-    // const id = event.currentTarget.id;
-  }
 };
 
 export default useCompanyVisitor;

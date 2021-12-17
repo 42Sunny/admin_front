@@ -30,7 +30,7 @@ const CompanyVisitorContainer = () => {
   const props = {
     header: <Header {...headerProps} />,
     tableProps: {
-      tableHead: ['방문 날짜', '업체 이름', '방문자 이름', '입실 시간', '퇴실 시간'],
+      tableHead: ['장소', '방문 날짜', '업체 이름', '방문자 이름', '입실 시간', '퇴실 시간'],
       tableData: tableData,
     },
     paginationProps: {
