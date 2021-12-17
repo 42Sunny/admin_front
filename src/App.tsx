@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { VisitorProviderWrapper } from 'contexts/VisitorContext';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { checkAdmin } from 'API/checkinApi';
+import { checkAdmin } from 'API/checkin';
 import Admin from 'layouts/Admin';
 import Login from 'components/Login/Login';
 

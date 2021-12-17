@@ -7,7 +7,7 @@ import CardBody from 'components/Card/CardBody';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { forceCheckOut } from 'API/checkinApi';
+import { forceCheckOut } from 'API/checkin';
 import moment from 'moment';
 import useCriteria from 'hooks/useCriteria';
 import useCheckInLogs from 'hooks/useCheckInLogs';

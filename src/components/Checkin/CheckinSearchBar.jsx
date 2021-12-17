@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { Button } from '@material-ui/core';
 import { debounce } from 'lodash';
 
-import { getCluster, getStudent, getCard, getCheckIn } from 'API/checkinApi';
+import { getCluster, getStudent, getCard, getCheckIn } from 'API/checkin';
 import useCriteria from 'hooks/useCriteria';
 import useCheckInLogs from 'hooks/useCheckInLogs';
 import useStyles from './CheckinSearchBarStyles';
