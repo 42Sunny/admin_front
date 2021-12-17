@@ -1,6 +1,6 @@
 import { Tab, Tabs } from '@material-ui/core';
 import { useStyles } from './ClusterSelectorStyles';
-import useCriteria from 'hooks/useCriteria';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import moment from 'moment';
 import React from 'react';
 

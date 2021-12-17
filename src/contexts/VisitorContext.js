@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import { getVisitorLogs } from 'API/visitorApi';
-import useCriteria from 'hooks/useCriteria';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import { getClusterName } from 'utils/getCluster';
 
 const WS_URL = `${process.env.REACT_APP_VISITOR_API_URL}/ws`;

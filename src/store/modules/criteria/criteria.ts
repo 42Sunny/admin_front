@@ -35,44 +35,58 @@ const initialState = {
   maxGaepo: 0,
 };
 
+export type CriteriaType = {
+  clusterNumber: string;
+  intraId: string;
+  cardNum: string;
+  currentPage: number;
+  lastPage: number;
+  listSize: number;
+  logType: number;
+  maxSeocho: number;
+  maxGaepo: number;
+};
+
+type PayloadType = number | string;
+
 // reducer
-export default handleActions(
+export default handleActions<CriteriaType, PayloadType>(
   {
     [SET_CLUSTER_NUMBER]: (state, action) => ({
       ...state,
-      clusterNumber: action.payload,
+      clusterNumber: action.payload as string,
     }),
     [SET_INTRA_ID]: (state, action) => ({
       ...state,
-      intraId: action.payload,
+      intraId: action.payload as string,
     }),
     [SET_CARD_NUM]: (state, action) => ({
       ...state,
-      cardNum: action.payload,
+      cardNum: action.payload as string,
     }),
     [SET_CURRENT_PAGE]: (state, action) => ({
       ...state,
-      currentPage: action.payload,
+      currentPage: action.payload as number,
     }),
     [SET_LAST_PAGE]: (state, action) => ({
       ...state,
-      lastPage: action.payload,
+      lastPage: action.payload as number,
     }),
     [SET_LIST_SIZE]: (state, action) => ({
       ...state,
-      listSize: action.payload,
+      listSize: action.payload as number,
     }),
     [SET_LOG_TYPE]: (state, action) => ({
       ...state,
-      logType: action.payload,
+      logType: action.payload as number,
     }),
     [SET_MAX_GAEPO]: (state, action) => ({
       ...state,
-      maxGaepo: action.payload,
+      maxGaepo: action.payload as number,
     }),
     [SET_MAX_SEOCHO]: (state, action) => ({
       ...state,
-      maxSeocho: action.payload,
+      maxSeocho: action.payload as number,
     }),
   },
   initialState,

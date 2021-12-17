@@ -5,7 +5,7 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 import { reqUsingCard, reqMaxCapacity } from 'API/checkin';
-import useCriteria from 'hooks/useCriteria';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
 
 const useStyles = makeStyles(styles);
 

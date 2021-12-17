@@ -9,8 +9,8 @@ import { Button } from '@material-ui/core';
 import { debounce } from 'lodash';
 
 import { getCluster, getStudent, getCard, getCheckIn } from 'API/checkin';
-import useCriteria from 'hooks/useCriteria';
-import useCheckInLogs from 'hooks/useCheckInLogs';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
+import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import useStyles from './CheckinSearchBarStyles';
 
 const CheckinSearchBar = () => {

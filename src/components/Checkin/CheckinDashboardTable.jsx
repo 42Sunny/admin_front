@@ -5,8 +5,8 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import { forceCheckOut } from 'API/checkin';
 import moment from 'moment';
-import useCriteria from 'hooks/useCriteria';
-import useCheckInLogs from 'hooks/useCheckInLogs';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
+import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import { useStyles } from './CheckinDashBoardTableStyles';
 import { getClusterNumber } from 'utils/getCluster';
 

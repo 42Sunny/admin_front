@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCheckInLogsAction } from '../redux/modules/checkInLogs';
+import { RootState } from 'store/configureStore';
+import { CheckinLogType, setCheckInLogsAction } from './checkInLogs';
 
 const useCheckInLogs = () => {
   const dispatch = useDispatch();
-  const checkInLogs = useSelector(({ checkInLogs }) => checkInLogs);
 
   return {
-    checkInLogs,
+    checkInLogs: useSelector<RootState, CheckinLogType[]>(({ checkInLogs }) => checkInLogs),
     setCheckInLogs: useCallback(
       (param) => {
         dispatch(setCheckInLogsAction(param));

@@ -9,8 +9,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { forceCheckOut } from 'API/checkin';
 import moment from 'moment';
-import useCriteria from 'hooks/useCriteria';
-import useCheckInLogs from 'hooks/useCheckInLogs';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
+import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import { useStyles } from './CheckinLogTableStyles';
 import { getClusterName } from 'utils/getCluster';
 

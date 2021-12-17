@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from 'components/CustomButtons/Button';
 
 import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
-import useLogin from 'hooks/useLogin';
+import useLogin from 'store/modules/login/useLoginStore';
 
 const useStyles = makeStyles(styles);
 

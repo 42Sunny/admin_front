@@ -1,70 +1,74 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLastPageAction } from 'redux/modules/criteria';
-import { setLogTypeAction } from 'redux/modules/criteria';
-import { setMaxSeocho } from 'redux/modules/criteria';
-import { setMaxGaepo } from 'redux/modules/criteria';
-import { setListSizeAction } from 'redux/modules/criteria';
-import { setCurrentPageAction } from 'redux/modules/criteria';
-import { setCardNumAction } from 'redux/modules/criteria';
-import { setIntraIDAction } from 'redux/modules/criteria';
-import { setClusterNumberAction } from 'redux/modules/criteria';
+import { RootState } from 'store/configureStore';
+import {
+  CriteriaType,
+  setLastPageAction,
+  setLogTypeAction,
+  setMaxSeocho,
+  setMaxGaepo,
+  setListSizeAction,
+  setCurrentPageAction,
+  setCardNumAction,
+  setIntraIDAction,
+  setClusterNumberAction,
+} from 'store/modules/criteria/criteria';
 
 const useCriteria = () => {
   const dispatch = useDispatch();
 
   return {
-    criteria: useSelector(({ criteria }) => criteria),
+    criteria: useSelector<RootState, CriteriaType>(({ criteria }) => criteria),
     setClusterNumber: useCallback(
-      (param) => {
+      (param: string) => {
         dispatch(setClusterNumberAction(param));
       },
       [dispatch],
     ),
     setIntraId: useCallback(
-      (param) => {
+      (param: string) => {
         dispatch(setIntraIDAction(param));
       },
       [dispatch],
     ),
     setCardNum: useCallback(
-      (param) => {
+      (param: string) => {
         dispatch(setCardNumAction(param));
       },
       [dispatch],
     ),
     setCurrentPage: useCallback(
-      (param) => {
+      (param: number) => {
         dispatch(setCurrentPageAction(param));
       },
       [dispatch],
     ),
     setLastPage: useCallback(
-      (param) => {
+      (param: number) => {
         dispatch(setLastPageAction(param));
       },
       [dispatch],
     ),
     setListSize: useCallback(
-      (param) => {
+      (param: number) => {
         dispatch(setListSizeAction(param));
       },
       [dispatch],
     ),
     setLogType: useCallback(
-      (param) => {
+      (param: number) => {
         dispatch(setLogTypeAction(param));
       },
       [dispatch],
     ),
     setMaxGaepo: useCallback(
-      (param) => {
+      (param: number) => {
         dispatch(setMaxGaepo(param));
       },
       [dispatch],
     ),
     setMaxSeocho: useCallback(
-      (param) => {
+      (param: number) => {
         dispatch(setMaxSeocho(param));
       },
       [dispatch],

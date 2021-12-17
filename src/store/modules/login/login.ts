@@ -11,11 +11,13 @@ export const logoutAction = createAction(LOGOUT);
 // initalState
 const initialState = true;
 
+export type LoginType = boolean;
+
 // reducer
 export default handleActions(
   {
-    [LOGIN]: (state, action) => true,
-    [LOGOUT]: (state, action) => false,
+    [LOGIN]: () => true,
+    [LOGOUT]: () => false,
   },
   initialState,
 );

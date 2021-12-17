@@ -8,8 +8,8 @@ import CheckinLogTable from 'components/Checkin/CheckinLogTable';
 
 import 'assets/css/AdminPage.css';
 import GridContainer from 'components/Grid/GridContainer';
-import useCriteria from 'hooks/useCriteria';
-import useCheckInLogs from 'hooks/useCheckInLogs';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
+import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import { useStyles } from './CheckInManagementStyles';
 import { updateCheckInLogs } from 'utils/updateCheckInLogs';
 
