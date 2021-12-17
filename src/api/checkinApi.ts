@@ -18,23 +18,23 @@ export const checkAdmin = async () => {
   return await instance.get(`/user/status`);
 };
 
-export const forceCheckOut = async (userId) => {
+export const forceCheckOut = async (userId: any) => {
   return await instance.post(`/user/forceCheckOut/${userId}`);
 };
 
-export const getCluster = async (ClusterNumber, page, listSize) => {
+export const getCluster = async (ClusterNumber: '0' | '1', page: any, listSize: any) => {
   return await instance.get(`/log/${CLUSTER[ClusterNumber]}?page=${page}&listSize=${listSize}`);
 };
 
-export const getStudent = async (login, page, listSize) => {
+export const getStudent = async (login: any, page: any, listSize: any) => {
   return await instance.get(`/log/user/${login}?page=${page}&listSize=${listSize}`);
 };
 
-export const getCard = async (cardId, page, listSize) => {
+export const getCard = async (cardId: any, page: any, listSize: any) => {
   return await instance.get(`/log/card/${cardId}?page=${page}&listSize=${listSize}`);
 };
 
-export const getCheckIn = async (ClusterNumber, page) => {
+export const getCheckIn = async (ClusterNumber: any, page: any) => {
   return await instance.get(`/log/checkIn/${ClusterNumber}?page=${page}&listSize=${ALL_CARD_CNT}`);
 };
 
@@ -42,7 +42,7 @@ export const getConfig = async () => {
   return await instance.get(`/config`);
 };
 
-export const setConfig = async (capacity) => {
+export const setConfig = async (capacity: any) => {
   return await instance.put(`/config`, capacity);
 };
 
