@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import GridContainer from 'components/Grid/GridContainer.js';
+import GridContainer from 'components/Grid/GridContainer';
 import { useContext } from 'react';
 import { VisitorContext } from 'contexts/VisitorContext';
 import CheckinDashboardTable from 'components/Checkin/CheckinDashboardTable';

@@ -1,8 +1,8 @@
-import GridItem from 'components/Grid/GridItem.js';
-import Table from 'components/Table/Table.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import CardBody from 'components/Card/CardBody.js';
+import GridItem from 'components/Grid/GridItem';
+import Table from 'components/Table/Table';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 import { forceCheckOut } from 'API/checkinApi';
 import moment from 'moment';
 import useCriteria from 'hooks/useCriteria';

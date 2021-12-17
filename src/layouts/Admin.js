@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Navbar from 'components/Navbars/Navbar.js';
-import Footer from 'components/Footer/Footer.js';
-import Sidebar from 'components/Sidebar/Sidebar.js';
-import routes from 'routes.js';
-import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
+import Navbar from 'components/Navbars/Navbar';
+import Footer from 'components/Footer/Footer';
+import Sidebar from 'components/Sidebar/Sidebar';
+import routes from 'routes';
+import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle';
 import bgImage from 'assets/img/sidebar-2.jpg';
 import logo from 'assets/img/bi_img01.png';
 

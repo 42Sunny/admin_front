@@ -10,15 +10,15 @@ import Hidden from '@material-ui/core/Hidden';
 // @material-ui/icons
 import Menu from '@material-ui/icons/Menu';
 // core components
-import AdminNavbarLinks from './AdminNavbarLinks.js';
-import RTLNavbarLinks from './RTLNavbarLinks.js';
-import Button from 'components/CustomButtons/Button.js';
+import AdminNavbarLinks from './AdminNavbarLinks';
+import RTLNavbarLinks from './RTLNavbarLinks';
+import Button from 'components/CustomButtons/Button';
 
 //hooks
 import { useRouteName } from 'hooks';
 
-import styles from 'assets/jss/material-dashboard-react/components/headerStyle.js';
-import { checkAdmin } from 'API/checkinApi.js';
+import styles from 'assets/jss/material-dashboard-react/components/headerStyle';
+import { checkAdmin } from 'API/checkinApi';
 
 const useStyles = makeStyles(styles);
 

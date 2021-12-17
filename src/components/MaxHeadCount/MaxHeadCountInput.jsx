@@ -1,10 +1,10 @@
 import React from 'react';
-import GridItem from 'components/Grid/GridItem.js';
-import Card from 'components/Card/Card.js';
-import CardBody from 'components/Card/CardBody.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import RegularButton from 'components/CustomButtons/Button.js';
-import { setConfig } from 'API/checkinApi.js';
+import GridItem from 'components/Grid/GridItem';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
+import CardHeader from 'components/Card/CardHeader';
+import RegularButton from 'components/CustomButtons/Button';
+import { setConfig } from 'API/checkinApi';
 import { useStyles } from './maxHeadCountInputStyle';
 
 const CONFIRM_MESSAGE = '최대 입장 인원 값을 변경하시겠습니까?';

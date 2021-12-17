@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import GridItem from 'components/Grid/GridItem.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import GridItem from 'components/Grid/GridItem';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 import { reqUsingCard, reqMaxCapacity } from 'API/checkinApi';
 import useCriteria from 'hooks/useCriteria';
 
