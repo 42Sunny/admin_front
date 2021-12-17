@@ -1,5 +1,5 @@
 import { Icon, Modal } from '@material-ui/core';
-import { addStaff } from 'api/visitorApi';
+import { addStaff } from 'API/visitorApi';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';

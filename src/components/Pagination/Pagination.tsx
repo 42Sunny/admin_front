@@ -1,7 +1,23 @@
 import React from 'react';
 import { useStyles } from './PaginationStyles';
 
-const Pagination = ({ paginationLength, start, end, decrease, increase, clickDescription }) => {
+type PropTypes = {
+  paginationLength: number;
+  start: number;
+  end: number;
+  decrease?: React.MouseEventHandler<HTMLButtonElement>;
+  increase?: React.MouseEventHandler<HTMLButtonElement>;
+  clickDescription?: React.MouseEventHandler<HTMLButtonElement>;
+};
+
+const Pagination = ({
+  paginationLength,
+  start,
+  end,
+  decrease,
+  increase,
+  clickDescription,
+}: PropTypes) => {
   const classes = useStyles();
 
   return (

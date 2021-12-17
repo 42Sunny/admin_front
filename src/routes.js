@@ -6,6 +6,8 @@ import DashboardPage from 'views/Dashboard/Dashboard';
 import VisitorManagement from 'views/VisitorManagement/VisitorManagementContainer';
 import CheckInManagement from 'views/CheckInManagement/CheckInManagement';
 import Settings from 'views/Settings/Settings';
+import { Business } from '@material-ui/icons';
+import CompanyManagement from 'views/CompanyManagement/CompanyManagement';
 
 const dashboardRoutes = [
   {
@@ -27,6 +29,13 @@ const dashboardRoutes = [
     name: '방문자 출입 관리',
     icon: Person,
     component: VisitorManagement,
+    layout: '',
+  },
+  {
+    path: '/company/management',
+    name: '업체 출입 관리',
+    icon: Business,
+    component: CompanyManagement,
     layout: '',
   },
   {

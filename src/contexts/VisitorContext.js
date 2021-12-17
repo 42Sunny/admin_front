@@ -4,7 +4,7 @@ import { createContext, useCallback } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { SnackbarProvider, useSnackbar } from 'notistack';
-import { getVisitorLogs } from 'api/visitorApi';
+import { getVisitorLogs } from 'API/visitorApi';
 import useCriteria from 'hooks/useCriteria';
 import { getClusterName } from 'utils/getCluster';
 

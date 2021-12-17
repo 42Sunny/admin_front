@@ -1,5 +1,5 @@
 import { Icon } from '@material-ui/core';
-import { deleteStaff } from 'api/visitorApi';
+import { deleteStaff } from 'API/visitorApi';
 import React from 'react';
 import { useStyles } from './DeleteStaffButtonStyles';
 

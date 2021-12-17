@@ -1,4 +1,4 @@
-import { getVisitorLogs } from 'api/visitorApi';
+import { getVisitorLogs } from 'API/visitorApi';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
 import moment from 'moment';
 import { createContext, useEffect, useState, useCallback, useMemo } from 'react';
@@ -71,7 +71,7 @@ const VisitorManagementProvider = ({ children }) => {
   const [page, setPage] = useState(0);
   const [lastPage, setLastPage] = useState(0);
 
-  const updateAllData = useCallback(async (startDate, { endDate, place }) => {
+  const updateAllData = useCallback(async ({ startDate, endDate, place }) => {
     const allData = await updateData(setAllData, {
       startDate,
       endDate,
@@ -87,30 +87,34 @@ const VisitorManagementProvider = ({ children }) => {
     });
   }, []);
 
-  const lazyGetData = useMemo(() => debounce((setData, arg) => updateData(setData, arg), 500), []);
-
-  const lazyGetAllData = useMemo(
-    () => debounce((startDate, arg) => updateAllData(startDate, arg), 500),
+  const lazyGetData = useMemo(
+    () =>
+      debounce(
+        (setData, dataArg, dataAllArg) =>
+          Promise.all([updateData(setData, dataArg), updateAllData(dataAllArg)]),
+        500,
+      ),
     [updateAllData],
   );
 
   useEffect(
     () =>
-      lazyGetData(setVisitData, {
-        endDate,
-        page,
-        place,
-        searchOption,
-        searchValue,
-        startDate,
-        setLastPage,
-      }),
+      lazyGetData(
+        setVisitData,
+        {
+          endDate,
+          page,
+          place,
+          searchOption,
+          searchValue,
+          startDate,
+          setLastPage,
+        },
+        { startDate, endDate, place },
+      ),
     [endDate, lazyGetData, page, place, searchOption, searchValue, startDate],
   );
-  useEffect(
-    () => lazyGetAllData(startDate, { endDate, place }),
-    [endDate, lazyGetAllData, place, startDate, updateAllData],
-  );
+
   useEffect(() => setTableData(makeTableData(visitData)), [visitData]);
   useEffect(() => setPage(0), [startDate, endDate, searchValue, searchOption]);
 
@@ -157,7 +161,6 @@ const VisitorManagementProvider = ({ children }) => {
             startDate,
             setLastPage,
           });
-          lazyGetAllData(startDate, { endDate, place });
         },
       }}
     >
@@ -170,33 +173,24 @@ const updateData = async (
   setData,
   { endDate, page, place, searchOption, searchValue, startDate, size, setLastPage },
 ) => {
-  const data = { start: startDate, end: endDate, page, size };
+  const criteria = { start: startDate, end: endDate, page, size };
 
   if (searchValue !== '') {
-    if (searchOption === SEARCH_OPTION_ORGANIZATION.value) data['organization'] = searchValue;
-    if (searchOption === SEARCH_OPTION_STAFF_NAME.value) data['staffName'] = searchValue;
-    if (searchOption === SEARCH_OPTION_STATUS.value) data['status'] = searchValue;
-    if (searchOption === SEARCH_OPTION_PHONE.value) data['phone'] = searchValue;
-    if (searchOption === SEARCH_OPTION_NAME.value) data['name'] = searchValue;
+    if (searchOption === SEARCH_OPTION_ORGANIZATION.value) criteria['organization'] = searchValue;
+    if (searchOption === SEARCH_OPTION_STAFF_NAME.value) criteria['staffName'] = searchValue;
+    if (searchOption === SEARCH_OPTION_STATUS.value) criteria['status'] = searchValue;
+    if (searchOption === SEARCH_OPTION_PHONE.value) criteria['phone'] = searchValue;
+    if (searchOption === SEARCH_OPTION_NAME.value) criteria['name'] = searchValue;
   }
-  if (place !== PLACE_ALL.value) data['place'] = place;
-  if (size) data['size'] = Number.parseInt(size, 10);
+  if (place !== PLACE_ALL.value) criteria['place'] = place;
+  if (size) criteria['size'] = Number.parseInt(size, 10);
 
-  const response = await getVisitorLogs(data);
-  const {
-    data: { error },
-  } = response;
-  if (!error) {
-    const {
-      data: { checkInLogs, lastPage },
-    } = response;
-    setData(checkInLogs);
-    if (setLastPage) setLastPage(lastPage);
-    return checkInLogs;
-  } else {
-    //TODO: ERROR 처리
-    return [];
-  }
+  const { data, error } = await getVisitorLogs(criteria);
+  if (error !== undefined) return [];
+  const { checkInLogs, lastPage } = data;
+  setData(checkInLogs);
+  if (setLastPage) setLastPage(lastPage);
+  return checkInLogs;
 };
 
 const makeTableData = (visitData) => {

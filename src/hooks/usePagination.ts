@@ -1,6 +1,12 @@
-const { useState, useMemo, useCallback } = require('react');
+import { useState, useMemo, useCallback } from 'react';
 
-const usePagination = (args) => {
+type ArgsType = {
+  page?: number;
+  length?: number;
+  size?: number;
+};
+
+const usePagination = (args: ArgsType = {}) => {
   const [page, setPage] = useState(args?.page ?? 1);
   const [length, setLength] = useState(args?.length ?? 0);
   const size = args?.size ?? 10;

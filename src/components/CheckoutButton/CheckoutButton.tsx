@@ -1,4 +1,4 @@
-import { updateVisitorStatus } from 'api/visitorApi';
+import { updateVisitorStatus } from 'API/visitorApi';
 import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
 import React, { useContext } from 'react';
 import useStyles from './CheckoutButtonStyles';
@@ -13,7 +13,7 @@ const CheckoutButton = ({ visitorId, status }: PropTypes) => {
   const { reloadData } = useContext(VisitorManagementContext);
 
   const handleClick = async () => {
-    if (window.confirm('퇴실 시키겠습니까?')) {
+    if (window.confirm('퇴실 처리하시겠습니까?')) {
       await updateVisitorStatus(visitorId, '퇴실');
       reloadData();
     }
