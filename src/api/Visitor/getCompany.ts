@@ -1,3 +1,3 @@
-import { authGetToVisitor, makeAPIPath } from 'API/visitorApi';
+import { getToVisitor, makeAPIPath } from 'API/visitorApi';
 
-export const getCompany = () => authGetToVisitor(makeAPIPath('/company'), {});
+export const getCompany = () => getToVisitor(makeAPIPath('/company'), {});

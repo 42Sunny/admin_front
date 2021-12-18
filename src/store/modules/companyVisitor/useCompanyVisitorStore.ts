@@ -1,16 +1,14 @@
+import { GetCompanyVisitorResponseType } from 'API/Visitor/getCompanyVisitor';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/configureStore';
-import {
-  CompanyVisitorResponseType,
-  setCompanyVisitorAction,
-} from './companyVisitor';
+import { setCompanyVisitorAction } from './companyVisitor';
 
 const useCompanyVisitorStore = () => {
   const dispatch = useDispatch();
 
   return {
-    companyVisitor: useSelector<RootState, CompanyVisitorResponseType[]>(
+    companyVisitor: useSelector<RootState, GetCompanyVisitorResponseType[]>(
       ({ companyVisitor }) => companyVisitor,
     ),
     setCompanyVisitor: useCallback(

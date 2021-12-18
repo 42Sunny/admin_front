@@ -1,4 +1,4 @@
-import { authPostToVisitor, makeAPIPath } from 'API/visitorApi';
+import { postToVisitor, makeAPIPath } from 'API/visitorApi';
 
 export type GetCompanyVisitorArgTypes = {
   start: Date;
@@ -8,5 +8,17 @@ export type GetCompanyVisitorArgTypes = {
     size: number;
   };
 };
+
+export type GetCompanyVisitorResponseType = {
+  id: number;
+  companyName: string;
+  name: string;
+  place: string;
+  checkinTime: Date;
+  checkoutTime: Date | null;
+};
 export const getCompanyVisitor = (arg: GetCompanyVisitorArgTypes) =>
-  authPostToVisitor<GetCompanyVisitorArgTypes>(makeAPIPath('/company/visitor/date'), arg);
+  postToVisitor<GetCompanyVisitorArgTypes, GetCompanyVisitorResponseType>(
+    makeAPIPath('/company/visitor/date'),
+    arg,
+  );

@@ -1,10 +1,9 @@
 import { exitCompanyVisitor } from 'API/Visitor/exitCompanyVisitor';
-import { getCompanyVisitor } from 'API/Visitor/getCompanyVisitor';
+import { getCompanyVisitor, GetCompanyVisitorResponseType } from 'API/Visitor/getCompanyVisitor';
 import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
-import { CompanyVisitorResponseType } from 'store/modules/companyVisitor/companyVisitor';
 import useCompanyVisitorStore from 'store/modules/companyVisitor/useCompanyVisitorStore';
 import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 
@@ -89,7 +88,7 @@ const createExitButton = (id: number) =>
     onClick: handleExitButtonClick,
   });
 
-const dataToTableData = (visitor: CompanyVisitorResponseType): CompanyVisitorObjType => ({
+const dataToTableData = (visitor: GetCompanyVisitorResponseType): CompanyVisitorObjType => ({
   place: visitor.place,
   checkinDate: moment(visitor.checkinTime).format('YYYY-MM-DD'),
   checkinTime: moment(visitor.checkinTime).format('HH:mm'),

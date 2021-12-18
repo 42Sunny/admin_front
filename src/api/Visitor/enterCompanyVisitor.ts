@@ -1,4 +1,4 @@
-import { authPostToVisitor, makeAPIPath } from 'API/visitorApi';
+import { postToVisitor, makeAPIPath } from 'API/visitorApi';
 
 type ArgTypes = {
   place: string;
@@ -6,4 +6,4 @@ type ArgTypes = {
   visitorName: string;
 };
 export const enterCompanyVisitor = (arg: ArgTypes) =>
-  authPostToVisitor(makeAPIPath('/company/visitor'), arg);
+  postToVisitor(makeAPIPath('/company/visitor'), arg);

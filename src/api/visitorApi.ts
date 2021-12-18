@@ -1,54 +1,43 @@
 import moment from 'moment';
-import forceLogout from 'utils/forceLogout';
-import { isExpiredCookie } from 'utils/isExpiredCookie';
 import { visitorAPIInstance } from 'API/APIInstance';
-import { AxiosResponse } from 'axios';
 const VERSION_PATH = '/v1';
 export const makeAPIPath = (path: string) => `${VERSION_PATH}${path}`;
 
-const authAPIToVisitor =
-  (APIFunction: (url: string, data?: any) => Promise<AxiosResponse<any>>) =>
-  async <T = any, R = any>(url: string, data?: T): Promise<AxiosResponse<R>> => {
-    if (isExpiredCookie() === true) {
-      forceLogout();
-      return Promise.reject({ data: { error: { message: '쿠키가 만료되었습니다.' } } });
-    }
-    return await APIFunction(url, data);
-  };
-
-export const authPostToVisitor = authAPIToVisitor(visitorAPIInstance.post);
-export const authGetToVisitor = authAPIToVisitor(visitorAPIInstance.get);
-export const authPutToVisitor = authAPIToVisitor(visitorAPIInstance.put);
-export const authDeleteToVisitor = authAPIToVisitor(visitorAPIInstance.delete);
-export const authPatchToVisitor = authAPIToVisitor(visitorAPIInstance.patch);
+export const postToVisitor = <T, R>(url: string, data?: T) => visitorAPIInstance.post<R>(url, data);
+export const getToVisitor = <T, R>(url: string, data?: T) => visitorAPIInstance.get<R>(url, data);
+export const putToVisitor = <T, R>(url: string, data?: T) => visitorAPIInstance.put<R>(url, data);
+export const deleteToVisitor = <T, R>(url: string, data?: T) =>
+  visitorAPIInstance.delete<R>(url, data);
+export const patchToVisitor = <T, R>(url: string, data?: T) =>
+  visitorAPIInstance.patch<R>(url, data);
 
 const getAllReserves = (date: Date) => {
   const data = { date };
-  return authPostToVisitor(makeAPIPath('/info/reserve/date'), data);
+  return postToVisitor(makeAPIPath('/info/reserve/date'), data);
 };
 
 const updateVisitorStatus = (id: string, status: string) => {
   const data = { visitor: { id, status } };
-  return authPutToVisitor(makeAPIPath('/info/visitor/status'), data);
+  return putToVisitor(makeAPIPath('/info/visitor/status'), data);
 };
 
 const addStaff = (name: string, phone: string, department: string) => {
   const data = { name, phone, department };
-  return authPostToVisitor(makeAPIPath('/admin/staff/save'), data);
+  return postToVisitor(makeAPIPath('/admin/staff/save'), data);
 };
 
 const deleteStaff = (staffId: string) => {
   const data = { staffId: Number.parseInt(staffId) };
-  return authDeleteToVisitor(makeAPIPath('/admin/staff'), { data });
+  return deleteToVisitor(makeAPIPath('/admin/staff'), { data });
 };
 
 const getStaffs = () => {
-  return authGetToVisitor(makeAPIPath('/admin/staff'));
+  return getToVisitor(makeAPIPath('/admin/staff'));
 };
 
 const checkStaff = (staffName: string) => {
   const data = { staffName };
-  return authPostToVisitor(makeAPIPath('/staff'), data);
+  return postToVisitor(makeAPIPath('/staff'), data);
 };
 
 const INIT_PAGE = 0;
@@ -109,7 +98,7 @@ const getVisitorLogs = ({
     searchCriteria.push({ criteria: criteria.staff.phone, value: staffPhone });
   if (searchCriteria.length !== 0) data['searchCriteria'] = searchCriteria;
 
-  return authPostToVisitor(makeAPIPath('/info/log/date'), data);
+  return postToVisitor(makeAPIPath('/info/log/date'), data);
 };
 
 export {

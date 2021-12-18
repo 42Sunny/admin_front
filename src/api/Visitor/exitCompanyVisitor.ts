@@ -1,4 +1,4 @@
-import { authPatchToVisitor, makeAPIPath } from 'API/visitorApi';
+import { patchToVisitor, makeAPIPath } from 'API/visitorApi';
 
 export const exitCompanyVisitor = (visitorId: string) =>
-  authPatchToVisitor(makeAPIPath(`/company/visitor/out/${visitorId}`));
+  patchToVisitor(makeAPIPath(`/company/visitor/out/${visitorId}`));
