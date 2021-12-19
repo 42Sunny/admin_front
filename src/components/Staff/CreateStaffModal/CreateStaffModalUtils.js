@@ -1,4 +1,4 @@
-import { checkStaff } from 'API/visitorApi';
+import { checkStaff } from 'API/visitor/staff';
 
 export const DUPLICATE_NAME_ERROR_MESSAGE = '이미 사용중인 이름입니다.';
 export const INVALIDE_PHONE_ERROR_MESSAGE = '번호 형식이 올바르지 않습니다.';

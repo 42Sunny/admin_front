@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import GridItem from 'components/Grid/GridItem.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
-import { reqUsingCard, reqMaxCapacity } from 'API/checkinApi';
-import useCriteria from 'hooks/useCriteria';
+import GridItem from 'components/Grid/GridItem';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+// import { reqUsingCard, reqMaxCapacity } from 'API/checkin';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
+import { reqUsingCard } from 'API/checkin/user/reqUsingCard';
 
 const useStyles = makeStyles(styles);
 
@@ -32,22 +33,23 @@ export const CheckinHeadCount = ({ category, xs, sm, md }) => {
     }
   }, []);
 
-  const getMaxCapacity = useCallback(async () => {
-    try {
-      const { data } = await reqMaxCapacity();
-      setClusterMaxConf({
-        gaepo: data.gaepo,
-        seocho: data.seocho,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+  // const getMaxCapacity = useCallback(async () => {
+  //   try {
+  //     const { data } = await reqMaxCapacity();
+  //     setClusterMaxConf({
+  //       gaepo: data.gaepo,
+  //       seocho: data.seocho,
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }, []);
 
   const fetchData = useCallback(() => {
     getUsingCard();
-    getMaxCapacity();
-  }, [getUsingCard, getMaxCapacity]);
+    // getMaxCapacity();
+    // }, [getUsingCard, getMaxCapacity]);
+  }, [getUsingCard]);
 
   useEffect(() => {
     fetchData();

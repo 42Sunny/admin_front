@@ -1,3 +1,4 @@
+import React from 'react';
 import { Icon } from '@mui/material';
 import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
 import { SEARCH_OPTIONS } from './Define';

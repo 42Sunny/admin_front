@@ -1,14 +1,14 @@
 import React, { useEffect, useCallback } from 'react';
 import { VisitorProviderWrapper } from 'contexts/VisitorContext';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { checkAdmin } from './API/checkinApi';
 import Admin from 'layouts/Admin';
 import Login from 'components/Login/Login';
 
 import 'assets/css/material-dashboard-react.css?v=1.10.0';
 import 'assets/css/input.css';
-import useLogin from 'hooks/useLogin';
+import useLogin from 'store/modules/login/useLoginStore';
 import getCookieValue from 'utils/getCookieValue';
+import { checkAdmin } from 'API/checkin/user/checkAdmin';
 
 const App = () => {
   const { isLogin, login, logout } = useLogin();

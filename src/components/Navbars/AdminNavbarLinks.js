@@ -2,10 +2,10 @@ import React from 'react';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 // core components
-import Button from 'components/CustomButtons/Button.js';
+import Button from 'components/CustomButtons/Button';
 
-import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
-import useLogin from 'hooks/useLogin';
+import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
+import useLogin from 'store/modules/login/useLoginStore';
 
 const useStyles = makeStyles(styles);
 

@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { whiteColor, grayColor } from 'assets/jss/material-dashboard-react.js';
+import { whiteColor, grayColor } from 'assets/jss/material-dashboard-react';
 
 const styles = {
   title: {

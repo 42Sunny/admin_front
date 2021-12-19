@@ -1,3 +1,4 @@
+import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import logo from 'assets/img/bi_img01.png';
 

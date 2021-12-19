@@ -1,3 +1,4 @@
+import React from 'react';
 import VisitorManagementPlaceSelector from './VisitDataTablePlaceSelector';
 
 export const SEARCH_OPTION_NAME = { value: 'name', text: '이름' };

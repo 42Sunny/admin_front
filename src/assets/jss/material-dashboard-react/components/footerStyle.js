@@ -1,4 +1,4 @@
-import { defaultFont, primaryColor, grayColor } from 'assets/jss/material-dashboard-react.js';
+import { defaultFont, primaryColor, grayColor } from 'assets/jss/material-dashboard-react';
 
 const footerStyle = {
   footer: {

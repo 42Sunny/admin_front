@@ -1,4 +1,4 @@
-import { getVisitorLogs } from 'API/visitorApi';
+import React from 'react';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
 import moment from 'moment';
 import { createContext, useEffect, useState, useCallback, useMemo } from 'react';
@@ -15,6 +15,7 @@ import { debounce } from 'lodash';
 import VisitStatus from 'views/VisitorManagement/VisitStatus';
 import CheckoutButton from 'components/CheckoutButton/CheckoutButton';
 import CheckinButton from 'components/CheckinButton/CheckinButton';
+import { getVisitorLogs } from 'API/visitor/info';
 
 const VisitorManagementContext = createContext({
   visitData: [],

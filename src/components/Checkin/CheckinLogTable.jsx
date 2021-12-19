@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import GridItem from 'components/Grid/GridItem.js';
-import Table from 'components/Table/Table.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import CardBody from 'components/Card/CardBody.js';
+import GridItem from 'components/Grid/GridItem';
+import Table from 'components/Table/Table';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { forceCheckOut } from 'API/checkinApi';
 import moment from 'moment';
-import useCriteria from 'hooks/useCriteria';
-import useCheckInLogs from 'hooks/useCheckInLogs';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
+import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import { useStyles } from './CheckinLogTableStyles';
 import { getClusterName } from 'utils/getCluster';
+import { forceCheckOut } from 'API/checkin/user/forceCheckOut';
 
 const LOGTYPE = {
   0: '클러스터',

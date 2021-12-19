@@ -1,8 +1,8 @@
+import React from 'react';
 import CompanyInfoContainer from 'components/Company/CompanyInfoContainer/CompanyInfoContainer';
 import CompanyVisitorContainer from 'components/Company/CompanyVisitorContainer/CompanyVisitorContainer';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
-import React from 'react';
 
 const CompanyManagement = () => {
   return (

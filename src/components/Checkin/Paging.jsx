@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Pagination from '@mui/material/Pagination';
-import useCriteria from 'hooks/useCriteria';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
 
 const useStyles = makeStyles((theme) => ({
   root: {

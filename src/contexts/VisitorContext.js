@@ -1,14 +1,16 @@
+import React from 'react';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import { createContext, useCallback } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { SnackbarProvider, useSnackbar } from 'notistack';
-import { getVisitorLogs } from 'API/visitorApi';
-import useCriteria from 'hooks/useCriteria';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import { getClusterName } from 'utils/getCluster';
+import { getVisitorLogs } from 'API/visitor/info';
+import { env } from 'env/env';
 
-const WS_URL = `${process.env.REACT_APP_VISITOR_API_URL}/ws`;
+const WS_URL = `${env.API_URL.visitor}/ws`;
 const checkInPath = '/visitor';
 const enqueueSnackbarOptions = {
   variant: 'info',

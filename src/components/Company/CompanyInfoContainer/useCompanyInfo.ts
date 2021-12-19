@@ -1,16 +1,14 @@
 import { useFormattedPhone as formattedPhone } from 'hooks/useFormattedPhone';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'redux/configureStore';
-import { CompanyInfoResponseType, setCompanyInfoAction } from 'redux/modules/companyInfo';
+import { CompanyInfoResponseType } from 'store/modules/companyInfo/companyInfo';
 import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
-import { getCompany } from 'API/Visitor/getCompany';
+import useCompanyInfoStore from 'store/modules/companyInfo/useCompanyInfoStore';
+import { getCompany } from 'API/visitor/company';
 
 const useCompanyInfo = () => {
-  const companyInfo = useSelector(({ companyInfo }: RootState) => companyInfo);
-  const dispatch = useDispatch();
+  const { companyInfo, setCompanyInfo } = useCompanyInfoStore();
   const [rawTableData, setRawTableData] = useState<CompanyTableDataType[][]>([]);
   const [tableData, setTableData] = useState<CompanyTableDataType[][]>([]);
   const {
@@ -22,9 +20,6 @@ const useCompanyInfo = () => {
     setPage,
   } = usePagination();
 
-  const updateCompanyVisitor = useCallback(() => {
-    dispatch(setCompanyInfoAction());
-  }, [dispatch]);
   useEffect(() => {
     const tableData = companyInfo.map((elem) => TableDataToArray(dataToTableData(elem)));
     setPage(1);
@@ -38,8 +33,8 @@ const useCompanyInfo = () => {
 
   const updateCompanyInfo = useCallback(async () => {
     const res = await getCompany();
-    dispatch(setCompanyInfoAction(res.data));
-  }, [dispatch]);
+    setCompanyInfo(res.data);
+  }, [setCompanyInfo]);
 
   useEffect(() => {
     updateCompanyInfo();
@@ -47,7 +42,6 @@ const useCompanyInfo = () => {
 
   return {
     tableData,
-    updateCompanyVisitor,
     pagination: {
       start,
       end,

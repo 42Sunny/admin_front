@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo } from 'react';
-import GridContainer from 'components/Grid/GridContainer.js';
+import GridContainer from 'components/Grid/GridContainer';
 import { useContext } from 'react';
 import { VisitorContext } from 'contexts/VisitorContext';
 import CheckinDashboardTable from 'components/Checkin/CheckinDashboardTable';
 import VisitorDashboardTable from 'components/Visitor/VisitorDashboardTable';
-import useCriteria from 'hooks/useCriteria';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import ClusterSelector from 'components/ClusterSelector/ClusterSelector';
 import { useStyles } from './DashboardStyles';
-import useCheckInLogs from 'hooks/useCheckInLogs';
+import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import { getClusterNumber } from 'utils/getCluster';
 import HeadCount from 'components/HeadCount/HeadCount';
 import { updateCheckInLogs } from 'utils/updateCheckInLogs';

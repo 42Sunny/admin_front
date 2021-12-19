@@ -8,10 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import { Button } from '@material-ui/core';
 import { debounce } from 'lodash';
 
-import { getCluster, getStudent, getCard, getCheckIn } from 'API/checkinApi';
-import useCriteria from 'hooks/useCriteria';
-import useCheckInLogs from 'hooks/useCheckInLogs';
+import useCriteria from 'store/modules/criteria/useCriteriaStore';
+import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import useStyles from './CheckinSearchBarStyles';
+import { getCard, getCheckIn, getCluster, getStudent } from 'API/checkin/log';
 
 const CheckinSearchBar = () => {
   const classes = useStyles();
