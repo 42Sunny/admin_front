@@ -18,7 +18,7 @@ pipelines:
             - export REACT_APP_X_42CADET_CHECKIN_AUTH_KEY=$REACT_APP_X_42CADET_CHECKIN_AUTH_KEY
             - export REACT_APP_X_42CADET_VISITOR_AUTH_KEY=$REACT_APP_X_42CADET_VISITOR_AUTH_KEY
             - export REACT_APP_ENVIRONMENT=$REACT_APP_ENVIRONMENT
-            - npm run build:test
+            - npm run build:dev
           artifacts:
             - build/**
       - step:

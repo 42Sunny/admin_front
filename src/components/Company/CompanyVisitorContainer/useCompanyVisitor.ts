@@ -1,9 +1,8 @@
-import { exitCompanyVisitor } from 'API/Visitor/exitCompanyVisitor';
-import { getCompanyVisitor, GetCompanyVisitorResponseType } from 'API/Visitor/getCompanyVisitor';
+import { exitCompanyVisitor, GetCompanyVisitorResponseType } from 'API/visitor/company';
 import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
 import moment from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useCompanyVisitorStore from 'store/modules/companyVisitor/useCompanyVisitorStore';
 import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 
@@ -21,14 +20,8 @@ type ArgTypes = {
   endDate: string;
 };
 
-const argForGetAllData = (startDate: string, endDate: string) => ({
-  start: new Date(startDate),
-  end: new Date(endDate),
-  pagination: { size: 1000, page: 0 },
-});
-
 const useCompanyVisitor = ({ startDate, endDate }: ArgTypes) => {
-  const { companyVisitor, setCompanyVisitor } = useCompanyVisitorStore();
+  const { companyVisitor, updateCompanyVisitor } = useCompanyVisitorStore();
   const [rawTableData, setRawTableData] = useState<CompanyTableDataType[][]>([]);
   const [tableData, setTableData] = useState<CompanyTableDataType[][]>([]);
   const {
@@ -51,14 +44,9 @@ const useCompanyVisitor = ({ startDate, endDate }: ArgTypes) => {
     setTableData(rawTableData.slice(start - 1, end));
   }, [end, rawTableData, start]);
 
-  const updateCompanyVisitor = useCallback(async () => {
-    const res = await getCompanyVisitor(argForGetAllData(startDate, endDate));
-    setCompanyVisitor(res.data);
-  }, [startDate, endDate, setCompanyVisitor]);
-
   useEffect(() => {
-    updateCompanyVisitor();
-  }, [updateCompanyVisitor]);
+    updateCompanyVisitor(startDate, endDate);
+  }, [endDate, startDate, updateCompanyVisitor]);
 
   return {
     tableData,

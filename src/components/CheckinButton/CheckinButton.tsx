@@ -1,4 +1,4 @@
-import { updateVisitorStatus } from 'API/visitorApi';
+import { updateVisitorStatus } from 'API/visitor/info';
 import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
 import React, { useContext } from 'react';
 import useStyles from './CheckinButtonStyles';

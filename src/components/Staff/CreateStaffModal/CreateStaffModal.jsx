@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Icon, Modal } from '@material-ui/core';
-import { addStaff } from 'API/visitorApi';
+import { addStaff } from 'API/visitor/admin';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';

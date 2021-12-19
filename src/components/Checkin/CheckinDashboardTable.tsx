@@ -1,18 +1,25 @@
+import React from 'react';
 import GridItem from 'components/Grid/GridItem';
 import Table from 'components/Table/Table';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
-import { forceCheckOut } from 'API/checkin';
 import moment from 'moment';
 import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import { useStyles } from './CheckinDashBoardTableStyles';
 import { getClusterNumber } from 'utils/getCluster';
+import { forceCheckOut } from 'API/checkin/user/forceCheckOut';
 
 const tableHead = ['체크인 시간', '인트라 ID', '카드 번호', '강제 퇴실'];
 
-const CheckinLogTable = ({ xs, sm, md }) => {
+type PropTypes = {
+  xs: number;
+  sm: number;
+  md: number;
+};
+
+const CheckinLogTable = ({ xs, sm, md }: PropTypes) => {
   const classes = useStyles();
   const {
     criteria: { clusterNumber },
@@ -20,9 +27,9 @@ const CheckinLogTable = ({ xs, sm, md }) => {
 
   const { checkInLogs, setCheckInLogs } = useCheckInLogs();
 
-  const checkOutOnClick = async (event) => {
+  const checkOutOnClick: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
     try {
-      const userId = event.target.id;
+      const userId = event.currentTarget.id;
       if (userId) {
         window.confirm('퇴실 처리하시겠습니까?');
         await forceCheckOut(userId);
@@ -49,11 +56,16 @@ const CheckinLogTable = ({ xs, sm, md }) => {
               tableHead={tableHead}
               tableData={checkInLogs
                 .filter((log) => clusterNumber === getClusterNumber(log))
-                .map((log, idx) => [
+                .map((log) => [
                   moment(log.created_at).format('HH:mm') ?? null,
                   log.login,
                   log.card_no,
-                  <button className="force-out-Btn" onClick={checkOutOnClick} id={log._id}>
+                  <button
+                    className="force-out-Btn"
+                    onClick={checkOutOnClick}
+                    key={log._id}
+                    id={log._id.toString()}
+                  >
                     퇴실
                   </button>,
                 ])}

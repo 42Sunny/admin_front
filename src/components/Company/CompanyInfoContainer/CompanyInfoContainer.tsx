@@ -59,10 +59,10 @@ const CreateModal = ({ isOpenDialog, closeDialog }: CreateModalPropTypes) => {
   const [phone, setPhone] = useState('');
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value);
-
   const changePhone = (event: React.ChangeEvent<HTMLInputElement>) => setPhone(event.target.value);
 
   return (
+    // TODO: waring 해결하기
     <Modal open={isOpenDialog} onClose={closeDialog}>
       <Card className={classes.modalContainer}>
         <CardHeader color="info" className={classes.modalHeader}>

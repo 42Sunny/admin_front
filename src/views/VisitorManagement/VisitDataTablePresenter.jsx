@@ -1,3 +1,4 @@
+import React from 'react';
 import useStyles from './VisitorManagementStyles';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';

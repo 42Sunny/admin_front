@@ -4,8 +4,8 @@ import { CompanyInfoResponseType } from 'store/modules/companyInfo/companyInfo';
 import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
-import { getCompany } from 'API/Visitor/getCompany';
 import useCompanyInfoStore from 'store/modules/companyInfo/useCompanyInfoStore';
+import { getCompany } from 'API/visitor/company';
 
 const useCompanyInfo = () => {
   const { companyInfo, setCompanyInfo } = useCompanyInfoStore();

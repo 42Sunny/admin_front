@@ -1,8 +1,9 @@
-import { getStaffs } from 'API/visitorApi';
+import React from 'react';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
 import { useState, useCallback, useEffect } from 'react';
 import usePagination from 'hooks/usePagination';
 import DeleteStaffButton from '../DeleteStaffButton';
+import { getStaffs } from 'API/visitor/admin';
 
 const useStaffTable = () => {
   const [rawTableData, setRawTableData] = useState([]);
@@ -65,7 +66,7 @@ const makeTableData = (rawTableData, reloadData) =>
             cur.department,
             cur.name,
             useFormattedPhone(cur.phone),
-            <DeleteStaffButton {...cur} reloadData={reloadData} />,
+            <DeleteStaffButton {...cur} reloadData={reloadData} key={cur.id} />,
           ],
         ],
         [],

@@ -26,10 +26,6 @@ const useStyles = makeStyles(styles);
 export default function Admin({ ...rest }) {
   const classes = useStyles();
   const mainPanel = React.createRef();
-  // eslint-disable-next-line no-unused-vars
-  const [image, setImage] = React.useState(bgImage);
-  // eslint-disable-next-line no-unused-vars
-  const [color, setColor] = React.useState('blue');
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -55,10 +51,10 @@ export default function Admin({ ...rest }) {
         routes={routes}
         logoText={'이노베이션 아카데미'}
         logo={logo}
-        image={image}
+        image={bgImage}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
-        color={color}
+        color={'blue'}
         {...rest}
       />
       <div className={classes.mainPanel} ref={mainPanel}>

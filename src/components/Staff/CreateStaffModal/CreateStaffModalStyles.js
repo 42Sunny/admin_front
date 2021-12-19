@@ -1,7 +1,7 @@
 import { grayColor } from 'assets/jss/material-dashboard-react';
 
-const { makeStyles } = require('@material-ui/core');
-const { whiteColor } = require('assets/jss/material-dashboard-react');
+import { makeStyles } from '@material-ui/core';
+import { whiteColor } from 'assets/jss/material-dashboard-react';
 
 export const useStyles = makeStyles({
   container: {

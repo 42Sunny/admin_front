@@ -1,4 +1,4 @@
-import { getConfig } from 'API/checkin';
+import { getConfig } from 'API/checkin/config';
 
 export const getHeadCount = async (setMaxGaepo, setMaxSeocho) => {
   try {

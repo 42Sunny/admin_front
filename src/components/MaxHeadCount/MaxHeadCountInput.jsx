@@ -4,8 +4,8 @@ import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import RegularButton from 'components/CustomButtons/Button';
-import { setConfig } from 'API/checkin';
 import { useStyles } from './maxHeadCountInputStyle';
+import { setConfig } from 'API/checkin/config';
 
 const CONFIRM_MESSAGE = '최대 입장 인원 값을 변경하시겠습니까?';
 const SUBTITLE_MESSAGE = '입장 가능한 최대 카뎃 인원을 입력해주세요.';

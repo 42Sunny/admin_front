@@ -1,7 +1,8 @@
-import { updateVisitorStatus } from 'API/visitorApi';
+import React from 'react';
 import { useContext, useState, useEffect } from 'react';
 import { VisitorManagementContext } from 'contexts/VisitorManagementContext';
 import useStyles from './VisitorManagementStyles';
+import { updateVisitorStatus } from 'API/visitor/info';
 
 const StatusOptions = [
   { value: '대기', name: '대기' },

@@ -1,6 +1,6 @@
+import React from 'react';
 import useStyles from './VisitorManagementStyles';
 import useVisitData from 'hooks/useVisitData';
-import React from 'react';
 
 const VisitDataTableDatePicker = () => {
   const classes = useStyles();

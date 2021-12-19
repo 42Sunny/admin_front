@@ -1,8 +1,8 @@
+import React from 'react';
 import { Tab, Tabs } from '@material-ui/core';
 import { useStyles } from './ClusterSelectorStyles';
 import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import moment from 'moment';
-import React from 'react';
 
 function a11yProps(index) {
   return {
