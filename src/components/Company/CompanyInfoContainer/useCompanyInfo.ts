@@ -5,7 +5,7 @@ import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
 import useCompanyInfoStore from 'store/modules/companyInfo/useCompanyInfoStore';
-import { getCompany } from 'API/visitor/company';
+import { createCompany, getCompany } from 'API/visitor/company';
 
 const useCompanyInfo = () => {
   const { companyInfo, setCompanyInfo } = useCompanyInfoStore();
@@ -50,6 +50,16 @@ const useCompanyInfo = () => {
       decrease,
       clickDescription: () => setPage(0),
     },
+    createCompany: useCallback(
+      async (name: string, phone: string) => {
+        await createCompany({
+          name,
+          phone,
+        });
+        await updateCompanyInfo();
+      },
+      [updateCompanyInfo],
+    ),
   };
 };
 
