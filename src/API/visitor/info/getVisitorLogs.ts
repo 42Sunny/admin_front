@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { postToVisitor } from 'API/APISetting/visitorAPI';
 
 const INIT_PAGE = 0;
@@ -30,8 +30,8 @@ type RequestDataType = {
 };
 
 export const getVisitorLogs = ({
-  start = moment().format('YYYY-MM-DD'),
-  end = moment().format('YYYY-MM-DD'),
+  start = dayjs().format('YYYY-MM-DD'),
+  end = dayjs().format('YYYY-MM-DD'),
   place = null,
   name = null,
   phone = null,

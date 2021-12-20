@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { createContext, useEffect, useState, useCallback, useMemo } from 'react';
 import {
   PLACE_ALL,
@@ -53,8 +53,8 @@ const VisitorManagementContext = createContext({
 
 const VisitorManagementProvider = ({ children }) => {
   const [visitData, setVisitData] = useState([]);
-  const [startDate, setStartDate] = useState(new moment().format('YYYY-MM-DD'));
-  const [endDate, setEndDate] = useState(new moment().format('YYYY-MM-DD'));
+  const [startDate, setStartDate] = useState(new dayjs().format('YYYY-MM-DD'));
+  const [endDate, setEndDate] = useState(new dayjs().format('YYYY-MM-DD'));
   const [place, setPlace] = useState(PLACE_ALL.value);
   const [allData, setAllData] = useState([]);
   const [allCount, setAllCount] = useState({
@@ -201,21 +201,21 @@ const makeTableData = (visitData) => {
 
   const results = visitData.map((elem) => [
     elem.place,
-    elem.reserveDate ? moment(elem.reserveDate).format('YYYY-MM-DD') : '',
+    elem.reserveDate ? dayjs(elem.reserveDate).format('YYYY-MM-DD') : '',
     elem.organization,
     elem.name,
     useFormattedPhone(elem.phone),
     elem.purpose,
     elem.staffName,
     useFormattedPhone(elem.staffPhone),
-    elem.reserveDate ? moment(elem.reserveDate).format('HH:mm') : '',
+    elem.reserveDate ? dayjs(elem.reserveDate).format('HH:mm') : '',
     elem.checkIn ? (
-      moment(elem.checkIn).format('HH:mm')
+      dayjs(elem.checkIn).format('HH:mm')
     ) : (
       <CheckinButton visitorId={elem.id} status={elem.status} />
     ),
     elem.checkOut ? (
-      moment(elem.checkOut).format('HH:mm')
+      dayjs(elem.checkOut).format('HH:mm')
     ) : (
       <CheckoutButton visitorId={elem.id} status={elem.status} />
     ),

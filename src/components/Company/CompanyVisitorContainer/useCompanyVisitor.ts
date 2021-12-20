@@ -1,7 +1,6 @@
 import { GetCompanyVisitorResponseType } from 'API/visitor/company';
 import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import useCompanyVisitorStore from 'store/modules/companyVisitor/useCompanyVisitorStore';
 import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
@@ -10,6 +9,7 @@ import {
   getCompanyVisitorAction,
 } from 'store/modules/companyVisitor/actions';
 import { dispatchToStore } from 'utils/dispatchToStore';
+import dayjs from 'dayjs';
 
 export type CompanyVisitorObjType = {
   checkoutTime: string | JSX.Element;
@@ -104,10 +104,10 @@ const dataToTableData = (
   date: DateType,
 ): CompanyVisitorObjType => ({
   place: visitor.place,
-  checkinDate: moment(visitor.checkIn).format('YYYY-MM-DD'),
-  checkinTime: moment(visitor.checkIn).format('HH:mm'),
+  checkinDate: dayjs(visitor.checkIn).format('YYYY-MM-DD'),
+  checkinTime: dayjs(visitor.checkIn).format('HH:mm'),
   checkoutTime: visitor.checkOut
-    ? moment(visitor.checkOut).format('HH:mm')
+    ? dayjs(visitor.checkOut).format('HH:mm')
     : createExitButton(visitor.id, date),
   name: visitor.name,
   companyName: visitor.companyName,

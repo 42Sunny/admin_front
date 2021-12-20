@@ -1,12 +1,12 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import CompanyContainer from '../CompanyContainer/CompanyContainer';
 import useCompanyVisitorContainerStyles from './CompanyVisitorContainerStyles';
 import useCompanyVisitor from './useCompanyVisitor';
 
 const CompanyVisitorContainer = () => {
-  const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
-  const [endDate, setEndDate] = useState(moment().format('YYYY-MM-DD'));
+  const [startDate, setStartDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [endDate, setEndDate] = useState(dayjs().format('YYYY-MM-DD'));
   const { tableData, pagination } = useCompanyVisitor({ startDate, endDate });
 
   const headerProps = {

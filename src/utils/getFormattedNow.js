@@ -1,5 +1,5 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 export const getFomattedNow = () => {
-  return moment().format('YYYY-MM-DD');
+  return dayjs().format('YYYY-MM-DD');
 };
