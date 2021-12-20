@@ -1,24 +1,12 @@
-import { createAction, handleActions } from 'redux-actions';
-
-// actions
-const SET_COMPANY_INFO = 'companyInfo/SET_COMPANY_INFO';
-
-// action creators
-export const setCompanyInfoAction = createAction(SET_COMPANY_INFO);
-
-export type CompanyInfoResponseType = {
-  id: number;
-  name: string;
-  phone: string;
-};
+import { GetCompanyInfoResponseType } from 'API/visitor/company';
+import { createReducer } from 'typesafe-actions';
+import { GET_COMPANY_INFO_SUCCESS, SET_COMPANY_INFO } from './actions';
 
 // initalState
-const initialState: CompanyInfoResponseType[] = [];
+const initialState: GetCompanyInfoResponseType[] = [];
 
 // reducer
-export default handleActions(
-  {
-    [SET_COMPANY_INFO]: (state, action) => action.payload,
-  },
-  initialState,
-);
+export default createReducer(initialState, {
+  [SET_COMPANY_INFO]: (state, action) => action.payload,
+  [GET_COMPANY_INFO_SUCCESS]: (state, action) => action.payload,
+});
