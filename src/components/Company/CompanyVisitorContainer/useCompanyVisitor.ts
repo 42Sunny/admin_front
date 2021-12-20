@@ -78,10 +78,10 @@ const createExitButton = (id: number) =>
 
 const dataToTableData = (visitor: GetCompanyVisitorResponseType): CompanyVisitorObjType => ({
   place: visitor.place,
-  checkinDate: moment(visitor.checkinTime).format('YYYY-MM-DD'),
-  checkinTime: moment(visitor.checkinTime).format('HH:mm'),
-  checkoutTime: visitor.checkoutTime
-    ? moment(visitor.checkoutTime).format('HH:mm')
+  checkinDate: moment(visitor.checkIn).format('YYYY-MM-DD'),
+  checkinTime: moment(visitor.checkIn).format('HH:mm'),
+  checkoutTime: visitor.checkOut
+    ? moment(visitor.checkOut).format('HH:mm')
     : createExitButton(visitor.id),
   name: visitor.name,
   companyName: visitor.companyName,

@@ -19,6 +19,6 @@ export type GetCompanyVisitorResponseType = {
   companyName: string;
   name: string;
   place: string;
-  checkinTime: Date;
-  checkoutTime: Date | null;
+  checkIn: Date;
+  checkOut: Date | null;
 };
