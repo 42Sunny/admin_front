@@ -6,8 +6,8 @@ import usePagination from 'hooks/usePagination';
 import useCompanyInfoStore from 'store/modules/companyInfo/useCompanyInfoStore';
 import LinkButton from './LinkButton';
 import { deleteCompanyInfo, GetCompanyInfoResponseType } from 'API/visitor/company';
-import store from 'store/configureStore';
 import { getCompanyInfoAction } from 'store/modules/companyInfo/actions';
+import { dispatchToStore } from 'utils/dispatchToStore';
 
 const useCompanyInfo = () => {
   const { companyInfo, getCompanyInfo, createCompanyInfo } = useCompanyInfoStore();
@@ -91,8 +91,8 @@ const TableDataToArray = (info: CompanyInfoObjType) => [
 
 const handleDeleteClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
   if (window.confirm('삭제 처리하시겠습니까?')) {
-    store.dispatch(deleteCompanyInfo(event.currentTarget.id));
-    store.dispatch(getCompanyInfoAction.request());
+    dispatchToStore(deleteCompanyInfo(event.currentTarget.id));
+    dispatchToStore(getCompanyInfoAction.request());
   }
 };
 

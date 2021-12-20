@@ -5,11 +5,11 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import useCompanyVisitorStore from 'store/modules/companyVisitor/useCompanyVisitorStore';
 import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
-import store from 'store/configureStore';
 import {
   exitCompanyVisitorAction,
   getCompanyVisitorAction,
 } from 'store/modules/companyVisitor/actions';
+import { dispatchToStore } from 'utils/dispatchToStore';
 
 export type CompanyVisitorObjType = {
   checkoutTime: string | JSX.Element;
@@ -31,7 +31,7 @@ type DateType = {
 };
 
 const useCompanyVisitor = ({ startDate, endDate }: ArgTypes) => {
-  const { companyVisitor, updateCompanyVisitor } = useCompanyVisitorStore();
+  const { companyVisitor, getCompanyVisitor } = useCompanyVisitorStore();
   const [rawTableData, setRawTableData] = useState<CompanyTableDataType[][]>([]);
   const [tableData, setTableData] = useState<CompanyTableDataType[][]>([]);
   const {
@@ -56,7 +56,9 @@ const useCompanyVisitor = ({ startDate, endDate }: ArgTypes) => {
     setTableData(rawTableData.slice(start - 1, end));
   }, [end, rawTableData, start]);
 
-  useEffect(() => {}, [endDate, startDate, updateCompanyVisitor]);
+  useEffect(() => {
+    getCompanyVisitor(startDate, endDate);
+  }, [endDate, getCompanyVisitor, startDate]);
 
   return {
     tableData,
@@ -76,8 +78,8 @@ const handleExitButtonClick = async (
   date: DateType,
 ) => {
   if (window.confirm('퇴실 처리하시겠습니까?')) {
-    store.dispatch(exitCompanyVisitorAction.request(event.currentTarget.id));
-    store.dispatch(
+    dispatchToStore(exitCompanyVisitorAction.request(event.currentTarget.id));
+    dispatchToStore(
       getCompanyVisitorAction.request({
         ...date,
         pagination: {

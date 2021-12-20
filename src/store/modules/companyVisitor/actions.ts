@@ -37,7 +37,7 @@ export const exitCompanyVisitorAction = createAsyncAction(
   EXIT_COMPANY_VISITOR_ERROR,
 )<ExitCompanyVisitorArgType, ExitCompanyVisitorResponseType, AxiosError>();
 
-export const enterCompanyInfoAction = createAsyncAction(
+export const enterCompanyVisitorAction = createAsyncAction(
   ENTER_COMPANY_VISITOR,
   ENTER_COMPANY_VISITOR_SUCCESS,
   ENTER_COMPANY_VISITOR_ERROR,

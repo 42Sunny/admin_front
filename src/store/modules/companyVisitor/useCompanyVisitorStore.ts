@@ -1,8 +1,9 @@
-import { GetCompanyVisitorResponseType } from 'API/visitor/company';
+import { EnterCompanyVisitorArgType, GetCompanyVisitorResponseType } from 'API/visitor/company';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/configureStore';
 import {
+  enterCompanyVisitorAction,
   exitCompanyVisitorAction,
   getCompanyVisitorAction,
   setCompanyVisitorAction,
@@ -19,7 +20,7 @@ const useCompanyVisitorStore = () => {
       (arg: GetCompanyVisitorResponseType[]) => dispatch(setCompanyVisitorAction(arg)),
       [dispatch],
     ),
-    updateCompanyVisitor: useCallback(
+    getCompanyVisitor: useCallback(
       (start: string, end: string) => {
         dispatch(
           getCompanyVisitorAction.request({
@@ -34,6 +35,12 @@ const useCompanyVisitorStore = () => {
     exitCompanyVisitor: useCallback(
       (visitorId: string) => {
         dispatch(exitCompanyVisitorAction.request(visitorId));
+      },
+      [dispatch],
+    ),
+    enterCompanyVisitor: useCallback(
+      (arg: EnterCompanyVisitorArgType) => {
+        dispatch(enterCompanyVisitorAction.request(arg));
       },
       [dispatch],
     ),

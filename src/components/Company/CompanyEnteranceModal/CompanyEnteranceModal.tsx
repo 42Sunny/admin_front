@@ -1,5 +1,4 @@
 import { Input, Modal } from '@mui/material';
-import { enterCompanyVisitor } from 'API/visitor/company';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
@@ -7,6 +6,7 @@ import RegularButton from 'components/CustomButtons/Button';
 import IconButton from 'components/IconButton/IconButton';
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
+import useCompanyVisitorStore from 'store/modules/companyVisitor/useCompanyVisitorStore';
 import parseDecimal from 'utils/parseDecimal';
 import useCompanyEnteranceModalStyles from './CompanyEnteranceModalStyles';
 
@@ -16,18 +16,20 @@ const CompanyEnteranceModal = () => {
   const classes = useCompanyEnteranceModalStyles();
   const [name, setName] = useState('');
   const [place, setPlace] = useState('개포');
+  const { enterCompanyVisitor } = useCompanyVisitorStore();
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value);
   const changePlace = (event: React.MouseEvent<HTMLLabelElement>) =>
     setPlace(event.currentTarget.innerText);
   const postEnterance = async () => {
-    await enterCompanyVisitor({
+    enterCompanyVisitor({
       place: place,
       companyId: parseDecimal(params.id),
       visitorName: name,
     });
     closeModal();
   };
+  // TODO: 다시 불러오기...
   const closeModal = () => {
     history.goBack();
   };
