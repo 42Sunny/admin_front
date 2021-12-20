@@ -5,7 +5,8 @@ import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
 import useCompanyInfoStore from 'store/modules/companyInfo/useCompanyInfoStore';
-import { createCompany, getCompany } from 'API/visitor/company';
+import { createCompany, deleteCompany, enterCompanyVisitor, getCompany } from 'API/visitor/company';
+import parseDecimal from 'utils/parseDecimal';
 
 const useCompanyInfo = () => {
   const { companyInfo, setCompanyInfo } = useCompanyInfoStore();
@@ -92,18 +93,24 @@ const TableDataToArray = (info: CompanyInfoObjType) => [
   info.deleteButton,
 ];
 
-const handleEnteranceClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-  const name = window.prompt('방문자 이름을 입력해주세요.');
+const handleEnteranceClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const visitorName = window.prompt('방문자 이름을 입력해주세요.');
   const place = window.prompt('장소를 입력해주세요. (개포, 서초)');
   // TODO: modal로 변경 예정.
-  if (name !== null && name !== '' && (place === '개포' || place === '서초')) {
-    // TODO: API가 생성되는대로...
+  if (visitorName !== null && visitorName !== '') {
+    if (place === '개포' || place === '서초') {
+      await enterCompanyVisitor({
+        place,
+        visitorName,
+        companyId: parseDecimal(event.currentTarget.id),
+      });
+    }
   }
 };
 
-const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+const handleDeleteClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
   if (window.confirm('삭제 처리하시겠습니까?')) {
-    // TODO: API가 생성되는대로...
+    await deleteCompany(event.currentTarget.id);
   }
 };
 

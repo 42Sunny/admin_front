@@ -91,4 +91,42 @@ const CreateModal = ({ isOpenDialog, closeDialog, createCompany }: CreateModalPr
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const EnteranceModal = ({ isOpenDialog, closeDialog, createCompany }: CreateModalPropTypes) => {
+  const classes = useCompanyInfoContainerStyles();
+  const [name, setName] = useState('');
+  const [place, setPlace] = useState('');
+
+  const changeName = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value);
+  const changePlace: React.ChangeEventHandler<HTMLSelectElement> = (event) =>
+    setPlace(event.currentTarget.value);
+  const postCreateCompany = () => {
+    createCompany(name, place);
+  };
+
+  return (
+    // TODO: waring 해결하기
+    <Modal open={isOpenDialog} onClose={closeDialog}>
+      <div>
+        <Card className={classes.modalContainer}>
+          <CardHeader color="info" className={classes.modalHeader}>
+            <div>입실</div>
+            <IconButton icon="close" className={classes.modalExit} onClick={closeDialog} />
+          </CardHeader>
+          <CardBody className={classes.modalBody}>
+            <Input fullWidth value={name} placeholder="방문자 이름" onChange={changeName} />
+            <select value={place} onChange={changePlace}>
+              <option value="개포">개포</option>
+              <option value="서초">서초</option>
+            </select>
+            <RegularButton color="info" onClick={postCreateCompany}>
+              등록
+            </RegularButton>
+          </CardBody>
+        </Card>
+      </div>
+    </Modal>
+  );
+};
+
 export default CompanyInfoContainer;

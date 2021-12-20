@@ -63,7 +63,7 @@ const useCompanyVisitor = ({ startDate, endDate }: ArgTypes) => {
 
 const handleExitButtonClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
   if (window.confirm('퇴실 처리하시겠습니까?')) {
-    exitCompanyVisitor(event.currentTarget.id);
+    await exitCompanyVisitor(event.currentTarget.id);
     // TODO: 업데이트 처리
   }
 };
