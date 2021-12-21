@@ -16,25 +16,10 @@ const instance = axios.create({
   },
 });
 
-const apiHandler = async (method, path, data) => {
-  return await axios(
-    {
-      method,
-      url: `${URL}${path}`,
-      data,
-      headers: {
-        'X-42Cadet-Auth-Key': process.env.REACT_APP_X_42CADET_VISITOR_AUTH_KEY,
-        cookie: document.cookie,
-      },
-    },
-    { withCredentials: true },
-  );
-};
-
 const postToVisitor = (url, data) => instance.post(url, data);
 const getToVisitor = (url, data) => instance.get(url, data);
 const putToVisitor = (url, data) => instance.put(url, data);
-const deleteToVisitor = (url, data) => apiHandler('delete', url, data);
+const deleteToVisitor = (url, data) => instance.delete(url, { data });
 
 const isExpiredCookie = () => {
   const value = getCookieValue(process.env.REACT_APP_AUTH_KEY);
