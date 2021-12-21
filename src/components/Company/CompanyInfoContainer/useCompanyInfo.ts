@@ -5,8 +5,8 @@ import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
 import useCompanyInfoStore from 'store/modules/companyInfo/useCompanyInfoStore';
 import LinkButton from './LinkButton';
-import { deleteCompanyInfo, GetCompanyInfoResponseType } from 'API/visitor/company';
-import { getCompanyInfoAction } from 'store/modules/companyInfo/actions';
+import { GetCompanyInfoResponseType } from 'API/visitor/company';
+import { deleteCompanyInfoAction } from 'store/modules/companyInfo/actions';
 import { dispatchToStore } from 'utils/dispatchToStore';
 
 const useCompanyInfo = () => {
@@ -45,7 +45,7 @@ const useCompanyInfo = () => {
       paginationLength,
       increase,
       decrease,
-      clickDescription: () => setPage(0),
+      clickDescription: () => setPage(1),
     },
     createCompany: useCallback(
       async (name: string, phone: string) => {
@@ -91,8 +91,7 @@ const TableDataToArray = (info: CompanyInfoObjType) => [
 
 const handleDeleteClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
   if (window.confirm('삭제 처리하시겠습니까?')) {
-    dispatchToStore(deleteCompanyInfo(event.currentTarget.id));
-    dispatchToStore(getCompanyInfoAction.request());
+    dispatchToStore(deleteCompanyInfoAction.request(event.currentTarget.id));
   }
 };
 

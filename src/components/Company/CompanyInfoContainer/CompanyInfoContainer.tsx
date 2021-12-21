@@ -5,7 +5,9 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import RegularButton from 'components/CustomButtons/Button';
 import IconButton from 'components/IconButton/IconButton';
-import React, { useState } from 'react';
+import { checkPhone } from 'components/Staff/CreateStaffModal/CreateStaffModalUtils';
+import React, { useEffect, useState } from 'react';
+import useCompanyInfoStore from 'store/modules/companyInfo/useCompanyInfoStore';
 import CompanyContainer from '../CompanyContainer/CompanyContainer';
 import useCompanyInfoContainerStyles from './CompanyInfoContainerStyles';
 import useCompanyInfo from './useCompanyInfo';
@@ -60,14 +62,29 @@ type CreateModalPropTypes = {
 
 const CreateModal = ({ isOpenDialog, closeDialog, createCompany }: CreateModalPropTypes) => {
   const classes = useCompanyInfoContainerStyles();
+  const { companyInfo } = useCompanyInfoStore();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
   const changeName = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value);
   const changePhone = (event: React.ChangeEvent<HTMLInputElement>) => setPhone(event.target.value);
   const postCreateCompany = () => {
+    if (checkPhone(phone) !== true) {
+      window.alert('번호 형식이 올바르지 않습니다.');
+      return;
+    }
+    if (companyInfo.filter((info) => info.name === name).length !== 0) {
+      window.alert('중복된 업체 이름입니다.');
+      return;
+    }
     createCompany(name, phone);
+    closeDialog();
   };
+
+  useEffect(() => {
+    setName('');
+    setPhone('');
+  }, [isOpenDialog]);
 
   return (
     // TODO: waring 해결하기

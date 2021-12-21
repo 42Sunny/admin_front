@@ -10,6 +10,7 @@ import {
 } from 'store/modules/companyVisitor/actions';
 import { dispatchToStore } from 'utils/dispatchToStore';
 import dayjs from 'dayjs';
+import { useHistory } from 'react-router-dom';
 
 export type CompanyVisitorObjType = {
   checkoutTime: string | JSX.Element;
@@ -42,12 +43,17 @@ const useCompanyVisitor = ({ startDate, endDate }: ArgTypes) => {
     decrease,
     setPage,
   } = usePagination();
+  const history = useHistory();
+
+  useEffect(() => {
+    history.push({ search: `?start=${startDate}&end=${endDate}` });
+    setPage(1);
+  }, [endDate, history, setPage, startDate]);
 
   useEffect(() => {
     const tableData = companyVisitor.map((elem) =>
       ObjToArray(dataToTableData(elem, { start: new Date(startDate), end: new Date(endDate) })),
     );
-    setPage(1);
     setRawTableData(tableData);
     setPaginationLength(tableData.length);
   }, [companyVisitor, endDate, setPage, setPaginationLength, startDate]);
@@ -68,7 +74,7 @@ const useCompanyVisitor = ({ startDate, endDate }: ArgTypes) => {
       paginationLength,
       increase,
       decrease,
-      clickDescription: () => setPage(0),
+      clickDescription: () => setPage(1),
     },
   };
 };

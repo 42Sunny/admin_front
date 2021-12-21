@@ -12,6 +12,7 @@ import {
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { enterCompanyVisitor, getCompanyVisitor } from 'API/visitor/company';
 import { exitCompanyVisitor, GetCompanyVisitorResponseType } from 'API/visitor/company';
+import { getQueryString } from 'utils/getQueryString';
 
 function* getSaga(action: ReturnType<typeof getCompanyVisitorAction.request>) {
   try {
@@ -46,12 +47,29 @@ function* enterSaga(action: ReturnType<typeof enterCompanyVisitorAction.request>
   }
 }
 
+function* getSagaWithoutDate() {
+  const { start, end } = getQueryString();
+  if (start === undefined) throw new Error('주소를 파싱하는데 에러가 발생했습니다.');
+  const action: ReturnType<typeof getCompanyVisitorAction.request> = {
+    type: GET_COMPANY_VISITOR,
+    payload: {
+      start: new Date(start),
+      end: new Date(end),
+      pagination: {
+        page: 0,
+        size: 1000,
+      },
+    },
+  };
+  yield getSaga(action);
+}
+
 export function* companyVisitorSaga() {
   yield takeLatest(GET_COMPANY_VISITOR, getSaga);
   yield takeLatest(EXIT_COMPANY_VISITOR, exitSaga);
   yield takeLatest(ENTER_COMPANY_VISITOR, enterSaga);
-  yield takeLatest(EXIT_COMPANY_VISITOR_SUCCESS, getSaga);
-  yield takeLatest(ENTER_COMPANY_VISITOR_SUCCESS, getSaga);
+  yield takeLatest(EXIT_COMPANY_VISITOR_SUCCESS, getSagaWithoutDate);
+  yield takeLatest(ENTER_COMPANY_VISITOR_SUCCESS, getSagaWithoutDate);
 }
 
 export default companyVisitorSaga;

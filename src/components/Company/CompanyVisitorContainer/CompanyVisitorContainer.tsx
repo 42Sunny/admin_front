@@ -53,7 +53,7 @@ const Header = ({ startDate, changeStartDate, endDate, changeEndDate }: HeaderPr
 
   return (
     <div className={classes.container}>
-      <div className={classes.title}>업체 방문 정보</div>
+      <div className={classes.title}>방문 정보</div>
       <div className={classes.datePicker}>
         <input
           type="date"

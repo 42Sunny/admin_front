@@ -4,8 +4,10 @@ import { GetCompanyInfoResponseType } from 'API/visitor/company';
 import {
   createCompanyInfoAction,
   CREATE_COMPANY_INFO,
+  CREATE_COMPANY_INFO_SUCCESS,
   deleteCompanyInfoAction,
   DELETE_COMPANY_INFO,
+  DELETE_COMPANY_INFO_SUCCESS,
   getCompanyInfoAction,
   GET_COMPANY_INFO,
 } from './actions';
@@ -47,6 +49,8 @@ export function* companyInfoSaga() {
   yield takeLatest(GET_COMPANY_INFO, getSaga);
   yield takeLatest(CREATE_COMPANY_INFO, createSaga);
   yield takeLatest(DELETE_COMPANY_INFO, deleteSaga);
+  yield takeLatest(CREATE_COMPANY_INFO_SUCCESS, getSaga);
+  yield takeLatest(DELETE_COMPANY_INFO_SUCCESS, getSaga);
 }
 
 export default companyInfoSaga;
