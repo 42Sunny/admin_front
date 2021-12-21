@@ -5,7 +5,8 @@ const styles = {
     width: '100%',
   },
   container: {
-    height: '600px',
+    height: '800px',
+    // 'overflow-y': 'auto',
     'box-sizing': 'border-box',
   },
   body: {

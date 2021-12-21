@@ -1,4 +1,4 @@
-import { EnterCompanyVisitorArgType, GetCompanyVisitorResponseType } from 'API/visitor/company';
+import { GetCompanyVisitorResponseType } from 'API/visitor/company';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/configureStore';
@@ -39,8 +39,8 @@ const useCompanyVisitorStore = () => {
       [dispatch],
     ),
     enterCompanyVisitor: useCallback(
-      (arg: EnterCompanyVisitorArgType) => {
-        dispatch(enterCompanyVisitorAction.request(arg));
+      (place: string, companyId: number, visitorName: string) => {
+        dispatch(enterCompanyVisitorAction.request({ place, companyId, visitorName }));
       },
       [dispatch],
     ),

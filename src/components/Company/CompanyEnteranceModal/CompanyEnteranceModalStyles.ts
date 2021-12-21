@@ -34,6 +34,9 @@ const styles = {
   radio: {
     margin: '0.3rem',
   },
+  input: {
+    minWidth: '4rem',
+  },
 };
 
 const useCompanyEnteranceModalStyles = makeStyles(styles);
