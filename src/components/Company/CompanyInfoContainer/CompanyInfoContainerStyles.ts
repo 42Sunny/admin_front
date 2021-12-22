@@ -4,8 +4,11 @@ const styles = {
   container: {
     fontSize: '1.3rem',
     display: 'flex',
-    justifyContent: 'space-between',
     width: '100%',
+    height: '2.5rem',
+    gap: '0.7rem',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   title: {
     gap: '0.7rem',

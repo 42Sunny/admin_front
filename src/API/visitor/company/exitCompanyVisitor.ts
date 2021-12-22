@@ -1,4 +1,7 @@
 import { patchToVisitor } from 'API/APISetting/visitorAPI';
+import { ExitCompanyVisitorArgType, ExitCompanyVisitorResponseType } from '.';
 
 export const exitCompanyVisitor = (visitorId: string) =>
-  patchToVisitor(`/company/visitor/out/${visitorId}`);
+  patchToVisitor<ExitCompanyVisitorArgType, ExitCompanyVisitorResponseType>(
+    `/company/visitor/out/${visitorId}`,
+  );

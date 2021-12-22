@@ -2,7 +2,7 @@ import React from 'react';
 import { Tab, Tabs } from '@material-ui/core';
 import { useStyles } from './ClusterSelectorStyles';
 import useCriteria from 'store/modules/criteria/useCriteriaStore';
-import moment from 'moment';
+import { formatDate } from 'utils/formatDate';
 
 function a11yProps(index) {
   return {
@@ -34,7 +34,7 @@ const ClusterSelector = () => {
         <Tab label="개포" {...a11yProps(0)} />
         <Tab label="서초" {...a11yProps(1)} />
       </Tabs>
-      <div>{moment().format('YYYY년 MM월 DD일')}</div>
+      <div>{formatDate('YYYY년 MM월 DD일')}</div>
     </div>
   );
 };

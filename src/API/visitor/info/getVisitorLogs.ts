@@ -1,5 +1,5 @@
-import moment from 'moment';
 import { postToVisitor } from 'API/APISetting/visitorAPI';
+import { formatDate } from 'utils/formatDate';
 
 const INIT_PAGE = 0;
 const INIT_SIZE = 10;
@@ -30,8 +30,8 @@ type RequestDataType = {
 };
 
 export const getVisitorLogs = ({
-  start = moment().format('YYYY-MM-DD'),
-  end = moment().format('YYYY-MM-DD'),
+  start = formatDate(),
+  end = formatDate(),
   place = null,
   name = null,
   phone = null,

@@ -7,12 +7,12 @@ import CardBody from 'components/Card/CardBody';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import moment from 'moment';
 import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import { useStyles } from './CheckinLogTableStyles';
 import { getClusterName } from 'utils/getCluster';
 import { forceCheckOut } from 'API/checkin/user/forceCheckOut';
+import { formatDate } from 'utils/formatDate';
 
 const LOGTYPE = {
   0: '클러스터',
@@ -58,7 +58,7 @@ const CheckinLogTable = ({ xs, sm, md }) => {
   };
 
   const tableData = checkInLogs.map((log) => [
-    moment(log.created_at).format('MM월 DD일 HH:mm') ?? null,
+    formatDate('MM월 DD일 HH:mm', log.created_at) ?? null,
     logType === 3 ? log.state : log.type,
     log.login,
     log.card_no,

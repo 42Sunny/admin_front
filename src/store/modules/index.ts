@@ -6,9 +6,10 @@ import companyVisitor from './companyVisitor/companyVisitor';
 import companyInfo from './companyInfo/companyInfo';
 import { all } from 'redux-saga/effects';
 import companyVisitorSaga from './companyVisitor/saga';
+import companyInfoSaga from './companyInfo/saga';
 
 export function* rootSaga() {
-  yield all([companyVisitorSaga()]);
+  yield all([companyVisitorSaga(), companyInfoSaga()]);
 }
 
 const rootReducer = combineReducers({

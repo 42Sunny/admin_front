@@ -1,8 +1,8 @@
 import { postToVisitor } from 'API/APISetting/visitorAPI';
+import { EnterCompanyVisitorArgType, EnterCompanyVisitorResponseType } from '.';
 
-type ArgTypes = {
-  place: string;
-  companyId: number;
-  visitorName: string;
-};
-export const enterCompanyVisitor = (arg: ArgTypes) => postToVisitor('/company/visitor', arg);
+export const enterCompanyVisitor = (args: EnterCompanyVisitorArgType) =>
+  postToVisitor<EnterCompanyVisitorArgType, EnterCompanyVisitorResponseType>(
+    '/company/visitor',
+    args,
+  );

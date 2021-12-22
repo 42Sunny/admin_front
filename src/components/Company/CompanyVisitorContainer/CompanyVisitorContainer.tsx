@@ -1,12 +1,12 @@
-import moment from 'moment';
 import React, { useState } from 'react';
+import { formatDate } from 'utils/formatDate';
 import CompanyContainer from '../CompanyContainer/CompanyContainer';
 import useCompanyVisitorContainerStyles from './CompanyVisitorContainerStyles';
 import useCompanyVisitor from './useCompanyVisitor';
 
 const CompanyVisitorContainer = () => {
-  const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
-  const [endDate, setEndDate] = useState(moment().format('YYYY-MM-DD'));
+  const [startDate, setStartDate] = useState(formatDate('YYYY-MM-DD'));
+  const [endDate, setEndDate] = useState(formatDate('YYYY-MM-DD'));
   const { tableData, pagination } = useCompanyVisitor({ startDate, endDate });
 
   const headerProps = {
@@ -53,7 +53,7 @@ const Header = ({ startDate, changeStartDate, endDate, changeEndDate }: HeaderPr
 
   return (
     <div className={classes.container}>
-      <div className={classes.title}>업체 방문 정보</div>
+      <div className={classes.title}>방문 정보</div>
       <div className={classes.datePicker}>
         <input
           type="date"

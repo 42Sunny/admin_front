@@ -37,6 +37,8 @@ const CreateStaffModal = ({ open, onClose, reloadData }) => {
     else if (name === INPUT_DEPARTMENT_NAME) setDepartment(value);
   };
 
+  const exitModal = () => onClose();
+
   const submitData = async () => {
     setErrorMessage('');
     const checkContentsResult = await checkContents(name, phone);
@@ -47,13 +49,12 @@ const CreateStaffModal = ({ open, onClose, reloadData }) => {
         setPhone('');
         setDepartment('');
         reloadData();
+        exitModal();
       }
     } else {
       setErrorMessage(checkContentsResult);
     }
   };
-
-  const exitModal = () => onClose();
 
   useEffect(() => {
     setName('');

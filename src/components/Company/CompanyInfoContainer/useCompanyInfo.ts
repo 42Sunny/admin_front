@@ -1,15 +1,16 @@
 import { useFormattedPhone as formattedPhone } from 'hooks/useFormattedPhone';
 import React, { useCallback, useEffect, useState } from 'react';
-import { CompanyInfoResponseType } from 'store/modules/companyInfo/companyInfo';
 import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 import IconButton from 'components/IconButton/IconButton';
 import usePagination from 'hooks/usePagination';
 import useCompanyInfoStore from 'store/modules/companyInfo/useCompanyInfoStore';
-import { createCompany, deleteCompany, getCompany } from 'API/visitor/company';
 import LinkButton from './LinkButton';
+import { GetCompanyInfoResponseType } from 'API/visitor/company';
+import { deleteCompanyInfoAction } from 'store/modules/companyInfo/actions';
+import { dispatchToStore } from 'utils/dispatchToStore';
 
 const useCompanyInfo = () => {
-  const { companyInfo, setCompanyInfo } = useCompanyInfoStore();
+  const { companyInfo, getCompanyInfo, createCompanyInfo } = useCompanyInfoStore();
   const [rawTableData, setRawTableData] = useState<CompanyTableDataType[][]>([]);
   const [tableData, setTableData] = useState<CompanyTableDataType[][]>([]);
   const {
@@ -32,14 +33,9 @@ const useCompanyInfo = () => {
     setTableData(rawTableData.slice(start - 1, end));
   }, [end, rawTableData, start]);
 
-  const updateCompanyInfo = useCallback(async () => {
-    const res = await getCompany();
-    setCompanyInfo(res.data);
-  }, [setCompanyInfo]);
-
   useEffect(() => {
-    updateCompanyInfo();
-  }, [updateCompanyInfo]);
+    getCompanyInfo();
+  }, [getCompanyInfo]);
 
   return {
     tableData,
@@ -49,17 +45,17 @@ const useCompanyInfo = () => {
       paginationLength,
       increase,
       decrease,
-      clickDescription: () => setPage(0),
+      clickDescription: () => setPage(1),
     },
     createCompany: useCallback(
       async (name: string, phone: string) => {
-        await createCompany({
+        await createCompanyInfo({
           name,
           phone,
         });
-        await updateCompanyInfo();
+        await getCompanyInfo();
       },
-      [updateCompanyInfo],
+      [createCompanyInfo, getCompanyInfo],
     ),
   };
 };
@@ -71,7 +67,7 @@ type CompanyInfoObjType = {
   phone: string;
 };
 
-const dataToTableData = (info: CompanyInfoResponseType): CompanyInfoObjType => ({
+const dataToTableData = (info: GetCompanyInfoResponseType): CompanyInfoObjType => ({
   deleteButton: React.createElement(IconButton, {
     id: info.id.toString(),
     icon: 'delete',
@@ -95,7 +91,7 @@ const TableDataToArray = (info: CompanyInfoObjType) => [
 
 const handleDeleteClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
   if (window.confirm('삭제 처리하시겠습니까?')) {
-    await deleteCompany(event.currentTarget.id);
+    dispatchToStore(deleteCompanyInfoAction.request(event.currentTarget.id));
   }
 };
 
