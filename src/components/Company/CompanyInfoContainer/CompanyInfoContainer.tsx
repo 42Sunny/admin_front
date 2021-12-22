@@ -73,7 +73,7 @@ const CreateModal = ({ isOpenDialog, closeDialog, createCompany }: CreateModalPr
       window.alert('번호 형식이 올바르지 않습니다.');
       return;
     }
-    if (companyInfo.filter((info) => info.name === name).length !== 0) {
+    if (companyInfo.some((info) => info.name === name) === true) {
       window.alert('중복된 업체 이름입니다.');
       return;
     }

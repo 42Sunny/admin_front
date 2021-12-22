@@ -5,7 +5,7 @@ import GridItem from 'components/Grid/GridItem';
 import React, { useEffect, useState } from 'react';
 import Table from 'components/Table/Table';
 import useStyles from './VisitorDashboardTableStyles';
-import dayjs from 'dayjs';
+import { formatDate } from 'utils/formatDate';
 
 const tableHead = ['예약 시간', '입실 시간', '퇴실 시간', '직원', '소속', '방문자', '목적', '상태'];
 
@@ -22,7 +22,7 @@ const VisitorLogTable = ({ xs, sm, md, checkInLogs, clusterNumber }) => {
       <Card>
         <CardHeader color="info">
           <h4 className={classes.title}>방문자 로그</h4>
-          <h6 className={classes.title}>{dayjs().format('YYYY년 MM월 DD일')}</h6>
+          <h6 className={classes.title}>{formatDate('YYYY년 MM월 DD일')}</h6>
         </CardHeader>
         <CardBody className={classes.content}>
           {tableData?.length ? (
@@ -46,9 +46,9 @@ const makeRow = ({
   name,
   status,
 }) => [
-  reserveDate && dayjs(reserveDate).format('HH:mm'),
-  checkIn && dayjs(checkIn).format('HH:mm'),
-  checkOut && dayjs(checkOut).format('HH:mm'),
+  reserveDate && formatDate('HH:mm', reserveDate),
+  checkIn && formatDate('HH:mm', checkIn),
+  checkOut && formatDate('HH:mm', checkOut),
   staffName,
   organization,
   name,

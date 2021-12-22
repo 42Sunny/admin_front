@@ -9,8 +9,8 @@ import {
   getCompanyVisitorAction,
 } from 'store/modules/companyVisitor/actions';
 import { dispatchToStore } from 'utils/dispatchToStore';
-import dayjs from 'dayjs';
 import { useHistory } from 'react-router-dom';
+import { formatDate } from 'utils/formatDate';
 
 export type CompanyVisitorObjType = {
   checkoutTime: string | JSX.Element;
@@ -110,10 +110,10 @@ const dataToTableData = (
   date: DateType,
 ): CompanyVisitorObjType => ({
   place: visitor.place,
-  checkinDate: dayjs(visitor.checkIn).format('YYYY-MM-DD'),
-  checkinTime: dayjs(visitor.checkIn).format('HH:mm'),
+  checkinDate: formatDate('YYYY-MM-DD', visitor.checkIn),
+  checkinTime: formatDate('HH:mm', visitor.checkIn),
   checkoutTime: visitor.checkOut
-    ? dayjs(visitor.checkOut).format('HH:mm')
+    ? formatDate('HH:mm', visitor.checkOut)
     : createExitButton(visitor.id, date),
   name: visitor.name,
   companyName: visitor.companyName,

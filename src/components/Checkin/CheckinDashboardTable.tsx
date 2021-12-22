@@ -4,12 +4,12 @@ import Table from 'components/Table/Table';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
-import dayjs from 'dayjs';
 import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import { useStyles } from './CheckinDashBoardTableStyles';
 import { getClusterNumber } from 'utils/getCluster';
 import { forceCheckOut } from 'API/checkin/user/forceCheckOut';
+import { formatDate } from 'utils/formatDate';
 
 const tableHead = ['체크인 시간', '인트라 ID', '카드 번호', '강제 퇴실'];
 
@@ -47,7 +47,7 @@ const CheckinLogTable = ({ xs, sm, md }: PropTypes) => {
       <Card>
         <CardHeader color="info">
           <h4 className={classes.title}>체크인 로그</h4>
-          <h6 className={classes.title}>{dayjs().format('YYYY년 MM월 DD일')}</h6>
+          <h6 className={classes.title}>{formatDate('YYYY년 MM월 DD일')}</h6>
         </CardHeader>
         <CardBody className={classes.content}>
           <div className={classes.tableBody}>
@@ -57,7 +57,7 @@ const CheckinLogTable = ({ xs, sm, md }: PropTypes) => {
               tableData={checkInLogs
                 .filter((log) => clusterNumber === getClusterNumber(log))
                 .map((log) => [
-                  dayjs(log.created_at).format('HH:mm') ?? null,
+                  formatDate('HH:mm', log.created_at) ?? null,
                   log.login,
                   log.card_no,
                   <button

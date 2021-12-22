@@ -1,6 +1,5 @@
 import React from 'react';
 import { useFormattedPhone } from 'hooks/useFormattedPhone';
-import dayjs from 'dayjs';
 import { createContext, useEffect, useState, useCallback, useMemo } from 'react';
 import {
   PLACE_ALL,
@@ -16,6 +15,7 @@ import VisitStatus from 'views/VisitorManagement/VisitStatus';
 import CheckoutButton from 'components/CheckoutButton/CheckoutButton';
 import CheckinButton from 'components/CheckinButton/CheckinButton';
 import { getVisitorLogs } from 'API/visitor/info';
+import { formatDate } from 'utils/formatDate';
 
 const VisitorManagementContext = createContext({
   visitData: [],
@@ -53,8 +53,8 @@ const VisitorManagementContext = createContext({
 
 const VisitorManagementProvider = ({ children }) => {
   const [visitData, setVisitData] = useState([]);
-  const [startDate, setStartDate] = useState(new dayjs().format('YYYY-MM-DD'));
-  const [endDate, setEndDate] = useState(new dayjs().format('YYYY-MM-DD'));
+  const [startDate, setStartDate] = useState(formatDate('YYYY-MM-DD'));
+  const [endDate, setEndDate] = useState(formatDate('YYYY-MM-DD'));
   const [place, setPlace] = useState(PLACE_ALL.value);
   const [allData, setAllData] = useState([]);
   const [allCount, setAllCount] = useState({
@@ -201,21 +201,21 @@ const makeTableData = (visitData) => {
 
   const results = visitData.map((elem) => [
     elem.place,
-    elem.reserveDate ? dayjs(elem.reserveDate).format('YYYY-MM-DD') : '',
+    elem.reserveDate ? formatDate('YYYY-MM-DD', elem.reserveDate) : '',
     elem.organization,
     elem.name,
     useFormattedPhone(elem.phone),
     elem.purpose,
     elem.staffName,
     useFormattedPhone(elem.staffPhone),
-    elem.reserveDate ? dayjs(elem.reserveDate).format('HH:mm') : '',
+    elem.reserveDate ? formatDate('HH:mm', elem.reserveDate) : '',
     elem.checkIn ? (
-      dayjs(elem.checkIn).format('HH:mm')
+      formatDate('HH:mm', elem.checkIn)
     ) : (
       <CheckinButton visitorId={elem.id} status={elem.status} />
     ),
     elem.checkOut ? (
-      dayjs(elem.checkOut).format('HH:mm')
+      formatDate('HH:mm', elem.checkOut)
     ) : (
       <CheckoutButton visitorId={elem.id} status={elem.status} />
     ),
