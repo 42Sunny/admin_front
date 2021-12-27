@@ -9,12 +9,10 @@ import 'assets/css/input.css';
 import useLogin from 'store/modules/login/useLoginStore';
 import getCookieValue from 'utils/getCookieValue';
 import { checkAdmin } from 'API/checkin/user/checkAdmin';
-import { getQueryString } from 'utils/getQueryString';
 
 const App = () => {
   const { isLogin, login, logout } = useLogin();
 
-  getQueryString();
   const getUserData = useCallback(async () => {
     try {
       const response = await checkAdmin();
