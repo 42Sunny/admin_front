@@ -1,4 +1,3 @@
-import { useFormattedPhone as formattedPhone } from 'hooks/useFormattedPhone';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CompanyTableDataType } from '../CompanyContainer/CompanyContainer';
 import IconButton from 'components/IconButton/IconButton';
@@ -79,7 +78,7 @@ const dataToTableData = (info: GetCompanyInfoResponseType): CompanyInfoObjType =
     path: `/company/management/enterance/${info.id}`,
   }),
   name: info.name,
-  phone: formattedPhone(info.phone),
+  phone: info.phone,
 });
 
 const TableDataToArray = (info: CompanyInfoObjType) => [
