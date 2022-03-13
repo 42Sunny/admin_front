@@ -38,7 +38,6 @@ const TimeSetting = () => {
   const handleSelect = (e: any) => {
     const selected = e.target.value;
     target.current = selected;
-    console.log(target.current);
   };
 
   const startTimeOnChanage = (date: any) => {
