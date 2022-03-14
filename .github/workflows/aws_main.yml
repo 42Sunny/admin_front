@@ -10,7 +10,7 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       REACT_APP_CHECKIN_API_URL: ${{secrets.REACT_APP_CHECKIN_API_URL}}
-      REACT_APP_VISITOR_API_URLL: ${{secrets.REACT_APP_VISITOR_API_URL}}
+      REACT_APP_VISITOR_API_URL: ${{secrets.REACT_APP_VISITOR_API_URL}}
       REACT_APP_X_42CADET_CHECKIN_AUTH_KEY: ${{secrets.REACT_APP_X_42CADET_CHECKIN_AUTH_KEY}}
       REACT_APP_X_42CADET_VISITOR_AUTH_KEY: ${{secrets.REACT_APP_X_42CADET_VISITOR_AUTH_KEY}}
       REACT_APP_VERSION: ${{secrets.REACT_APP_VERSION}}
@@ -29,9 +29,9 @@ jobs:
         uses: reggionick/s3-deploy@v3
         with:
           folder: build
-          bucket: ${{ secrets.S3_BUCKET_DEV }}
+          bucket: ${{ secrets.S3_BUCKET }}
           bucket-region: ap-northeast-2
-          dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID_DEV }}
+          dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
           invalidation: /*
           delete-removed: true
           no-cache: true
