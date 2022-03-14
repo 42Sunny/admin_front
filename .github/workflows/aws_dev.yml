@@ -14,7 +14,7 @@ jobs:
       REACT_APP_X_42CADET_CHECKIN_AUTH_KEY: ${{secrets.REACT_APP_X_42CADET_CHECKIN_AUTH_KEY}}
       REACT_APP_X_42CADET_VISITOR_AUTH_KEY: ${{secrets.REACT_APP_X_42CADET_VISITOR_AUTH_KEY}}
       REACT_APP_VERSION: ${{secrets.REACT_APP_VERSION}}
-      REACT_APP_AUTH_KEY: ${{secrets.REACT_APP_AUTH_KEY}}
+      REACT_APP_AUTH_KEY: ${{secrets.REACT_APP_AUTH_KEY_DEV}}
       
     steps:
       - uses: actions/checkout@v2
