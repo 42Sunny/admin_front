@@ -24,7 +24,6 @@ jobs:
 
       - name: Build prod
         run: yarn build:prod
-        if: contains(github.ref, 'main')
 
       - name: Deploy
         uses: reggionick/s3-deploy@v3

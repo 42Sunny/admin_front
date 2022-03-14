@@ -1,4 +1,4 @@
-name: workflow for S3 Deploy Devlop
+name: workflow for S3 Deploy Develop
 on:
   push:
     branches:
@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Build prod
+      - name: Build dev
         run: yarn build:dev
 
       - name: Deploy
