@@ -11,3 +11,10 @@ export const deleteToCheckin = <T, R = any>(url: string, data?: T): Promise<Axio
   checkinAPIInstance.delete<R>(url, data);
 export const patchToCheckin = <T, R = any>(url: string, data?: T): Promise<AxiosResponse<R>> =>
   checkinAPIInstance.patch<R>(url, data);
+
+export type CheckInResponseType<PayloadType> = {
+  code: number;
+  payload: PayloadType;
+  result: string;
+  status: number;
+};

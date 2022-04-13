@@ -11,7 +11,7 @@ import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import { useStyles } from './CheckinLogTableStyles';
 import { getClusterName } from 'utils/getCluster';
-import { forceCheckOut } from 'API/checkin/user/forceCheckOut';
+import { forceCheckOut } from 'API/checkin/user';
 import { formatDate } from 'utils/formatDate';
 
 const LOGTYPE = {

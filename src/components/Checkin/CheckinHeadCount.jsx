@@ -4,7 +4,6 @@ import GridItem from 'components/Grid/GridItem';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
-// import { reqUsingCard, reqMaxCapacity } from 'API/checkin';
 import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import { reqUsingCard } from 'API/checkin/user/reqUsingCard';
 
@@ -17,16 +16,17 @@ export const CheckinHeadCount = ({ category, xs, sm, md }) => {
   } = useCriteria();
 
   const [clusterConf, setClusterConf] = useState({});
+  // eslint-disable-next-line no-unused-vars
   const [clusterMaxConf, setClusterMaxConf] = useState({});
 
   const cluster = clusterNumber === '0' ? 'gaepo' : 'seocho';
 
   const getUsingCard = useCallback(async () => {
     try {
-      const { data } = await reqUsingCard();
+      const { data: payload } = await reqUsingCard();
       setClusterConf({
-        gaepo: data.gaepo,
-        seocho: data.seocho,
+        gaepo: payload.gaepo,
+        seocho: payload.seocho,
       });
     } catch (err) {
       console.log(err);

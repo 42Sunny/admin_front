@@ -34,8 +34,8 @@ export default function Header(props) {
 
   const getUserId = async () => {
     try {
-      const { data } = await checkAdmin();
-      setUserId(data.user.login);
+      const { data: payload } = await checkAdmin();
+      setUserId(payload.user.login);
     } catch (err) {
       console.log(err);
     }

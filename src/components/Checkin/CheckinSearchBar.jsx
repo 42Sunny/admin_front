@@ -51,12 +51,12 @@ const CheckinSearchBar = () => {
           break;
       }
 
-      if (response.data.list) {
+      if (response.data.payload.list) {
         let datas;
-        datas = response.data.list;
+        datas = response.data.payload.list;
         setCheckInLogs(datas);
-        setLastPage(response.data.lastPage);
-        if (response.data.lastPage < currentPage) {
+        setLastPage(response.data.payload.lastPage);
+        if (response.data.payload.lastPage < currentPage) {
           setCurrentPage(1);
         }
       } else {

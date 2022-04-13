@@ -3,7 +3,7 @@ import { setConfig } from 'API/checkin/config';
 import { forwardRef, LegacyRef, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useEffect } from 'react';
-import { getConfig } from 'API/checkin/config/getConfig';
+import { getConfig } from 'API/checkin/config';
 import styles from './TimeSetting.module.css';
 import dayjs from 'dayjs';
 import { stringToDate } from 'utils/formatDate';
@@ -19,9 +19,9 @@ const TimeSetting = () => {
   useEffect(() => {
     const getConfigTime = async () => {
       try {
-        const response = await getConfig();
-        const open_at = response.data.open_at;
-        const close_at = response.data.close_at;
+        const { data: payload } = await getConfig();
+        const open_at = payload.open_at;
+        const close_at = payload.close_at;
 
         startTime.current = open_at;
         endTime.current = close_at;

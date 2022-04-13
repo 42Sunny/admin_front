@@ -8,7 +8,7 @@ import useCriteria from 'store/modules/criteria/useCriteriaStore';
 import useCheckInLogs from 'store/modules/checkinLogs/useCheckInLogsStore';
 import { useStyles } from './CheckinDashBoardTableStyles';
 import { getClusterNumber } from 'utils/getCluster';
-import { forceCheckOut } from 'API/checkin/user/forceCheckOut';
+import { forceCheckOut } from 'API/checkin/user';
 import { formatDate } from 'utils/formatDate';
 
 const tableHead = ['체크인 시간', '인트라 ID', '카드 번호', '강제 퇴실'];
@@ -55,16 +55,16 @@ const CheckinLogTable = ({ xs, sm, md }: PropTypes) => {
               tableHeaderColor="info"
               tableHead={tableHead}
               tableData={checkInLogs
-                .filter((log) => clusterNumber === getClusterNumber(log))
-                .map((log) => [
-                  formatDate('HH:mm', log.created_at) ?? null,
-                  log.login,
-                  log.card_no,
+                .filter(({ payload }) => clusterNumber === getClusterNumber(payload))
+                .map(({ payload }) => [
+                  formatDate('HH:mm', payload.created_at) ?? null,
+                  payload.login,
+                  payload.card_no,
                   <button
                     className="force-out-Btn"
                     onClick={checkOutOnClick}
-                    key={log._id}
-                    id={log._id.toString()}
+                    key={payload._id}
+                    id={payload._id.toString()}
                   >
                     퇴실
                   </button>,

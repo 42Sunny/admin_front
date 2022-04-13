@@ -8,7 +8,7 @@ import 'assets/css/material-dashboard-react.css?v=1.10.0';
 import 'assets/css/input.css';
 import useLogin from 'store/modules/login/useLoginStore';
 import getCookieValue from 'utils/getCookieValue';
-import { checkAdmin } from 'API/checkin/user/checkAdmin';
+import { checkAdmin } from 'API/checkin/user';
 
 const App = () => {
   const { isLogin, login, logout } = useLogin();
@@ -16,7 +16,7 @@ const App = () => {
   const getUserData = useCallback(async () => {
     try {
       const response = await checkAdmin();
-      if (response.data['isAdmin']) {
+      if (response.data.payload.isAdmin) {
         login();
       } else {
         window.alert('접근 권한이 없습니다.');
