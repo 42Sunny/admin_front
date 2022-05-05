@@ -1,4 +1,4 @@
 export const useFormattedPhone = (rawPhone) => {
-  const phone = `${rawPhone.slice(0, 3)}-${rawPhone.slice(3, 7)}-${rawPhone.slice(7)}`;
-  return phone;
+  if (rawPhone === "00000000000") return "";
+  return `${rawPhone.slice(0, 3)}-${rawPhone.slice(3, 7)}-${rawPhone.slice(7)}`;
 };
